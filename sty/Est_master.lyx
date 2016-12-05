@@ -1,0 +1,232 @@
+#LyX file created by tex2lyx 2.0.0beta3
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass book
+\begin_preamble
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% paquetes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{chngcntr}%para referenciar cualquier entorno
+\usepackage[notref,color]{showkeys}%para mostrar etiquetas de las referencias
+\usepackage{pifont}\usepackage{tikz}\usetikzlibrary{shapes,snakes}
+\usepackage{pgf}\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\usepackage{epstopdf}\usepackage{zahlen}\usepackage{floatflt}\usepackage{multirow}\usepackage{bigstrut}\usepackage{type1ec}% Tildes en el pdf
+\usepackage{times}% Usar tipo Times-Roman
+% Usar la codificación T1
+%\usepackage[spanish]{babel}
+%\usepackage{gnuplot-lua-tikz}
+%\usepackage{maxiplot}
+%\usepackage{gnuplottex}
+\usepackage{pgfplots}%\usepackage{helvet}
+%\geometry{verbose}
+\usepackage{booktabs}\usepackage{courier}\usepackage{units}\usepackage{float}\usepackage{xcolor}\usepackage{mathpazo}\usepackage{amsfonts}\usepackage{fancyvrb}\usepackage{multicol}%\usepackage[latin1]{inputenc}
+%\usepackage[calcwidth]{titlesec}
+\usepackage[oneline,flushleft,footnotesize]{caption2}\usepackage{enumerate}\usepackage{comment}\usepackage{ifthen}\usepackage{cancel}\usepackage{layout}\usepackage{footnote}\usepackage{listings}\usepackage{hhline}\usepackage{colortbl}\usepackage{epstopdf}\usepackage{titletoc}\usepackage{blindtext}\usepackage{fix-cm}\usepackage{titlesec}\usepackage{kpfonts}%\usepackage[tmargin=2cm,rmargin=3.8cm,lmargin=3.8cm,bmargin=2cm]{geometry}
+\setlength{\textheight}{22 cm} \setlength{\textwidth}{16cm}
+\headheight-0.5cm \headsep+2cm \oddsidemargin 0.5 cm
+\evensidemargin 0.5cm \topmargin-0.5 cm 
+%\lhead{\rmfamily \small \thepage} \rhead{\small  Probabilidad y
+% %Estad{\'\i}stica } \rfoot{} \cfoot{}
+%\setlength{\headrulewidth}{0.6pt}
+%\setlength{\footrulewidth}{0.6pt}
+\def\chaptername{Cap\' itulo}
+\def\indexname{\large{\' Indice}}
+\def\bibname{\large{Bibliograf\'ia}}
+\def\contentsname{Contenido}
+\newtheorem{theorem}{\color{doc!70}Teorema}[chapter]
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}{\color{doc!70}Axioma}
+\newtheorem{case}[theorem]{\color{doc!70}Caso}
+\newtheorem{claim}{\color{doc!70}Introducci{\'o}n}
+\newtheorem{conclusion}{\color{doc!70}Conclusi\'on}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}{\color{doc!70}Corolario}[chapter]
+\newtheorem{criterion}[theorem]{\color{doc!70}Concepto}
+\newtheorem{definition}{\color{doc!70}Definici\'on}[chapter]
+\newtheorem{example}{\color{doc!70}Ejemplo}[chapter]
+\newtheorem{exercise}{\color{doc!70}Ejercicios}
+\newtheorem{lemma}{\color{doc!70}Lema}[chapter]
+\newtheorem{notation}[theorem]{\color{doc!70}Notaci{\'o}n}
+\newtheorem{tarea}{\color{doc!70}Tarea}
+\newtheorem{problem}[theorem]{\color{doc!70}Problema}
+\newtheorem{proposition}{\color{doc!70}Proposici\'on}[chapter]
+\newtheorem{remark}{\color{doc!70}Nota}[chapter]
+\newtheorem{solution}{\color{doc!70}Soluci{\'o}n}[example]
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][\color{doc!70}Demostraci\'on]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+% % % % % % % %$$$$$$$$$$$$$$$$$$$$$$$$
+\definecolor{doc}{RGB}{0,60,110}
+\contentsmargin{0cm}
+\titlecontents{chapter}[2cm]
+{\addvspace{30pt}%
+\begin{tikzpicture}[remember picture, overlay]%
+\draw[fill=doc!30,draw=doc!30] (-2,-.1) rectangle (1,.5);%
+\pgftext[left,x=-1.8cm,y=0.2cm]{\color{white}\Large\sc\bfseries c\'apitulo\ \thecontentslabel};%
+\end{tikzpicture}\hspace{2cm}\color{doc!90}\large\sc\bfseries}%
+{}
+{}
+{\;\titlerule\;\large\sc\bfseries P\'agina \thecontentspage
+\begin{tikzpicture}[remember picture, overlay]
+\draw[fill=doc!25,draw=doc!20] (2pt,0) rectangle (6,0.1pt);
+\end{tikzpicture}}%
+\titlecontents{section}[2.4pc]
+{\addvspace{1pt}}
+{\contentslabel[\thecontentslabel]{2.4pc}}
+{}
+{\hfill\small \thecontentspage}
+[]
+\titlecontents{subsection}[4.4pc]
+{\addvspace{1pt}}
+{\contentslabel[\thecontentslabel]{2.4pc}}
+{}
+{\hfill \small\thecontentspage}
+[]
+
+
+\renewcommand{\tableofcontents}{%
+\chapter*{%
+\vspace*{-20\p@}%
+\begin{tikzpicture}[remember picture, overlay]%
+\pgftext[right,x=2cm,y=0.2cm]{\color{doc!30}\Huge\sc\bfseries \contentsname};%
+\draw[fill=doc!30,draw=doc!30] (-0.45,-.75) rectangle (2,1);%
+\clip (-0.45,-.75) rectangle (2,1);
+\pgftext[right,x=2cm,y=0.2cm]{\color{white}\Huge\sc\bfseries \contentsname};%
+\end{tikzpicture}}%
+\@starttoc{toc}}
+
+% % %$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+\titleformat{\chapter}[display]
+{\bfseries\Large}
+{\hfill \tikz[remember picture] \node[] (nr) {\fontsize{120}{70}\selectfont\color{doc!80}\textbf{\thechapter}~};
+\begin{tikzpicture}[overlay,remember picture]
+\coordinate (leftborder) at ($(nr)-(100,0)$);
+\coordinate (leftborderhigh) at ($(nr.north west)-(100,0)$);
+\coordinate (leftborderlow) at ($(nr.south west)-(100,0)$);
+\coordinate (left) at ($(nr.west)-(1.5,0)$);
+\fill[doc!60] (leftborderhigh) -- ($(nr.north west)+(0,0.5)$) -- (left) -- (leftborder) -- cycle;
+\fill[doc!30] (leftborderlow) -- ($(nr.south west)-(0,0.5)$) -- (left) -- (leftborder) -- cycle;
+\draw[doc!30,line width=0.1em,line join=round] (left) -- ($(nr.south west)-(0,0.5)$) -- ($(nr.south east)-(0,0.5)$) -- ($(nr.north east)+(0,0.5)$) -- ($(nr.north west)+(0,0.5)$) -- (left) -- (leftborder);
+\end{tikzpicture}}
+{-2ex}
+{\filleft\fontsize{50}{70}\selectfont\scshape\color{doc!80}}
+[\vspace{0ex}]
+\newcommand{\blackline}{{\setlength{\parindent}{0mm}\color{doc!90}\rule{\linewidth}{0.3mm}}}
+\newcommand{\blueline}{{\setlength{\parindent}{0mm}\color{doc!70}\rule{\linewidth}{1mm}}}
+\newcommand{\greenline}{{\setlength{\parindent}{0mm}\color{green}\rule{\linewidth}{1mm}}} %
+
+
+%%%%%%%%%%%%%%%%%%%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$%%%%%%%%%%%%%%%%%%
+\newcommand{\tikzit}[1]{
+\begin{tikzpicture}
+\node[](title){\color{doc!90}\Large\bfseries\thesection\ #1};
+\draw[doc!40,line width=0.15em] (title.north west) -- (title.north east) -- ($(title.south east) + (1,0.15)$) -- ($(title.south east) + (150,0.15)$);
+\end{tikzpicture}
+}
+\titleformat{\section}{}{}{0pt}{\tikzit}
+\titleformat{\subsection}{}{}{0pt}{\centering\sc\normalsize\color{doc!80} \thesubsection\,}[\blueline]
+\titleformat{\subsubsection}{}{}{0pt}{\centering\sc\normalsize\color{doc!70} \thesubsubsection\,}
+
+\makeindex
+
+\end_preamble
+\options letter
+\use_default_options false
+\language spanish
+\inputencoding utf8x
+\font_roman palatino
+\font_sans default
+\font_typewriter mathpazo
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize 11
+\spacing single
+\use_hyperref 1
+\pdf_bookmarks 1
+\pdf_bookmarksnumbered 0
+\pdf_bookmarksopen 0
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks 0
+\pdf_pdfborder 0
+\pdf_colorlinks 0
+\pdf_backref section
+\pdf_pdfusetitle 1
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language french
+\papercolumns 1
+\papersides 2
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\begin_inset CommandInset include
+LatexCommand input
+preview false
+filename "cap1m2.lyx"
+
+\end_inset
+
+ 
+\begin_inset CommandInset include
+LatexCommand input
+preview false
+filename "CAP2m2.lyx"
+
+\end_inset
+
+ 
+\begin_inset CommandInset include
+LatexCommand input
+preview false
+filename "CAP3m2.lyx"
+
+\end_inset
+
+ 
+\begin_inset CommandInset include
+LatexCommand input
+preview false
+filename "CAP4m2.lyx"
+
+\end_inset
+
+ 
+\begin_inset CommandInset include
+LatexCommand input
+preview false
+filename "CAP5m2.lyx"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_body
+\end_document

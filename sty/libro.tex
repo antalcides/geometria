@@ -1,0 +1,42 @@
+\documentclass[xcolor=pdftex, x11names,table,openany]{book}
+\usepackage{book_RevistaLibroEstilo}
+
+\definecolor{color1}{RGB}{0,0,255} %azul
+\definecolor{color2}{RGB}{255,0,0} %rojo
+\definecolor{color3}{RGB}{0,255,0} %verde
+\definecolor{color4}{RGB}{0,0,0}   %negro
+\nuevoboiejemplo{miejemplo}{\black Ejemplo}{color1}{color2}{color3}{color4}
+%Iluminar c�digo de programas. Requiere Python, Pygments  minted.sty y habilita shell-scape
+\usepackage{minted}
+\usemintedstyle{vs}
+
+\begin{document}
+\title{MATEM\'ATICAS II}
+
+\author{Antalcides Olivo B.\\
+{\helv TEXNORTE,\\
+\vspace{-0.4cm}
+UNIVERSIDAD DEL NORTE.}}
+ \maketitle
+
+ \tableofcontents
+ \pagenumbering{arabic}
+
+\begin{minted}[mathescape,
+               gobble=2]{r}
+  # generate fake data
+  x <- rnorm(100)
+  y <- 1.2*x + rnorm(100)
+  # summarize $x$ and $y$
+  apply(cbind(x, y), 2, function(x) c(mean(x), sd(x, na.rm=TRUE)))
+  # fit a linear model $\mathbb{E}(y|x)=\beta_0+\beta_1x+\varepsilon$, where $\varepsilon\sim\mathcal{N}(0,1)$.
+  summary(lm.fit <- lm(y ~ x))
+\end{minted}
+
+In the above, we have enabled the \verb|mathescape| option: Really awesome!
+\vspace*{2em}
+
+
+\end{document}
+
+

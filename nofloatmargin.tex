@@ -1,0 +1,46 @@
+\documentclass{article}
+\usepackage{color}
+\usepackage[english]{babel}
+\usepackage{blindtext}
+
+\usepackage{marginnote}
+\usepackage[paperwidth=170mm, paperheight=240mm, left=40pt, top=40pt, textwidth=260pt, marginparsep=20pt, marginparwidth=100pt, textheight=560pt, footskip=40pt]{geometry}
+\usepackage{lipsum}
+\makeatletter
+\renewenvironment{table}[2][]{\@float{table}[#1]\marginnote{#2}}{\end@float}
+\makeatother
+
+%\begin{document}
+%\usepackage{marginnote}
+
+
+\begin{document}
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut purus elit, vestibulum ut, placerat ac, adipiscing vitae, felis. Curabitur dictum gravida mauris. Nam arcu libero, nonummy eget, consectetuer id, vulputate a, magna.
+\marginpar{This could be a couple of references and other sidenotes.}
+Donec vehicula augue eu neque.
+\marginpar{This could be a couple of references and other sidenotes.}
+Pellentesque habitant morbi tris- tique senectus et netus et malesuada fames ac turpis egestas. Mauris ut leo. Cras viverra metus rhoncus sem. Nulla et lectus vestibulum urna fringilla ultrices.
+\marginpar{This could be a couple of references and other sidenotes.}
+Phasellus eu tellus sit amet tortor gravida placerat. Integer sapien est, iaculis in, pretium quis, viverra ac, nunc.
+
+\begin{table}
+{This would be where the caption should be.}
+%\includegraphics{broken_loop}
+\centering
+(Table content)
+\color{red}
+\blindtext
+\end{table}
+
+\lipsum[3]
+
+\blindtext
+
+\begin{table}{float}
+\centering
+\color{blue}
+\blindtext
+
+\end{table}
+
+\end{document}

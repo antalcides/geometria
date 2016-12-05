@@ -1,0 +1,477 @@
+\ProvidesPackage{chapters}[2012/04/07 v0.1 Typesetting chapters]
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\newcommand\HHUGE{\@setfontsize\HHUGE{58}{67}}
+\newcommand\peque{\@setfontsize\peque{9}{10}}
+
+\newenvironment{summary}
+               {\list{}{\listparindent0pt %
+                        \itemindent\listparindent
+                        \leftmargin0pt
+                        \rightmargin\leftmargin
+                        \parsep\z@ \@plus\p@}%
+                \item\relax\itshape}
+               {\endlist}
+
+% helper macros
+\gdef\thinrule{\rule{\textwidth}{0.4pt}}
+\gdef\mediumrule{\rule{\textwidth}{0.8pt}}
+%% broad positions
+\newif\if@left
+\newif\if@right
+\newif\if@center
+\@leftfalse
+\@rightfalse
+\@centerfalse
+% newifs for number position
+\newif\if@lefttitle
+\newif\if@righttitle
+\newif\if@leftname
+\newif\if@rightname
+\newif\if@chapterspaceout\@chapterspaceoutfalse
+\newif\if@titlespaceout\@chapterspaceoutfalse
+
+%\section{Libraries}
+
+\def\cx@optionlist{}
+
+
+\def\cx@optionlist{}
+
+\def\cxuselibrary#1{\cxset{library/.cd,#1}}
+%
+% The library is added by inputting the file and setting the path accordingly.
+\def\cx@add@library#1#2{%
+  \cxset{library/#1/.code={\@ifundefined{cxlibrary@#1@loaded}{\input #2}{}}}%
+  \DeclareOption{#1}{\edef\cx@optionlist{\cx@optionlist,#1}}%
+}
+
+\def\thickrule{\leavevmode \leaders \hrule height 3pt \hfill \kern \z@}
+
+
+% Define a family for chapter styling keys
+\pgfkeys{/chapter/.is family}
+
+
+
+\def\cxset{\pgfqkeys{/chapter}} %Notice this is pgf q keys
+% spent half the evening to debug it;)Aarg!!!
+% We define keys for all major components
+\cxset{%
+  name/.code={\gdef\chaptername{#1}},
+  color/.store in=\color@cx,
+  color/.default=black,
+  chapter font-family/.store in=\chapterfontfamily@cx,
+  chapter font-weight/.store in=\chapterfontweight@cx,
+  chapter font-size/.store in=\chapterfontsize@cx,
+  chapter color/.store in=\chaptercolor@cx,
+  chapter before/.store in=\chapterbefore@cx,
+  chapter after/.store in=\chapterafter@cx,
+  chapter spaceout/.is choice,
+  chapter spaceout/soul/.code={\@chapterspaceouttrue},
+  chapter spaceout/none/.code={\@chapterspaceoutfalse},
+  % title keys
+  title font-family/.store in=\titlefontfamily@cx,
+  title font-family/.default=\rmfamily,
+  title font-weight/.store in=\titlefontweight@cx,
+  title font-size/.store in=\titlefontsize@cx,
+  title font-color/.store in=\titlefontcolor@cx,
+  title spaceout/.is choice,
+  title spaceout/soul/.code={\@titlespaceouttrue},
+  title spaceout/none/.code={\@titlespaceoutfalse},
+  title font/.style={title font-family=#1},
+  title before/.store in=\titlebefore@cx,
+  title after/.store in=\titleafter@cx,
+  title beforeskip/.store in=\titlebeforeskip@cx,
+  title afterskip/.store in=\titleafterskip@cx,
+  position/.is choice,
+  position/left/.code={\@lefttrue},
+  position/right/.code={\@righttrue},
+  position/center/.code={\@centertrue},
+% numbering options that are required
+  numbering/.is choice,
+% better to rename thechapter?
+  numbering/roman/.code={\gdef\thechapter{\@roman\c@chapter}},
+  numbering/Roman/.code={\gdef\thechapter{\@Roman\c@chapter}},
+  numbering/arabic/.code={\gdef\thechapter{\@arabic\c@chapter}},
+  numbering/none/.code={\gdef\thechapter{}},
+  number dot/.store in=\numberpunctuation@cx,
+  number position/.is choice,
+  number position/leftname/.code={\@leftnametrue\@rightnamefalse},
+  number position/rightname/.code={\@rightnametrue\@leftnamefalse},
+  number position/absolute/.code={},
+  number position/righttitle/.code={\@righttitletrue},
+  number position/lefttitle/.code={\@lefttitletrue},
+  number after/.store in=\numberafter@cx,
+  number before/.store in=\numberbefore@cx,
+  number color/.store in=\numbercolor@cx,
+  number font-size/.store in=\numberfontsize@cx,
+  number font-family/.store in=\numberfontfamily@cx,
+  number font-weight/.store in=\numberfontweight@cx,
+% headers and footers
+  header style/.store in=\headerstyle@cx,
+% general draft rules
+  rule /.is choice,
+  rule on/.code={\gdef\rulewidth@cx{0.4pt}},
+  rule off/.code={\gdef\rulewidth@cx{0pt}},
+  %imagenes
+  image/.store in=\image@cx,
+       image caption/.store in=\caption@cx,
+}
+
+\cxset{%
+  color=blue,
+  position=center,
+  name=chapteris,
+  title font-family=\rmfamily,
+  title font-weight=\bfseries,
+  title font-size=\Huge,
+  title font-color=\color{olive},
+  numbering=arabic,
+  number dot=,
+  chapter font-family=\sffamily,
+  chapter font-weight=\bfseries,
+  chapter font-size=\Large,
+  chapter color=gray,
+  chapter before={\leavevmode\par\hfill},%need to correct for 0pt
+  chapter after=\hfill\hfill,
+  number position=rightname,
+  number color=\color{gray},
+  number after=\hspace{20pt},
+  number before=\hspace*{20pt},
+  number font-size=\huge,
+  number font-family=\sffamily,
+  number font-weight=\bfseries,
+  number before=,
+  number after=,
+  title before=,
+  title after=,
+  title afterskip={\vskip50pt},
+  title beforeskip={\vskip10pt},
+  header style=plain,
+}
+
+\gdef\setdefaults{%
+\cxset{%
+name=CHAPTER,
+title font-family=\rmfamily,
+title font-weight=\bfseries,
+title font-size=\Huge,
+title font-color=\color{purple},
+numbering=arabic,
+number dot=,
+number before=,
+number after=,
+chapter font-family=\sffamily,
+chapter font-weight=\bfseries,
+chapter font-size=\large,
+chapter spaceout=soul,
+chapter color=gray,
+chapter before={},%need to correct for 0pt
+chapter after=,
+number position=rightname,
+number color=\color{gray},
+number after=\hspace{20pt},
+number before=\space,
+number font-size=\large,
+number font-family=\sffamily,
+number font-weight=\bfseries,
+title before=,
+title after=,
+title afterskip={\vskip24pt},
+title beforeskip={\vskip10pt},
+title font=\rmfamily,
+header style=plain,
+%image caption={\minitoc},
+}
+}
+%%%%%%%%%%%Definicion de seccion%%%%%%%%%%%%%%%%
+\newcounter{seccion}
+\def\seccion#1{\refstepcounter{seccion}
+\section{#1}
+}
+\renewcommand{\thesection}{\theechap@cx\ . \theseccion}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The |\@makechapterhead| is used by LaTeX to typeset the
+% Chapter heading. This is a rewrite in order to make it
+% more flexible and use the keys.
+\renewcommand\@makechapterhead[2][]{%
+% macro for typesetting the chapter number
+  \def\printnumber{%
+    \numberbefore@cx
+      {%
+      \numbercolor@cx
+      \numberfontsize@cx
+      \numberfontfamily@cx
+      \numberfontweight@cx
+      \thechapter
+      \numberpunctuation@cx
+      }
+      \numberafter@cx
+  }%
+% macro for typesetting the chapter name
+  \def\printchaptername{%
+    {
+    \chapterfontfamily@cx
+    \chapterfontsize@cx
+    \chapterfontweight@cx
+    \color{\chaptercolor@cx}
+% Check if the chapter name is spaced out and use the
+% soul package. TODO add values for soul parameters
+% as a style feature.
+    \if@chapterspaceout
+     \expandafter\so\expandafter{\chaptername}
+    \else
+      \@chapapp\space
+    \fi
+    }%
+  }%
+% set all keys
+    {%
+    \parindent0pt
+    \normalfont%
+    \ifnum \c@secnumdepth>\m@ne%
+      \if@mainmatter%
+ % we start displaying  the names and any preambles such
+ % as images
+ % print chapter name
+         \chapterbefore@cx%
+         \if@leftname
+            \printnumber
+         \fi%
+         \printchaptername
+         \if@rightname
+            \printnumber
+         \fi%
+         \chapterafter@cx
+      \fi%
+    \fi%
+     %chapter title
+    \interlinepenalty\@M%
+% if the number is before the title
+% if the number prints together with the title they
+% are considered as one indivisible part.
+     \titlebeforeskip@cx%
+     \if@lefttitle%
+       \beforenumber@cx%
+       \counterdisplay\c@chapter\afternumber@cx%
+     \fi
+% Display title
+      \titlefontfamily@cx
+      \titlefontweight@cx
+      \titlefontsize@cx
+      \titlefontcolor@cx
+      \selectfont
+      \titlebefore@cx%
+      \if@titlespaceout
+         \so{#2}%
+      \else
+         #2
+      \fi%
+      \titleafter@cx
+    \if@righttitle%
+      \afternumber@cx
+      \counterdisplay\c@chapter\afternumber@cx%
+    \fi
+    \par\nobreak%
+% skip after title
+    \titleafterskip@cx
+% headers
+    \thispagestyle{\headerstyle@cx}
+}}
+
+
+% Special Chapter command
+% estructura vieja%%%%%%%%%%
+
+\newcommand\specialchapter@cx[3][]{%
+ \renewcommand*{\labelitemi}{\color{blue}\ding{43}}
+\cxset{#1}
+\begin{changemargin}{22.9cm}{21.6cm}{0cm}{0cm}{-1cm}
+\vbox to -1.5pt{\color{MilkTea!90}\rule{6cm}{0.4pt}\par\vskip-1.4pt
+\rule{0.4pt}{0.4\textheight }\rule{6cm}{0.4pt}}
+\hbox {\hspace*{20pt}
+\parbox[b][0.4\textheight][s]{4.5cm}{\vspace*{15pt}
+\bf \color{teal} \caption@cx\par
+  } \hspace{10pt}
+\hbox{\color{MilkTea!90}\rule{1cm}{0.4\textheight}}
+\hspace*{-20pt}
+\parbox[b][0.4\textheight][s]{7.6cm}{
+\includegraphics[width=7.6cm,height=0.4\textheight]{./chapters/\image@cx}\par}
+\hspace*{-18pt}
+   %\hbox{\hspace*{4pt}\color{blue}\rule{0.3cm}{0.4\textheight}}\vspace*{3cm}
+   \vbox{\begin{minipage}[b][1cm][t]
+{4cm}\vskip-1.1cm
+%\hspace*{15pt}%
+\sffamily\color{Sienna!90!gray}\Huge Cap\'itulo
+\end{minipage}
+
+\begin{minipage}[b][1cm][t]{4cm}\vskip-1cm
+\hspace*{2cm}%%
+\sffamily\color{Sienna!80!gray}\HHUGE \theechap@cx
+    \end{minipage}
+
+   \begin{minipage}[b][6cm][t]{4cm}\hspace*{-6cm}
+   \vskip-4.5cm \contenido
+   \end{minipage}
+
+   }
+            }
+
+   \vbox{
+     \begin{tikzpicture}[overlay,remember picture]
+     \begin{pgfonlayer}{background}
+\path[opacity=0.3,right=2cm,inner ysep=10pt,
+inner xsep=15pt,rounded corners=0.7cm,fill=GreenTea!80!white,color=GreenTea!90!white]($ (current page.north west) $)
+ rectangle ($ (current page.north west) + (25cm,-14.4cm)$);
+ \end{pgfonlayer}
+     \node[right=2cm,rectangle,draw,color=GreenTea!90,fill=GreenTea!90,opacity=0.9,inner ysep=10pt,
+inner xsep=15pt,rounded corners=0.75cm] at ($ (current page.north west) + (-1cm,-12.7cm)$){\hspace{1cm}\color{Sienna!80!black}
+ \Huge\raise1cm\hbox{#2}\hspace{15cm} \null};
+  \end{tikzpicture}
+  %% Concepts
+
+  \vbox to -2.5pt{\vskip 2.2cm \color{MilkTea!90}%\rule{6cm}{0.4pt}\par\vskip-1.4pt
+\rule{0.4pt}{0.4\textheight + 3cm }\rule{6cm}{0.4pt}}
+\begin{minipage}{\textwidth}%
+    %\vspace{1cm}
+    %\raggedright
+     \vskip3.4cm
+  \begin{itemize}
+\color{teal} #3
+  \end{itemize}
+\end{minipage}}
+\end{changemargin}
+\newpage
+}
+
+\newenvironment{specialchapter}[3][]{%
+  \if@openright\cleardoublepage\else\clearpage\fi
+    \thispagestyle{empty}%
+    \global\@topnum\z@
+    \@afterindentfalse
+    \specialchapter@cx[#1]{#2}{#3}
+    \begin{minipage}{0.5\textwidth}%
+    \vspace{0.5\baselineskip}
+    \raggedright
+}{\end{minipage}}
+\newcounter{echap@cx}
+\newcommand\echap@cx[3][]{%
+ % \if@openright\cleardoublepage\else\clearpage\fi
+  \refstepcounter{echap@cx}
+   \typeout{\@chapapp\space\thechapter.}
+   \addcontentsline{toc}{chapter}
+    %\thispagestyle{plain}%
+    %\global\@topnum\z@
+    %\@afterindentfalse
+    {\protect\numberline{\theechap@cx}#2}
+    \specialchapter@cx[#1]{#2}{#3}
+    \begin{minipage}{0.5\textwidth}%
+    \vspace{0.5\baselineskip}
+    \raggedright
+\end{minipage}}
+\renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
+                                        \thispagestyle{empty}%
+                   \global\@topnum\z@
+                    \@afterindentfalse
+                   \secdef\echap@cx\@schapter}
+                  % \renewcommand \thechapter {\@Roman\c@chapter}
+                  \renewcommand \thechapter {\@arabic\c@chapter}
+                  \setcounter{echap@cx}{0}
+                  %%%%tabla de contenido%%%%%%%%%%
+\definecolor{doc}{RGB}{0,60,110}
+%\makeatletter
+\contentsmargin{0cm}
+\titlecontents{chapter}[2cm]
+{\addvspace{30pt}%
+\begin{tikzpicture}[remember picture, overlay]%
+\draw[fill=teal!80,draw=teal!80] (-2,-.1) rectangle (1,.5);%
+\pgftext[left,x=-1.8cm,y=0.2cm]{\color{white}\Large\sc\bfseries c\'apitulo\ \thecontentslabel};%
+\end{tikzpicture}\hspace{2cm}\color{teal!80}\large\sc\bfseries}%
+{}
+{}
+{\;\titlerule\;\large\sc\bfseries P\'agina \thecontentspage
+\begin{tikzpicture}[remember picture, overlay]
+\draw[fill=teal!80,draw=teal!80] (2pt,0) rectangle (7,0.1pt);
+\end{tikzpicture}}%
+\titlecontents{section}[2.4pc]
+{\addvspace{3pt}}
+{\contentslabel[\thecontentslabel\ ]{2.4pc}}
+{}
+{\hfill\small \thecontentspage}
+[]
+\titlecontents{subsection}[2.5pc]
+{\addvspace{1pt}}
+{\contentslabel[\thecontentslabel\ ]{2.4pc}}
+{}
+{\hfill \small\thecontentspage}
+[]
+\renewcommand{\tableofcontents}{%
+\chapter*{%
+\vspace*{-20\p@}%
+\begin{tikzpicture}[remember picture, overlay]%
+\pgftext[right,x=14cm,y=0.2cm]{\HHUGE \rmfamily \color{teal} \contentsname};%
+\draw[fill=teal!80,draw=teal!30] (10,-.75) rectangle (2,1);%
+\clip (10,-.75) rectangle (2,1);
+\pgftext[right,x=14cm,y=0.2cm]{\HHUGE \rmfamily \color{white} \contentsname};%
+\end{tikzpicture}}%
+\@starttoc{toc}}
+% % % % % % % % % % %$$$$$$$$$$$$$$$$$$$ % % % % % % % % % %
+\newcommand{\bibcmd}{\begin{tikzpicture}[remember picture, overlay]%
+\pgftext[right,x=2cm,y=0.2cm]{\color{doc!30}\Huge\sc\bfseries \contentsname};%
+\draw[fill=doc!30,draw=doc!30] (-0.45,-.75) rectangle (2,1);%
+\clip (-0.45,-.75) rectangle (2,1);
+\pgftext[right,x=2cm,y=0.2cm]{\color{white}\Huge\sc\bfseries \contentsname};%
+\end{tikzpicture}}
+\renewenvironment{thebibliography}[1]
+     {\chapter*{\bibcmd}%
+     \color{doc!60}\bfseries
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\color{doc!90}\bfseries\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+      \def\clearpage{\ifvmode
+\ifnum \@dbltopnum =\m@ne \ifdim \pagetotal <\topskip \hbox{} \fi
+\fi \fi
+\newpage
+\thispagestyle{empty} \write\m@ne{} \vbox{} \penalty -\@Mi }
+% % % % % % % % % % % % % % %seccion
+\newcommand{\newsectioncmd}[1]{
+\begin{tcolorbox}[colback=blue!5,colframe=blue!85!black,title=Secci\'on\  \thesection]
+\centering \color{blue!85!black} #1
+\end{tcolorbox}}
+\titleformat{\section}
+{\gdef\sectionlabel{}}
+{\gdef\sectionlabel{\thesecion.\ }}
+{0pt}
+{\newsectioncmd}
+{}
+\titlespacing*{\section}{0pt}{0pt}{20pt}
+% % % % % % % % % % % % % %
+% % % % %subseccion % % % % % % % % %
+\renewcommand\subsection{\@startsection {subsection}{1}{-5pt}%
+                                   {3.5ex \@plus 1ex \@minus .2ex
+                                   }%
+                                   {2.3ex\@plus .2ex
+                                   \vskip 0.2\p@ \vskip 1pt}%
+                                   {\centering\sc\normalsize\color{purple}}}
+
+\renewcommand\subsubsection{\@startsection {subsubsection}{1}{-5pt}%
+                                   {3.5ex \@plus 1ex \@minus .2ex
+                                   }%
+                                   {2.3ex\@plus .2ex
+                                   \vskip 0.2\p@ \vskip 1pt}%
+                                   {\centering\sc\normalsize\color{purple}}}
+% % % % % % % % % % % % % % %

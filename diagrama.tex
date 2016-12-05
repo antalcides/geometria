@@ -1,0 +1,19 @@
+\documentclass[10pt]{article}
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows}
+\pagestyle{empty}
+\begin{document}
+\definecolor{qqtttt}{rgb}{0,0.2,0.2}
+\definecolor{cqcqcq}{rgb}{0.75,0.75,0.75}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+\draw [color=cqcqcq,dash pattern=on 2pt off 2pt, xstep=1.0cm,ystep=1.0cm] (-4.3,-9.68) grid (12.2,6.3);
+\clip(-4.3,-9.68) rectangle (12.2,6.3);
+\draw [color=qqtttt] (-3,3)-- (1,3);
+\draw [color=qqtttt] (1,3)-- (1,1);
+\draw [color=qqtttt] (1,1)-- (-3,1);
+\draw [color=qqtttt] (-3,1)-- (-3,3);
+\draw (-2.46,2.96) node[anchor=north west] {\large{Fuente}};
+\draw [->] (1,2) -- (4,2);
+\draw (2.04,2.44) node[anchor=north west] {$x$};
+\end{tikzpicture}
+\end{document}

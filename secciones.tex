@@ -1,0 +1,173 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Fancy %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+%%%%%%%%%%%%%%%%%%%%%Página par en blanco al final del capítulo%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Abre Introducción de tipos  @  %%%%%%%%%%%
+ \makeatletter
+\def\clearpage{\ifvmode
+\ifnum \@dbltopnum =\m@ne \ifdim \pagetotal <\topskip \hbox{} \fi
+\fi \fi
+\newpage
+\thispagestyle{empty} \write\m@ne{} \vbox{} \penalty -\@Mi }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\@endchapter{\vfil\newpage
+              \if@twoside
+               \if@openright
+                \null
+                \thispagestyle{empty}%
+                \newpage
+               \fi
+              \fi
+              \if@tempswa
+                \twocolumn
+              \fi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Definicion de subsecciones%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\blackline}{{\setlength{\parindent}{0mm}\color{black}\rule{\linewidth}{0.3mm}}}
+\newcommand{\blueline}{{\setlength{\parindent}{0mm}\color{blue}\rule{\linewidth}{1mm}}}
+\newcommand{\greenline}{{\setlength{\parindent}{0mm}\color{green}\rule{\linewidth}{1mm}}}
+% \renewcommand\section{\@startsection {section}{1}{-10pt}%
+%                                    {3.5ex \@plus 1ex \@minus .2ex
+%                                    }%
+%                                    {2.3ex\@plus .2ex
+%                                    \vskip 0.2\p@ \blackline \vskip 1pt}%
+%                                    {\centering\sc\normalsize\color{black}}}
+
+\renewcommand\subsection{\@startsection {subsection}{1}{-5pt}%
+                                   {3.5ex \@plus 1ex \@minus .2ex
+                                   }%
+                                   {2.3ex\@plus .2ex
+                                   \vskip 0.2\p@ \vskip 1pt}%
+                                   {\centering\sc\normalsize\color{black}}}
+
+\renewcommand\subsubsection{\@startsection {subsubsection}{1}{-5pt}%
+                                   {3.5ex \@plus 1ex \@minus .2ex
+                                   }%
+                                   {2.3ex\@plus .2ex
+                                   \vskip 0.2\p@ \vskip 1pt}%
+                                   {\centering\sc\normalsize\color{black}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&%%
+\setlength{\parindent}{0pt}
+%%%%%%%%%%%%%tabla de contenido%%%%%%%%%%%%
+  \newif\if@toc \@tocfalse
+\renewcommand\tableofcontents{ \if@twocolumn
+\@restonecoltrue\onecolumn \else \@restonecolfalse \fi
+\begingroup                     \@toctrue
+\chapter*{\Large \contentsname}
+\endgroup
+\pagestyle{empty} \baselineskip=18pt plus .5pt minus .5pt
+{\raggedleft P\'{a}gina \par\vskip-\parskip} \@starttoc{toc}
+\newpage
+\if@restonecol\twocolumn\fi \baselineskip=\normalbaselineskip
+}\let\par \par
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Tipos en caption%%%%%%%%%%%%%%%%%
+\renewcommand{\captionfont}{\rmfamily}
+\renewcommand{\captionlabelfont}{\footnotesize\bfseries \sffamily}
+\renewcommand\footnoterule{  \kern-3\p@
+\hrule\@width.2\columnwidth \kern2.6\p@}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Encajonado%%%%%%%%%%%%%%%%%%%%%
+% \setlength{\marginparwidth}{5cm} \setlength{\marginparsep}{0.5cm}
+% \setlength{\textheight}{22 cm} \setlength{\textwidth}{15cm}
+% \oddsidemargin -1cm
+% \evensidemargin -1cm
+% \topmargin-1 cm
+% \headsep+22pt
+% \headheight9pt
+% \hoffset -0.8cm
+% \voffset -1.8cm
+% \footskip 1cm
+\usepackage[paperheight=25cm,%
+paperwidth=19cm,%
+centering,%
+left=1.5cm,%
+right=2cm,%
+top=2.5cm,%
+bottom=1.5cm,%
+headheight=0.5cm,%
+headsep=10pt,%
+%footskip=1cm,%
+marginparsep=20pt,
+pdftex=false
+]{geometry}
+\usepackage[frame,center,letter,pdflatex,cam]{crop}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%titulo de secciones%%%%%%%%%%%%%%%%%%%%%%
+\def\indexname{\'{\I}ndice}
+\def\contentsname{\Large Contenido}
+\def\listfigurename{Tabla de figuras}
+\def\bibname{\Large Bibliograf\'{\i}a}
+\def\tablename{Tabla}
+\def\proofname{Demostraci\'on}
+\def\appendixname{Ap\'endice}
+\def\chaptername{ Cap\'{\i}tulo}
+\def\figurename{Figura}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\listtablename}{\'{\I}ndice de Tablas}
+\newdimen\myboxnot
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%definicion de capitulos%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nomproprebib}[2]{#1 \textsc{#2}}
+\newcommand{\entreebiblivre}[4]{#1, \emph{#2}, #3, #4.}
+\newcommand{\entreebibarticle}[7]{#1, \og #2\fg{}, \emph{#3} \textbf{#4} (#5), p.~#6-#7.}
+\newcommand{\ifempty}[3]{\ifx#1\empty#2\else#3\fi}
+\newcommand{\thechapterimage}{}
+\newcommand{\chapterimage}[1]{\renewcommand*{\thechapterimage}{#1}}
+\newcommand{\chapterheadfont}{\fontfamily{phv}\fontsize{24pt}{30pt}\selectfont}
+\newcommand{\newchaptercmd}[1]{%
+\begin{tikzpicture}[overlay,remember picture]
+\begin{scope}
+\clip (current page.north west) rectangle ($ (current page.north east) + (0cm,-12cm)$);
+\fill[blue!20] (current page.north west) rectangle
+($ (current page.north east) + (0cm,-12cm)$);
+\node[below=-0.35cm] at (current page.north)
+{\ifempty{\thechapterimage}{}{\includegraphics[width=\paperwidth]{\thechapterimage}}};
+\end{scope}
+\node[right=2cm,rectangle,draw,color=white,fill=white,opacity=0.7,inner ysep=10pt,
+inner xsep=15pt,rounded corners=0.75cm] at ($ (current page.north west) + (0cm,-7cm)$)
+{\chapterheadfont\vphantom{pb}\phantom{#1}\hspace{\paperwidth}\null};
+\node[right=2cm,inner ysep=10pt,inner xsep=15pt] at ($ (current page.north west) + (0cm,-7cm)$)
+{\chapterheadfont\vphantom{pb}\color{red!60!black}\chapterlabel#1};
+\end{tikzpicture}
+}
+\titleformat{\chapter}
+{\gdef\chapterlabel{}}
+{\gdef\chapterlabel{\thechapter.\ }}
+{0pt}
+{\newchaptercmd}
+{}
+\titlespacing*{\chapter}{0pt}{0pt}{8cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5 definicion seccion %%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\newsectioncmd}[1]{ %\vskip 5pt
+				\tikzstyle{mybox} = [ draw=blue, fill=red!10, very thick,
+    rectangle,opacity=0.7,inner ysep=10pt,inner xsep=15pt,rounded corners=20pt]
+				 \tikzstyle{fancytitle} =[fill=blue, text=white]
+                        \begin{tikzpicture}
+		             \node [mybox] (box){ \begin{minipage}[c][20pt]{0.7\paperwidth}
+                      \chapterheadfont\vphantom{pb}\phantom{#1}\hspace{0.7\paperwidth}\null
+                                \end{minipage}};
+                             \node[right=-5cm,inner ysep=10pt,inner xsep=15pt] at (0,0)
+{\chapterheadfont\vphantom{pb}\color{red!60!black}\thesection \, #1};
+                        \end{tikzpicture}
+
+
+\vskip -15pt
+}
+\titleformat{\section}
+{\gdef\sectionlabel{}}
+{\gdef\sectionlabel{\thesection.\ }}
+{0pt}
+{\newsectioncmd}
+{}
+\titlespacing*{\section}{0pt}{0pt}{20pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Encabezado %%%%%%%%%%%%%%%%%%%
+\newpagestyle{estilonew}[\small\sffamily]{\headrule
+\sethead[\thesection. \ \sectiontitle][][A.Olivo]{Geometr\'{\i}a con regla y comp\'as}{}{}
+\footrule\setfoot{}{\usepage}{}}
+\pagestyle{estilonew}
+\renewcommand{\makeheadrule}{%
+\makebox[0pt][l]{\rule[.9\baselineskip]{\linewidth}{0.8pt}}%
+\rule[-.4\baselineskip]{\linewidth}{0.8pt}}

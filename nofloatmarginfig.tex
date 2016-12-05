@@ -1,0 +1,75 @@
+\documentclass[twoside]{article}
+\usepackage[outermargin=2cm,innermargin=5cm,marginparwidth=3cm,marginparsep=20pt]{geometry}
+\usepackage[demo]{graphicx}
+\usepackage{marginnote}
+\usepackage{caption}
+\usepackage{lipsum}
+\usepackage{color}
+\usepackage{xcolor}
+%\usepackage{mdframed}
+%\newtheorem{mdtheorem}{Theorem}
+%\newenvironment{theorem}%
+%{\begin{mdframed}[backgroundcolor=lightgray]\begin{mdtheorem}}%
+%{\end{mdtheorem}\end{mdframed}}
+\usepackage[colorlinks]{hyperref}
+\usepackage{todonotes}
+
+\newcommand\MarginFig[4][width=\marginparwidth]{%
+\marginpar{\includegraphics[#1]{#2}
+\captionof{figure}{#3}
+\label{#4}}
+}
+
+\reversemarginpar
+
+\begin{document}
+%\layout
+text\MarginFig{name1}{description for figure one}{fig:test1} \lipsum[1-2]\MarginFig{name2}{description for figure one}{fig:test2}
+\lipsum[1]\MarginFig[height=7cm,width=\marginparwidth]{name3}{description for figure three}{fig:test3}\lipsum[1-3]
+text\MarginFig[height=7cm,width=\marginparwidth]{name4}{description for figure four}{fig:test4} \lipsum[1]\MarginFig{name5}{description for figure five}{fig:test5}\lipsum[2]\MarginFig{name6}{description for figure six}{fig:test6}\lipsum[1-3]
+\color{red}
+\lipsum[1]\MarginFig{name5}{description for figure five}{fig:test5}\lipsum[2]\MarginFig{name6}{description for figure six}{fig:test6}\lipsum[1-3]
+
+test \todo{side note}
+
+\listoftodos
+
+\section{The text}
+
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Etiam quam
+quam, sodales vel, iaculis at, varius fringilla, urna. Cras urna.
+\todo{A simple ting to do.}%
+Morbi lorem eros, ullam\-corper id, egestas ac, interdum eu, nunc. Nam
+enim eros, sodales at, dapibus eget, semper nec, augue. Morbi orci
+\todo{Something much more difficult to explain. So it takes several
+lines in the todo note and in the list of to do's.}%
+orci, tincidunt ac, pellentesque vel, facilisis et, dolor. Nunc nec
+mauris eu felis fringilla dictum.
+
+
+Donec ornare, mauris in posuere
+faucibus, lacus enim luctus nibh, vitae vestibulum sapien purus id
+nisl. Morbi non dolor non odio ornare faucibus. Proin in purus.
+\todo{There is still something to update in this document.}%
+Vivamus nulla sem, eleifend ac, lacinia suscipit, facilisis a, est.
+Mauris vitae purus. Donec ullamcorper, magna vitae sodales semper,
+elit diam adipiscing neque, quis mattis ante orci a orci. Mauris eu
+mauris non arcu pharetra euismod. Duis non elit. Etiam faucibus,
+mauris quis mollis lobortis, mauris sem feugiat dolor, sit amet
+porta libero lectus non erat. Donec cursus pede in tellus. Fusce
+egestas. Aenean ut nisl.
+
+Fusce eu arcu. Aliquam ultrices, turpis in facilisis lobortis, enim
+massa bibendum ante, id blandit purus sapien non eros. Aenean
+sodales ante eu magna. Proin vestibulum dolor auctor erat. Maecenas
+at neque. Fusce ante odio, sollicitudin eget, cursus condimentum,
+egestas in, urna.
+
+Suspendisse rutrum eros. Phasellus suscipit velit
+non nunc. Donec sollicitudin erat non dui. Aenean nec turpis. Aenean
+pellentesque porta ipsum. Mauris eget nulla eu nunc pellentesque
+sollicitudin. Pellentesque lacus. Fusce vehicula orci quis libero.
+Vivamus consequat. Cum sociis natoque penatibus et magnis dis
+parturient montes, nascetur ridiculus mus. Cras hendrerit elit. In
+hac habitasse platea dictumst. Phasellus rhoncus massa non ipsum.
+\end{document}

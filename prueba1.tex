@@ -1,0 +1,1210 @@
+\documentclass[a4paper]{book}
+%%%% paquetes de geom
+\usepackage{calc}
+\usepackage{pifont}
+\usepackage{tikz}
+\usetikzlibrary{shapes,snakes}
+\usepackage{pgf}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\usepackage{epstopdf}
+\usepackage{floatflt}
+\usepackage{pgfplots}
+\usepackage{amsmath,amssymb}
+%\usepackage{booktabs}
+\usepackage{courier}
+\usepackage{units}
+\usepackage{url}
+\usepackage{float}
+\usepackage{mathpazo}
+\usepackage{amsfonts}
+\usepackage{fancyvrb}
+\usepackage{multicol}
+\usepackage[utf8x]{inputenc}
+\usepackage[calcwidth]{titlesec}
+\usepackage[rightlabels]{titletoc}
+\usepackage{enumerate}
+\usepackage{comment}
+\usepackage{ifthen}
+\usepackage{cancel}
+\usepackage{layout}
+\usepackage{footnote}
+%\usepackage{fancyhdr}
+\usepackage{etex}
+%%%%%paquetes nuevos
+\usepackage{xcolor}
+\usepackage{lipsum,soul}
+\usepackage{palatino}
+\usepackage{calligra}
+\usepackage[T1]{fontenc}
+\usepackage{minitoc}
+\setcounter{minitocdepth}{2}
+\setlength{\mtcindent}{24pt}
+\renewcommand{\mtcfont}{\small\rm}
+\renewcommand{\mtcSfont}{\small\bf}
+\makeatletter
+\renewcommand*\l@chapter{\@dottedtocline{1}{1.5em}{2.6em}}
+\usepackage[listings,theorems]{tcolorbox}
+%\usepackage[charter]{mathdesign}
+% \def\rmdefault{bch} % not scaled
+% \def\ttdefault{blg}
+\usepackage{xcolor,filecontents,ragged2e}
+\usepackage[scale=0.5,
+paperheight=10in,%
+paperwidth=7in,%
+centering,%
+left=1.5cm,%
+right=2cm,%
+top=2.5cm,%
+bottom=1.5cm,%
+headheight=0.5cm,%
+headsep=10pt,%
+%footskip=1cm,%
+marginparsep=20pt,
+letterpaper
+]{geometry}
+\usepackage[frame,center,letter,pdflatex,cam]{crop}
+\usepackage{microtype,soul,filecontents}
+%\usepackage{pgf}
+\usepackage{lettrine,
+caption,multicol}
+%%%%%%%%%%%%%%%
+%\usepackage{hyperref}
+%\usepackage[latin1]{inputenc}
+%%%%%%%%%%%
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+%%%%%%%%%%%%%%%%%%%%%Página par en blanco al final del capítulo%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Abre Introducción de tipos  @  %%%%%%%%%%%
+ \makeatletter
+\def\clearpage{\ifvmode
+\ifnum \@dbltopnum =\m@ne \ifdim \pagetotal <\topskip \hbox{} \fi
+\fi \fi
+\newpage
+\thispagestyle{plain} \write\m@ne{} \vbox{} \penalty -\@Mi }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\@endchapter{\vfil\newpage
+              \if@twoside
+               \if@openright
+                \null
+                \thispagestyle{empty}%
+                \newpage
+               \fi
+              \fi
+              \if@tempswa
+                \twocolumn
+              \fi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Definicion de subsecciones%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\blackline}{{\setlength{\parindent}{0mm}\color{black}\rule{\linewidth}{0.3mm}}}
+\newcommand{\blueline}{{\setlength{\parindent}{0mm}\color{blue}\rule{\linewidth}{1mm}}}
+\newcommand{\greenline}{{\setlength{\parindent}{0mm}\color{green}\rule{\linewidth}{1mm}}}
+
+
+\renewcommand\subsection{\@startsection {subsection}{1}{-5pt}%
+                                   {3.5ex \@plus 1ex \@minus .2ex
+                                   }%
+                                   {2.3ex\@plus .2ex
+                                   \vskip 0.2\p@ \vskip 1pt}%
+                                   {\centering\sc\normalsize\color{black}}}
+
+\renewcommand\subsubsection{\@startsection {subsubsection}{1}{-5pt}%
+                                   {3.5ex \@plus 1ex \@minus .2ex
+                                   }%
+                                   {2.3ex\@plus .2ex
+                                   \vskip 0.2\p@ \vskip 1pt}%
+                                   {\centering\sc\normalsize\color{black}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&%%
+\setlength{\parindent}{0pt}
+
+%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage[frame,center,letter,pdflatex,cam]{crop}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%titulo de secciones%%%%%%%%%%%%%%%%%%%%%%
+\def\indexname{\'{\I}ndice}
+\def\contentsname{\Large Contenido}
+\def\listfigurename{Tabla de figuras}
+\def\bibname{\Large Bibliograf\'{\i}a}
+\def\tablename{Tabla}
+\def\proofname{Demostraci\'on}
+\def\appendixname{Ap\'endice}
+\def\chaptername{ Cap\'{\i}tulo}
+\def\figurename{Figura}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\listtablename}{\'{\I}ndice de Tablas}
+%\newdimen\myboxnot
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5 definicion seccion %%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nomproprebib}[2]{#1 \textsc{#2}}
+\newcommand{\entreebiblivre}[4]{#1, \emph{#2}, #3, #4.}
+\newcommand{\entreebibarticle}[7]{#1, \og #2\fg{}, \emph{#3} \textbf{#4} (#5), p.~#6-#7.}
+\newcommand{\ifempty}[3]{\ifx#1\empty#2\else#3\fi}
+\newcommand{\thechapterimage}{}
+\newcommand{\chapterimage}[1]{\renewcommand*{\thechapterimage}{#1}}
+\newcommand{\chapterheadfont}{\fontfamily{phv}\fontsize{24pt}{30pt}\selectfont}
+%%%%%%%%%%%
+\newcommand{\newsectioncmd}[1]{ %\vskip 5pt
+				\tikzstyle{mybox} = [ draw=blue, fill=red!10, very thick,
+    rectangle,opacity=0.7,inner ysep=10pt,inner xsep=15pt,rounded corners=20pt]
+				 \tikzstyle{fancytitle} =[fill=blue, text=white]
+                        \begin{tikzpicture}
+		             \node [mybox] (box){ \begin{minipage}[c][20pt]{0.7\paperwidth}
+                      \chapterheadfont\vphantom{pb}\phantom{#1}\hspace{0.7\paperwidth}\null
+                                \end{minipage}};
+                             \node[right=-5cm,inner ysep=10pt,inner xsep=15pt] at (0,0)
+{\chapterheadfont\vphantom{pb}\color{red!60!black}\theechap \,\thesection \, #1};
+                        \end{tikzpicture}
+
+
+\vskip -15pt
+}
+\newcommand\partialtocname{Contenido}
+\titleformat{\section}
+{\gdef\sectionlabel{}}
+{\gdef\sectionlabel{\thesection.\ }}
+{0pt}
+{\newsectioncmd}
+{}
+\titlespacing*{\section}{0pt}{0pt}{20pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Encabezado %%%%%%%%%%%%%%%%%%%
+\newpagestyle{estilonew}[\small\sffamily]{\headrule
+\sethead[\thesection. \ \sectiontitle][][A.Olivo]{Geometr\'{\i}a con regla y comp\'as}{}{}
+\footrule\setfoot{}{\usepage}{}}
+\pagestyle{estilonew}
+\renewcommand{\makeheadrule}{%
+\makebox[0pt][l]{\rule[.9\baselineskip]{\linewidth}{0.8pt}}%
+\rule[-.4\baselineskip]{\linewidth}{0.8pt}}
+%%%%tabla de contenido%%%%%%%%%%
+\definecolor{doc}{RGB}{0,60,110}
+%\makeatletter
+\contentsmargin{0cm}
+\titlecontents{chapter}[2cm]
+{\addvspace{30pt}%
+\begin{tikzpicture}[remember picture, overlay]%
+\draw[fill=doc!30,draw=doc!30] (-2,-.1) rectangle (1,.5);%
+\pgftext[left,x=-1.8cm,y=0.2cm]{\color{white}\Large\sc\bfseries c\'apitulo\ \thecontentslabel};%
+\end{tikzpicture}\hspace{2cm}\color{doc!90}\large\sc\bfseries}%
+{}
+{}
+{\;\titlerule\;\large\sc\bfseries P\'agina \thecontentspage
+\begin{tikzpicture}[remember picture, overlay]
+\draw[fill=doc!25,draw=doc!20] (2pt,0) rectangle (6,0.1pt);
+\end{tikzpicture}}%
+\titlecontents{section}[2.4pc]
+{\addvspace{1pt}}
+{\contentslabel[\thecontentslabel]{2.4pc}}
+{}
+{\hfill\small \thecontentspage}
+[]
+\titlecontents{subsection}[4.4pc]
+{\addvspace{1pt}}
+{\contentslabel[\thecontentslabel]{2.4pc}}
+{}
+{\hfill \small\thecontentspage}
+[]
+\renewcommand{\tableofcontents}{%
+\chapter*{%
+\vspace*{-20\p@}%
+\begin{tikzpicture}[remember picture, overlay]%
+\pgftext[right,x=2cm,y=0.2cm]{\color{doc!30}\Huge\sc\bfseries \contentsname};%
+\draw[fill=doc!30,draw=doc!30] (-0.45,-.75) rectangle (2,1);%
+\clip (-0.45,-.75) rectangle (2,1);
+\pgftext[right,x=2cm,y=0.2cm]{\color{white}\Huge\sc\bfseries \contentsname};%
+\end{tikzpicture}}%
+\@starttoc{toc}}
+% % % % % % % % % % %$$$$$$$$$$$$$$$$$$$ % % % % % % % % % %
+\newcommand{\bibcmd}{\begin{tikzpicture}[remember picture, overlay]%
+\pgftext[right,x=2cm,y=0.2cm]{\color{doc!30}\Huge\sc\bfseries \contentsname};%
+\draw[fill=doc!30,draw=doc!30] (-0.45,-.75) rectangle (2,1);%
+\clip (-0.45,-.75) rectangle (2,1);
+\pgftext[right,x=2cm,y=0.2cm]{\color{white}\Huge\sc\bfseries \contentsname};%
+\end{tikzpicture}}
+\renewenvironment{thebibliography}[1]
+     {\chapter*{\bibcmd}%
+     \color{doc!60}\bfseries
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\color{doc!90}\bfseries\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+
+%\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entornos %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%% Lista %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Lista    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{lista}{
+\begin{itemize}
+ \renewcommand{\labelitemi}{{
+ \colorbox{blue!90!black}{\color{white}{\ding{42}}}
+ }}
+}{\end{itemize}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ejemplo%%%%%%%%%%%%%%%%%%%%
+\newcounter{ejemplo}
+\newenvironment{ejemplo}[1]{\vskip 5pt
+\stepcounter{ejemplo}
+\begin{tikzpicture}
+\tikzstyle{mybox} = [draw=red, fill=blue!20, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=red, text=black]
+\node [mybox] (box){%
+     \begin{minipage}[r]{\textwidth}
+                                     {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west) {Ejemplo. \thechapter.\theejemplo};
+ \node[fancytitle, rounded corners] at (box.east) {$\blacktriangle$};
+      \end{tikzpicture}
+                        \hspace*{10pt}         }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% postulado %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{postulado}
+\newenvironment{postulado}[2]{\vskip 5pt
+\stepcounter{postulado}
+  \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=red!10, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=blue, text=white]
+\node [mybox] (box){ %
+     \begin{minipage}[r]{\textwidth}
+                                    {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west) {Postulado.\thechapter.\thepostulado. \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+     \end{tikzpicture}
+              \hspace*{10pt}                }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Axioma %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{axioma}
+\newenvironment{axioma}[2]{\vskip 5pt
+\stepcounter{axioma}
+  \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=red!10, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=blue, text=white]
+\node [mybox] (box){ %
+     \begin{minipage}[r]{\textwidth}
+                                    {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west)
+{Postulado.\thechapter.\thepostulado. \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+     \end{tikzpicture}
+              \hspace*{10pt}                }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conjetura %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{conjetura}
+\stepcounter{conjetura}
+\newenvironment{conjetura}[1]{\vskip 5pt
+  \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=green!20, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+\node [mybox] (box){ %
+     \begin{minipage}[r]{\textwidth}
+                                    {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west) {Conjetura. \thechapter.\theconjetura};
+ \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+     \end{tikzpicture}
+              \hspace*{10pt}                }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Definicion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{definicion}
+\newenvironment{definicion}[2]{\vskip 5pt
+  \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=yellow!20, very thick,
+    rectangle, rounded corners, inner sep=20pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=red!60, text=white, ellipse]
+\stepcounter{definicion}
+\hspace*{-15pt}
+\node [mybox] (box){ %
+     \begin{minipage}[r]{\textwidth}
+                                    {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west) {Definici\'on. \thechapter.\thedefinicion. \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\heartsuit$};
+     \end{tikzpicture}
+              \hspace*{10pt}                }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Teorema %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{teorema}
+\newenvironment{teorema}[2]{\vskip 5pt
+  \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=red!10, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+\stepcounter{teorema}
+\hspace*{-15pt}
+\node [mybox] (box){ %
+     \begin{minipage}[r]{0.85\textwidth}
+                                    {#1}
+                                 \end{minipage} };
+ \node[fancytitle, right=10pt] at (box.north west) {Teorema. \thechapter.\theteorema.  \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+     \end{tikzpicture}
+              \hspace*{10pt}                }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% construccion%%%%%%%%%%%%%%%%%%%%
+\newcounter{construccion}
+\newenvironment{construccion}[2]{\vskip 5pt
+\stepcounter{construccion}
+\begin{tikzpicture}
+\tikzstyle{mybox} = [draw=red, fill=blue!20, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=red, text=black]
+\node [mybox] (box){%
+     \begin{minipage}[r]{\textwidth}
+                                     {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west) {Construcci\'on. \thechapter.\theconstruccion \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\bigstar$};
+      \end{tikzpicture}
+                        \hspace*{10pt}         }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ideas  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{ideas}
+\newenvironment{ideas}[2]{\vskip 5pt
+\stepcounter{ideas}
+   \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=yellow!20, very thick,
+    rectangle, rounded corners, inner sep=20pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+ \hspace*{-15pt}
+   \node [mybox] (box){ %
+ \begin{minipage}[r]{0.9\textwidth}
+                                     #1
+                                          \end{minipage}};
+\node[fancytitle, right=10pt] at (box.north west) {T\'ermino. \thechapter. \theideas. \ \bf{#2}};
+\node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+ \end{tikzpicture}
+                         }
+                              {\vskip 5pt }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NoDefinicion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{tndefinido}
+\newenvironment{tndefinido}[2]{\vskip 5pt
+  \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=yellow!20, very thick,
+    rectangle, rounded corners, inner sep=20pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+\stepcounter{tndefinido}
+ \hspace*{-15pt}
+\node [mybox] (box){ %
+     \begin{minipage}[r]{0.9\textwidth}
+                                    #1
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west) {T\'ermino no definido. \thechapter. \thetndefinido. \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+     \end{tikzpicture}
+                             }
+                             {\vskip 5pt }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fontfamily{pbk}
+\selectfont
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Figura %%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{figura}[3]{\begin{figure}[H]
+\centering
+                               #1
+                              \caption{#2}
+                              \label{#3}
+                              \end{figure}
+}{ \vskip 5pt }
+%%%%%%%%%%%%%%%%%%%%%%%%cambiando margen%%%%%%%%%%%%%%%%
+\newenvironment{changemargin}[2]
+{
+\begin{list}{}
+{
+\setlength{\topsep}{0pt}
+\setlength{\evensidemargin}{0pt}%
+\setlength{\oddsidemargin}{0pt}
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}
+\item[]
+}
+{\end{list}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Notas %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{notas}[2]{\vskip 5pt  \colorbox{blue!30}{\color{white}{#1:\, #2}}
+
+                                     }{ \vskip 5pt
+                                        %\blackline
+                                        \vskip 0.2pt}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Prueba %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{prueba}[2]{\renewcommand{\arraystretch}{1.06}
+\vskip 5pt  {
+ \colorbox{red!30}{\color{white}{Prueba:}}
+ }\vskip 5pt
+$ %
+\begin{tabular}
+[t]{ll||c}\hline
+\multicolumn{2}{c||}{Afirmaciones} & Razones\\\hline\hline
+1. & $#1$ & \multicolumn{1}{|l}{Dado}\\
+#2
+\end{tabular}
+\ \ \ $ \vskip 5pt}{\hfill  \raggedright{ \rule{0.5em}{0.5em} }\vskip 5pt }
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Solucion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{sol}[2]{\renewcommand{\arraystretch}{1.06}
+\vskip 5pt  {
+ \colorbox{red!30}{\color{white}{Soluci\'on:}}
+ }\vskip 5pt
+$ %
+\begin{tabular}
+[t]{ll||c}\hline
+\multicolumn{2}{c||}{Afirmaciones} & Razones\\\hline\hline
+1. & $#1$ & \multicolumn{1}{|l}{Dado}\\
+#2
+\end{tabular}
+\ \ \ $ \vskip 5pt}{\hfill  \raggedright{ \rule{0.5em}{0.5em} }\vskip 5pt }
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %$$$$$$$$$$$$$$$$$$$$$$$ Comandos $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% solucion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\solucion}
+ {\vskip 5pt
+  {
+ \colorbox{red!30}{\color{white}{Soluci\'on: \,}}
+ }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% problemas %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\problema}[1]
+{
+%\noindent
+\section{Problemas}
+\begin{multicols}{2}
+ #1
+\end{multicols}
+{\setlength{\parindent}{0mm}\color{black}\rule{\linewidth}{1mm}}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Arco %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\arco}[2][30pt]{\overset{\tikz \draw[rotate=60,line width=1pt]
+ (#1,0pt) arc (0:60:#1);}{#2}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Nota y solución%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand{\solucion}{\colorbox{black}{\color{white}{Soluciön:}}}
+\newcommand{\nota}{\colorbox{red!20!white}{\color{black}{Nota:}}}
+\newcommand{\degre}{\ensuremath{^\circ}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%Regla y transportador %%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\regla}[1]{
+\begin{center}
+\begin{tikzpicture}[scale=#1,font=\fontsize{7}{7}\selectfont]
+% La regla de plastico
+\draw[thick,red] (-0.25,0.0) rectangle (25.25,2.5);
+% Marcas de milímetros
+\foreach \x in{0.0, 0.1,...,25.0}
+	\draw[blue,shift={(\x,0)}] (0,0.5pt) -- (0,5pt);
+% Marcas de centímetros	
+\foreach \x in{0, 1, ..., 25}
+	\draw[thick,shift={(\x,0)}] (0,-0.5pt) -- (0,7.5pt) node[above]{$\x$};
+% Para que escriban su nombre los niños:
+%\node[blue,right]	at (0,1.75) {\textbf{Nombre:} \rule{7.5cm}{0.5pt}};
+\end{tikzpicture}
+\end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\transportador}[1]{
+\begin{center}
+\begin{tikzpicture}[scale=#1,font=\fontsize{7}{7}\selectfont]
+\draw[thick] (5,0) arc (0:180:5);
+\draw[thick] (5,0) -- (5,-5pt) -- (-5,-5pt) -- (-5,0);
+%
+\draw[red,fill=red] (0,0) circle (3.5pt);
+% Grados
+\foreach \ang in {0,1,...,180}
+	\draw[rotate=\ang] (4.9,0) -- (5.0,0);
+% Multiplos de 5
+\foreach \mult in {0, 5,..., 180}
+	\draw[thick,rotate=\mult] (4.8,0) -- (5.0,0);
+% Multiplos de 10 (Solamente nodos)
+\foreach \nodo in {0, 10, ...,180}
+	\node[red] at (\nodo:4.5) {\nodo};
+% Multiplos de 10 [los últimos]
+\foreach \ult in {0, 10, ...,180}
+	\draw[very thick,rotate=\ult,red]	(4.8,0) -- (5.0,0);
+\end{tikzpicture}
+\end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\instruccion}[1]{
+	\vspace{\fill}
+	\begin{center}
+	\cooltooltip
+	[1 1 0]
+	{Instrucciones:}
+	{Imprima en hojas tamaño carta sin lineas. \\
+	Utilice sólo regla sin graduar y compás.	
+	}
+	{http://www.uninorte.edu.co}{Catálogo Web}
+	{#1\strut}
+	\end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%triangulo    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\triangulo}{\tikz \filldraw[scale=0.5,fill=blue!20] (0,0) -- ++(60:1) -- ++(-60:1) -- cycle ;
+                 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Aqui es nuevo
+%\usepackage[top=20mm,bottom=20mm,left=20mm,right=20mm]{geometry}
+
+%
+\definecolor{theblue} {rgb}{0.02,0.04,0.48}
+\definecolor{thered}  {rgb}{0.65,0.04,0.07}
+\definecolor{thegreen}{rgb}{0.06,0.44,0.08}
+\definecolor{thegrey} {gray}{0.5}
+\definecolor{theshade}{gray}{0.94}
+\definecolor{theframe}{gray}{0.75}
+\newcommand\lorem{Fusce adipiscing justo nec ante. Nullam in enim.
+ Pellentesque felis orci, sagittis ac, malesuada et, facilisis in,
+ ligula. Nunc non magna sit amet mi aliquam dictum. In mi. Curabitur
+ sollicitudin justo sed quam et quadd. \par}
+
+\lstloadlanguages{[LaTeX]TeX, [primitive]TeX}
+
+% Emphasis
+\newcommand\emphasis[2][thered]{\lstset{emph={newcommand,def,gdef,#2},
+   emphstyle={\ttfamily\textcolor{#1}}}}%
+
+\lstset{language={[LaTeX]TeX},
+      escapeinside={{(*@}{@*)}}, 
+       numbers=left, gobble=0,
+       stepnumber=1,numbersep=5pt, 
+       numberstyle={\footnotesize\color{gray}},firstnumber=last,
+       breaklines=true,
+       framesep=5pt,
+       basicstyle=\small\ttfamily,
+       showstringspaces=false,
+     % keywordstyle=\ttfamily\textcolor{thegreen},
+      stringstyle=\color{orange},
+      commentstyle=\color{black},
+      rulecolor=\color{theshade},
+      breakatwhitespace=true,
+     showspaces=false,  % shows spacing symbol
+      xleftmargin=0pt,
+      xrightmargin=5pt,
+      aboveskip=3pt plus1pt minus1pt, % compact the code looks ugly in type
+      belowskip=7pt plus1pt minus1pt,  % user responsible to insert any skips
+      backgroundcolor=\color{theshade}
+}
+
+\begin{filecontents*}{chapterx.sty}
+\ProvidesPackage{chapters}[2012/04/07 v0.1 Typesetting chapters]
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\newcommand\HHUGE{\@setfontsize\HHUGE{58}{67}}
+
+
+\newenvironment{summary}
+               {\list{}{\listparindent0pt %
+                        \itemindent\listparindent
+                        \leftmargin0pt
+                        \rightmargin\leftmargin
+                        \parsep\z@ \@plus\p@}%
+                \item\relax\itshape}
+               {\endlist}
+
+% helper macros
+\gdef\thinrule{\rule{\textwidth}{0.4pt}}
+\gdef\mediumrule{\rule{\textwidth}{0.8pt}}
+%% broad positions
+\newif\if@left
+\newif\if@right
+\newif\if@center
+\@leftfalse
+\@rightfalse
+\@centerfalse
+% newifs for number position
+\newif\if@lefttitle
+\newif\if@righttitle
+\newif\if@leftname
+\newif\if@rightname
+\newif\if@chapterspaceout\@chapterspaceoutfalse
+\newif\if@titlespaceout\@chapterspaceoutfalse
+
+%\section{Libraries} 
+
+\def\cx@optionlist{}
+
+
+\def\cx@optionlist{}
+
+\def\cxuselibrary#1{\cxset{library/.cd,#1}}
+%
+% The library is added by inputting the file and setting the path accordingly.
+\def\cx@add@library#1#2{%
+  \cxset{library/#1/.code={\@ifundefined{cxlibrary@#1@loaded}{\input #2}{}}}%
+  \DeclareOption{#1}{\edef\cx@optionlist{\cx@optionlist,#1}}%
+}
+
+\def\thickrule{\leavevmode \leaders \hrule height 3pt \hfill \kern \z@}
+
+
+% Define a family for chapter styling keys
+\pgfkeys{/chapter/.is family}
+
+
+
+\def\cxset{\pgfqkeys{/chapter}} %Notice this is pgf q keys
+% spent half the evening to debug it;)Aarg!!!
+% We define keys for all major components
+\cxset{%
+  name/.code={\gdef\chaptername{#1}},
+  color/.store in=\color@cx,
+  color/.default=black,
+  chapter font-family/.store in=\chapterfontfamily@cx,
+  chapter font-weight/.store in=\chapterfontweight@cx,
+  chapter font-size/.store in=\chapterfontsize@cx,
+  chapter color/.store in=\chaptercolor@cx,
+  chapter before/.store in=\chapterbefore@cx,
+  chapter after/.store in=\chapterafter@cx,
+  chapter spaceout/.is choice,
+  chapter spaceout/soul/.code={\@chapterspaceouttrue},
+  chapter spaceout/none/.code={\@chapterspaceoutfalse},
+  % title keys
+  title font-family/.store in=\titlefontfamily@cx,
+  title font-family/.default=\rmfamily,
+  title font-weight/.store in=\titlefontweight@cx,
+  title font-size/.store in=\titlefontsize@cx,
+  title font-color/.store in=\titlefontcolor@cx,
+  title spaceout/.is choice,
+  title spaceout/soul/.code={\@titlespaceouttrue},
+  title spaceout/none/.code={\@titlespaceoutfalse},
+  title font/.style={title font-family=#1},
+  title before/.store in=\titlebefore@cx,
+  title after/.store in=\titleafter@cx,
+  title beforeskip/.store in=\titlebeforeskip@cx,
+  title afterskip/.store in=\titleafterskip@cx,
+  position/.is choice,
+  position/left/.code={\@lefttrue},
+  position/right/.code={\@righttrue},
+  position/center/.code={\@centertrue},
+% numbering options that are required
+  numbering/.is choice,
+% better to rename thechapter?
+  numbering/roman/.code={\gdef\thechapter{\@roman\c@chapter}},
+  numbering/Roman/.code={\gdef\thechapter{\@Roman\c@chapter}},
+  numbering/arabic/.code={\gdef\thechapter{\@arabic\c@chapter}},
+  numbering/none/.code={\gdef\thechapter{}},
+  number dot/.store in=\numberpunctuation@cx,
+  number position/.is choice,
+  number position/leftname/.code={\@leftnametrue\@rightnamefalse},
+  number position/rightname/.code={\@rightnametrue\@leftnamefalse},
+  number position/absolute/.code={},
+  number position/righttitle/.code={\@righttitletrue},
+  number position/lefttitle/.code={\@lefttitletrue},
+  number after/.store in=\numberafter@cx,
+  number before/.store in=\numberbefore@cx,
+  number color/.store in=\numbercolor@cx,
+  number font-size/.store in=\numberfontsize@cx,
+  number font-family/.store in=\numberfontfamily@cx,
+  number font-weight/.store in=\numberfontweight@cx,
+% headers and footers
+  header style/.store in=\headerstyle@cx,
+% general draft rules
+  rule /.is choice,
+  rule on/.code={\gdef\rulewidth@cx{0.4pt}},
+  rule off/.code={\gdef\rulewidth@cx{0pt}},
+  %imagenes
+  image/.store in=\image@cx,
+       image caption/.store in=\caption@cx,
+}
+
+\cxset{%
+  color=blue,
+  position=center,
+  name=chapteris,
+  title font-family=\rmfamily,
+  title font-weight=\bfseries,
+  title font-size=\Huge,
+  title font-color=\color{olive},
+  numbering=arabic,
+  number dot=,
+  chapter font-family=\sffamily,
+  chapter font-weight=\bfseries,
+  chapter font-size=\Large,
+  chapter color=gray,
+  chapter before={\leavevmode\par\hfill},%need to correct for 0pt
+  chapter after=\hfill\hfill,
+  number position=rightname,
+  number color=\color{gray},
+  number after=\hspace{20pt},
+  number before=\hspace*{20pt},
+  number font-size=\huge,
+  number font-family=\sffamily,
+  number font-weight=\bfseries,
+  number before=,
+  number after=,
+  title before=,
+  title after=,
+  title afterskip={\vskip50pt},
+  title beforeskip={\vskip10pt},
+  header style=plain,
+}
+
+\gdef\setdefaults{%
+\cxset{%
+name=CHAPTER,
+title font-family=\rmfamily,
+title font-weight=\bfseries,
+title font-size=\Huge,
+title font-color=\color{purple},
+numbering=arabic,
+number dot=,
+number before=,
+number after=,
+chapter font-family=\sffamily,
+chapter font-weight=\bfseries,
+chapter font-size=\large,
+chapter spaceout=soul,
+chapter color=gray,
+chapter before={},%need to correct for 0pt
+chapter after=,
+number position=rightname,
+number color=\color{gray},
+number after=\hspace{20pt},
+number before=\space,
+number font-size=\large,
+number font-family=\sffamily,
+number font-weight=\bfseries,
+title before=,
+title after=,
+title afterskip={\vskip24pt},
+title beforeskip={\vskip10pt},
+title font=\rmfamily,
+header style=plain,
+image caption={\minitoc},
+}
+}
+
+% The |\@makechapterhead| is used by LaTeX to typeset the
+% Chapter heading. This is a rewrite in order to make it
+% more flexible and use the keys.
+
+\renewcommand\@makechapterhead[2][]{%
+% macro for typesetting the chapter number
+  \def\printnumber{%
+    \numberbefore@cx
+      {%
+      \numbercolor@cx
+      \numberfontsize@cx
+      \numberfontfamily@cx
+      \numberfontweight@cx
+      \thechapter
+      \numberpunctuation@cx
+      }
+      \numberafter@cx
+  }%
+% macro for typesetting the chapter name
+  \def\printchaptername{%
+    {
+    \chapterfontfamily@cx
+    \chapterfontsize@cx
+    \chapterfontweight@cx
+    \color{\chaptercolor@cx}
+% Check if the chapter name is spaced out and use the
+% soul package. TODO add values for soul parameters
+% as a style feature.
+    \if@chapterspaceout 
+     \expandafter\so\expandafter{\chaptername}
+    \else
+      \@chapapp\space
+    \fi
+    }%
+  }%
+% set all keys
+    {%
+    \parindent0pt 
+    \normalfont%
+    \ifnum \c@secnumdepth>\m@ne%
+      \if@mainmatter%
+ % we start displaying  the names and any preambles such 
+ % as images
+ % print chapter name
+         \chapterbefore@cx%
+         \if@leftname
+            \printnumber
+         \fi%
+         \printchaptername
+         \if@rightname
+            \printnumber
+         \fi%
+         \chapterafter@cx  
+      \fi%
+    \fi%
+     %chapter title
+    \interlinepenalty\@M%
+% if the number is before the title
+% if the number prints together with the title they 
+% are considered as one indivisible part.
+     \titlebeforeskip@cx%
+     \if@lefttitle%
+       \beforenumber@cx%
+       \counterdisplay\c@chapter\afternumber@cx%
+     \fi
+% Display title
+      \titlefontfamily@cx
+      \titlefontweight@cx
+      \titlefontsize@cx
+      \titlefontcolor@cx
+      \selectfont
+      \titlebefore@cx%
+      \if@titlespaceout
+         \so{#2}%
+      \else
+         #2
+      \fi%
+      \titleafter@cx
+    \if@righttitle%
+      \afternumber@cx
+      \counterdisplay\c@chapter\afternumber@cx%
+    \fi
+    \par\nobreak%
+% skip after title
+    \titleafterskip@cx
+% headers
+    \thispagestyle{\headerstyle@cx}
+}}
+
+
+%% Special Chapter command
+\newcommand\specialchapter@cx[4][\theechap]{%
+%\cxset{image/.store in=\image@cx,
+  %     image caption/.store in=\caption@cx}
+\cxset{#2}
+\vbox to 0pt{\color{blue}\rule{\paperwidth}{0.4pt}\par\vskip-1.4pt
+\rule{0.4pt}{\textheight}\rule{4cm}{0.4pt}}
+
+\vbox to 0pt{\parbox[b]{4.7cm}{%
+\raggedright
+
+\leftskip1.5cm
+\caption@cx\par
+ \expandafter\rule{\rulewidth@cx}{5.8cm}
+}\parbox[b]{0.5cm}{\includegraphics[width=0.5cm,height=9.15cm]{./chapters/shadow}}\includegraphics{./chapters/\image@cx}\par}
+
+\vspace{8.2cm}
+\hspace*{-3.51cm}\hbox to 0pt{\hspace*{1.01cm}\includegraphics[width=7.7cm,height=3.8cm]{./chapters/genetics-band}
+\hspace*{-2.7cm}\sffamily\color{\numbercolor@cx}\HHUGE \raise30pt\hbox{#1}%
+\hspace{1.5cm}\raise0.5pt\hbox{\includegraphics{./chapters/chapterconcept}\includegraphics{./chapters/shadow2}}
+}
+
+%% Title name
+\parbox[c][0.5\textwidth][c]{0.35\textwidth}{%
+  \titlefontsize@cx
+  \titlefontweight@cx
+  \titlefontfamily@cx
+  \leftskip0.5em \color{\titlefontcolor@cx}
+  #3
+}
+ \begin{minipage}{0.5\textwidth}%
+    \vspace{0.5\baselineskip}
+    \raggedright
+    #4
+\end{minipage}
+%\clearpage
+\newpage
+
+%% Concepts
+}
+
+\newenvironment{specialchapter}[3][]{%
+  \if@openright\cleardoublepage\else\@endchapter\fi
+    %\thispagestyle{plain}%
+    \global\@topnum\z@
+    \@afterindentfalse
+    %\stepcounter{echap}
+    \addcontentsline{toc}{chapter}%
+                {#2}
+    \specialchapter@cx[]{#1}{#2}{#3}
+    \begin{minipage}{0.5\textwidth}%
+    \vspace{0.5\baselineskip}
+    \raggedright
+}{\end{minipage}}
+\end{filecontents*}
+\newcounter{echap}
+\newcommand{\echapname}[1]{#1}
+\newcommand\echap[3][]{%
+  \if@openright\cleardoublepage\else\@endchapter%\clearpage
+  \fi
+    %\thispagestyle{plain}%
+    \global\@topnum\z@
+    \@afterindentfalse
+    \stepcounter{echap}
+    \addcontentsline{toc}{chapter}%
+                {\protect\numberline{\theechap}#2}
+    \specialchapter@cx{#1}{#2}{#3}
+    \begin{minipage}{0.5\textwidth}%
+    \vspace{0.5\baselineskip}
+    \raggedright
+\end{minipage}
+              }
+                 \renewcommand\chapter{\if@openright\cleardoublepage\else
+                 \@endchapter\fi
+                                    \thispagestyle{empty}%
+                                    \global\@topnum\z@
+                                    \@afterindentfalse
+                                    \secdef\echap\@schapter
+                                    }
+\usepackage{shorttoc}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{4}
+\titlecontents{partsection}[2.3em]
+{} {\contentslabel{2.3em}} {} {\titlerule*[1pc]{.}\contentspage}
+\titlecontents{partsubsection}[5.5em]
+{} {\contentslabel{3.2em}} {} {\titlerule*[1pc]{.}\contentspage}
+\titlecontents{partsubsubsection}[9.6em]
+{} {\contentslabel{4.1em}} {} {\titlerule*[1pc]{.}\contentspage}
+\titlecontents{partparagraph}[8.5em]
+{} {\contentslabel{0em}} {} {\titlerule*[1pc]{.}\contentspage}
+\newcommand{\contenido}{
+\shorttoc{Contents}{1}
+\startcontents[chapters]
+\begin{minipage}[b]{0.2\linewidth}
+ \printcontents[chapters]{part}{1}{}
+ \end{minipage}
+}
+
+
+
+\usepackage{chapterx}
+\usepackage{makeidx}
+\makeindex
+\author{Y Lazarides}
+\title{\parindent0pt A New Approach in\\ Styling Chapters}
+\begin{document}
+\maketitle
+%\dominitoc
+\tableofcontents
+\mainmatter
+\setdefaults
+\cxset{
+ name={CHAPTER CONCEPT},
+ numbering=none,
+ number font-size=,
+ number font-family=,
+ number font-weight=,
+ number color=white,
+ chapter color={black},
+ chapter font-family=\sffamily,
+ chapter font-size=\large,
+ chapter font-weight=\bfseries,
+ title font-family=\sffamily,
+ title font-color=teal,
+ rule off,image caption={}
+}
+\begin{specialchapter}[image=piramide,
+rule on=,]{Introduction}{
+The aim of the package is to allow easy styling of chapter heads and extends these to include images and special effects, which are difficult to achieve using traditional methods 
+}
+\end{specialchapter}
+
+\clearpage
+
+\echap[image=piramide,
+        image caption={}
+]{El primer  capitulo}{
+\begin{itemize}
+\item While alleles are transmitted from parent to   offspring
+according to Mendelian principles, they often do not
+display the clear-cut dominant/recessive relationship
+observed by Mendel.
+\item In many cases, in a departure from Mendelian genetics,
+two or more genes are known to influence the phenotype
+of a single characteristic.
+\item Still another exception to Mendelian inheritance occurs
+when genes are located on the X chromosome, because one
+of the sexes receives only one copy of that chromosome,
+eliminating the possibility of heterozygosity.
+\item Phenotypes are often the combined result of genetics and
+the environment within which genes are expressed.
+\item The result of the various exceptions to Mendelian principles
+is the occurrence of phenotypic ratios that differ from those
+produced by standard monohybrid, dihybrid, and trihybrid
+crosses.
+  \end{itemize}}
+   
+  \section{Background}
+
+The \LaTeX2e\ method of constructing the layout for Chapters is complicated and spread all over the book.cls code. Although not very difficult to customize, customization is not user friendly. 
+
+\begin{description}
+\item [counters] Counters can be displayed or not. These are constructed using the normal LaTeX method.
+   \begin{verbatim}
+   \renewcommand \thechapter {\@arabic\c@chapter}
+   \end{verbatim}
+
+\item [name] Here we use the term \textit{name} to denote in english the word ``chapter''. This can be typeset differently, depending on the language. It depends on on redefining one macro.
+   \begin{verbatim}
+     \def\chaptername{Chapter}
+   \end{verbatim}
+\item [openright] The global option open right, triggers the typesetting of chapter on odd pages only. There are a  couple of layouts that must be typeset on an even pages.
+
+\item [\string\chapter] The chapter command is the main author command and where all the branching starts.
+    \begin{verbatim}
+\newcommand\chapter{%
+  \if@openright\cleardoublepage\else\clearpage\fi
+    \thispagestyle{plain}%
+    \global\@topnum\z@
+    \@afterindentfalse
+    \secdef\@chapter\@schapter}
+    \end{verbatim}
+
+One limitation for this command is that it always starts a chapter on a new page and the macro needs to be rewritten if for example a new chapter is allowed to start anywhere.
+
+Consider options openright, openleft, continuous.
+
+The pagestyle is also settled here.
+
+secdef will define basic macros for chaapter and starred chapter. What it basically does... this will become unecessary as we are going to find out a bit later on, but first the @chapter.
+
+\item [\string\@chapter] This is the basic routine
+\begin{verbatim}
+\def\@chapter[#1]#2{
+  \ifnum \c@secnumdepth >\m@ne
+    \if@mainmatter
+      \refstepcounter{chapter}%
+      \typeout{\@chapapp\space\thechapter.}%
+      \addcontentsline{toc}{chapter}%
+         {\protect\numberline{\thechapter}#1}%
+      \else
+         \addcontentsline{toc}{chapter}{#1}%
+    \fi
+  \else
+    \addcontentsline{toc}{chapter}{#1}%
+  \fi
+  \chaptermark{#1}%
+  \addtocontents{lof}{\protect\addvspace{10\p@}}%
+  \addtocontents{lot}{\protect\addvspace{10\p@}}%
+  \if@twocolumn
+    \@topnewpage[\@makechapterhead{#2}]%
+  \else
+    \@makechapterhead{#2}%
+    \@afterheading
+  \fi}
+\end{verbatim}
+  The important branching command here is makechapterhead,   which is responsible for typesetting the layout.
+
+\end{description}
+
+\section{Counters}
+\begin{verbatim}
+
+\renewcommand \thepart {\@Roman\c@part}
+\renewcommand \thechapter {\@arabic\c@chapter}
+\end{verbatim}
+
+
+
+\section{major components}
+
+The major components of a chapter opening, is the chapter name, the number and the title. It can be enclosed in boxes rules or other decorative elements. 
+
+One peculiarity is how to specify the position of the number.
+
+leftofchaptername rightofchaptername ownline 
+
+\subsection{algorithmic approach}
+
+All major components are saved in boxes. then based on booleans or templets are inserted in right location. Similar to objects.
+
+This particular code, uses the predefined style \textit{manet}. The only difference we have now defined a helper macro to make it easier for such images to be inserted for similar style chapter openings.
+
+\medskip
+
+\begin{lstlisting}
+\def\topimage#1{\cxset{title before={\hskip-2.3cm\includegraphics[width=1.25\textwidth]{./chapters/#1}\par
+\vspace*{\baselineskip}\par}}}
+\end{lstlisting}
+
+If a full book is to be designed using chapter openings in this fashion more keys and styles could be defined to make it even more easy to enter.
+
+The full code to have the chapter typeset is shown below:
+\medskip
+
+\begin{lstlisting}
+\cxset{manet}
+\topimage{Alan-MacDonald-Cardinal-Spin-01}
+
+\chapter{ALAN MacDONALD}
+\begin{multicols}{3}
+      \leftskip0pt
+      \lettrine{I}{psum dolor} sit amet latixeus. \lipsum*[1-2]
+      Latinicus porcupinus to fill the line.
+\end{multicols}
+\end{lstlisting}
+All major components are saved in boxes. then based on booleans or templets are inserted in right location. Similar to objects.
+\chapter[image=piramide]{El primer  capitulo}{
+\begin{itemize}
+\item While alleles are transmitted from parent to   offspring
+according to Mendelian principles, they often do not
+display the clear-cut dominant/recessive relationship
+observed by Mendel.
+\item In many cases, in a departure from Mendelian genetics,
+two or more genes are known to influence the phenotype
+of a single characteristic.
+\item Still another exception to Mendelian inheritance occurs
+when genes are located on the X chromosome, because one
+of the sexes receives only one copy of that chromosome,
+eliminating the possibility of heterozygosity.
+\item Phenotypes are often the combined result of genetics and
+the environment within which genes are expressed.
+\item The result of the various exceptions to Mendelian principles
+is the occurrence of phenotypic ratios that differ from those
+produced by standard monohybrid, dihybrid, and trihybrid
+crosses.
+  \end{itemize}}
+  \begin{itemize}
+\item While alleles are transmitted from parent to   offspring
+according to Mendelian principles, they often do not
+display the clear-cut dominant/recessive relationship
+observed by Mendel.
+\item In many cases, in a departure from Mendelian genetics,
+two or more genes are known to influence the phenotype
+of a single characteristic.
+\item Still another exception to Mendelian inheritance occurs
+when genes are located on the X chromosome, because one
+of the sexes receives only one copy of that chromosome,
+eliminating the possibility of heterozygosity.
+\item Phenotypes are often the combined result of genetics and
+the environment within which genes are expressed.
+\item The result of the various exceptions to Mendelian principles
+is the occurrence of phenotypic ratios that differ from those
+produced by standard monohybrid, dihybrid, and trihybrid
+crosses.
+  \end{itemize}  
+  
+\end{document}

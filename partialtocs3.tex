@@ -1,0 +1,57 @@
+\documentclass{book}
+
+\usepackage{titletoc,titlesec}
+\usepackage{shorttoc}
+\usepackage{lipsum}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{4}
+
+\titlecontents{partsection}[2.3em]
+{} {\contentslabel{2.3em}} {} {\titlerule*[1pc]{.}\contentspage}
+\titlecontents{partsubsection}[5.5em]
+{} {\contentslabel{3.2em}} {} {\titlerule*[1pc]{.}\contentspage}
+\titlecontents{partsubsubsection}[9.6em]
+{} {\contentslabel{4.1em}} {} {\titlerule*[1pc]{.}\contentspage}
+\titlecontents{partparagraph}[8.5em]
+{} {\contentslabel{0em}} {} {\titlerule*[1pc]{.}\contentspage}
+
+\begin{document}
+
+\frontmatter
+
+\chapter*{Preface}
+\addcontentsline{toc}{chapter}{Preface}
+\lipsum[1]
+
+\cleardoublepage
+
+\shorttoc{Contents}{1}
+
+\cleardoublepage
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{A chapter}
+\startcontents[chapters]
+\printcontents[chapters]{part}{1}{}
+\section{Section}
+\lipsum[1]
+\subsection{A subsection}
+\lipsum[3]
+\subsection{A second subsection}
+\subsubsection{SubSubsection}
+\paragraph{Paragraph}
+\lipsum[4]
+\section{Section 2}
+\lipsum
+\chapter{Second chapter}
+\startcontents[chapters]
+\printcontents[chapters]{part}{1}{}
+\section{Section}
+\lipsum[2]
+\section{Another section}
+\lipsum
+\end{document}

@@ -1,0 +1,283 @@
+\documentclass[11pt,spanish,letter]{book}
+%%%%%%%%%%%%%%%%%%%%%%%%%%% paquetes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{chngcntr}%para referenciar cualquier entorno
+\usepackage[notref,color]{showkeys} %para mostrar etiquetas de las referencias
+\usepackage{pifont}
+\usepackage{tikz}
+%\usetikzlibrary{shapes}
+\usepackage{pgf}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\usepackage{epstopdf}
+\usepackage{zahlen}
+\usepackage{floatflt}
+\usepackage{multirow}
+\usepackage{bigstrut}
+\usepackage{type1ec}       % Tildes en el pdf
+\usepackage{times}          % Usar tipo Times-Roman
+\usepackage[T1]{fontenc}    % Usar la codificación T1
+%\usepackage[spanish]{babel}
+%\usepackage{gnuplot-lua-tikz}
+%\usepackage{maxiplot}
+%\usepackage{gnuplottex}
+\usepackage{pgfplots}
+\usepackage{amsmath,amssymb}
+%\usepackage{helvet}
+\usepackage[T1]{fontenc}
+%\geometry{verbose}
+\usepackage{booktabs}
+\usepackage{courier}
+\usepackage{units}
+\usepackage{url}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mathpazo}
+\usepackage{amsfonts}
+\usepackage{fancyvrb}
+\usepackage{multicol}
+\usepackage[utf8x]{inputenc}
+%\usepackage[latin1]{inputenc}
+%\usepackage[calcwidth]{titlesec}
+\usepackage{graphicx}
+\usepackage[oneline,flushleft,footnotesize]{caption2}
+\usepackage{enumerate}
+\usepackage{comment}
+\usepackage{ifthen}
+\usepackage{cancel}
+\usepackage{layout}
+\usepackage{footnote}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{hhline}
+\usepackage{colortbl}
+\usepackage{epstopdf}
+\usepackage{blindtext}
+\usepackage{fix-cm}
+\usepackage[newparttoc]{titlesec}
+\usepackage[rightlabels]{titletoc}
+\usepackage{kpfonts}
+\usepackage{makeidx}
+\usepackage{fancyhdr}
+%\usepackage[tmargin=2cm,rmargin=3.8cm,lmargin=3.8cm,bmargin=2cm]{geometry}
+\setlength{\textheight}{22 cm} \setlength{\textwidth}{16cm}
+\headheight-0.5cm \headsep+2cm \oddsidemargin 0.5 cm
+\evensidemargin 0.5cm \topmargin-0.5 cm
+%\lhead{\rmfamily \small \thepage} \rhead{\small  Probabilidad y
+% %Estad{\'\i}stica } \rfoot{} \cfoot{}
+%\setlength{\headrulewidth}{0.6pt}
+%\setlength{\footrulewidth}{0.6pt}
+\definecolor{doc}{RGB}{0,60,110}
+\def\chaptername{Cap\' itulo}
+\def\indexname{\' Indice}
+\def\bibname{Bibliograf\'ia}
+\def\contentsname{Contenido}
+\newtheorem{theorem}{\color{doc!70}Teorema}[chapter]
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}{\color{doc!70}Axioma}
+\newtheorem{case}[theorem]{\color{doc!70}Caso}
+\newtheorem{claim}{\color{doc!70}Introducci{\'o}n}
+\newtheorem{conclusion}{\color{doc!70}Conclusi\'on}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}{\color{doc!70}Corolario}[chapter]
+\newtheorem{criterion}[theorem]{\color{doc!70}Concepto}
+\newtheorem{definition}{\color{doc!70}Definici\'on}[chapter]
+\newtheorem{example}{\color{doc!70}Ejemplo}[chapter]
+\newtheorem{exercise}{\color{doc!70}Ejercicios}
+\newtheorem{lemma}{\color{doc!70}Lema}[chapter]
+\newtheorem{notation}[theorem]{\color{doc!70}Notaci{\'o}n}
+\newtheorem{tarea}{\color{doc!70}Tarea}
+\newtheorem{problem}[theorem]{\color{doc!70}Problema}
+\newtheorem{proposition}{\color{doc!70}Proposici\'on}[chapter]
+\newtheorem{remark}{\color{doc!70}Nota}[chapter]
+\newtheorem{solution}{\color{doc!70}Soluci{\'o}n}[example]
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][\color{doc!70}Demostraci\'on]{\textbf{#1.} }{\
+\rule{0.5em}{0.5em}}
+% % % % % % % %$$$$$$$$$$$$$$$$$$$$$$$$
+\contentsmargin{0cm}
+\titlecontents{chapter}[2cm]
+{\addvspace{30pt}%
+\begin{tikzpicture}[remember picture, overlay]%
+\draw[fill=doc!30,draw=doc!30] (-2,-.1) rectangle (1,.5);%
+\pgftext[left,x=-1.8cm,y=0.2cm]{\color{white}\Large\sc\bfseries c\'apitulo\
+\thecontentslabel};%
+\end{tikzpicture}\hspace{2cm}\color{doc!90}\large\sc\bfseries}%
+{}
+{}
+{\;\titlerule\;\large\sc\bfseries P\'agina \thecontentspage
+\begin{tikzpicture}[remember picture, overlay]
+\draw[fill=doc!25,draw=doc!20] (2pt,0) rectangle (6,0.1pt);
+\end{tikzpicture}}%
+\titlecontents{section}[2.4pc]
+{\addvspace{1pt}}
+{\contentslabel[\thecontentslabel]{2.4pc}}
+{}
+{\hfill\small \thecontentspage}
+[]
+\titlecontents{subsection}[4.4pc]
+{\addvspace{1pt}}
+{\contentslabel[\thecontentslabel]{2.4pc}}
+{}
+{\hfill \small\thecontentspage}
+[]
+
+\makeatletter
+\renewcommand{\tableofcontents}{%
+\chapter*{%
+\vspace*{-20\p@}%
+\begin{tikzpicture}[remember picture, overlay]%
+\pgftext[right,x=2cm,y=0.2cm]{\color{doc!30}\Huge\sc\bfseries \contentsname};%
+\draw[fill=doc!30,draw=doc!30] (-0.45,-.75) rectangle (2,1);%
+\clip (-0.45,-.75) rectangle (2,1);
+\pgftext[right,x=2cm,y=0.2cm]{\color{white}\Huge\sc\bfseries \contentsname};%
+\end{tikzpicture}}%
+\@starttoc{toc}}
+% % % % % % % % % % %$$$$$$$$$$$$$$$$$$$ % % % % % % % % % %
+\newcommand{\bibcmd}{\begin{tikzpicture}[remember picture, overlay]%
+\pgftext[right,x=2cm,y=0.2cm]{\color{doc!30}\Huge\sc\bfseries \contentsname};%
+\draw[fill=doc!30,draw=doc!30] (-0.45,-.75) rectangle (2,1);%
+\clip (-0.45,-.75) rectangle (2,1);
+\pgftext[right,x=2cm,y=0.2cm]{\color{white}\Huge\sc\bfseries \contentsname};%
+\end{tikzpicture}}
+\renewenvironment{thebibliography}[1]
+     {\chapter*{\bibcmd}%
+     \color{doc!60}\bfseries
+      \@mkboth{\MakeUppercase\bibname}{\MakeUppercase\bibname}%
+      \list{\color{doc!90}\bfseries\@biblabel{\@arabic\c@enumiv}}%
+           {\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+% % % % % % % % % %$$$$$$$$$$$$$$$$$ % % % % % % % % % % % %
+%\newcommand{\indexcmd}{\begin{tikzpicture}[remember picture, overlay]%
+%\pgftext[right,x=2cm,y=0.2cm]{\color{doc!30}\Huge\sc\bfseries \bibname};%
+%\draw[fill=doc!30,draw=doc!30] (-0.45,-.75) rectangle (2,1);%
+%\clip (-0.45,-.75) rectangle (2,1);
+%\pgftext[right,x=2cm,y=0.2cm]{\color{white}\Huge\sc\bfseries \bibname};
+%\end{tikzpicture}}
+%\renewenvironment{theindex}
+%               {\if@twocolumn
+%                  \@restonecolfalse
+%                \else
+%                  \@restonecoltrue
+%                \fi
+%                \twocolumn[\@makeschapterhead{\indexcmd}]%
+%                \@mkboth{\MakeUppercase\indexname}%
+%                        {\MakeUppercase\indexname}%
+%                \thispagestyle{plain}\parindent\z@
+%                \parskip\z@ \@plus .3\p@\relax
+%                \columnseprule \z@
+%                \columnsep 35\p@
+%                \let\item\@idxitem}
+             % % % % % % % % % % % % %$$$$$$$$$ % % % % % % % % % % % % % % % %
+%
+\makeatother
+
+% % %$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ % % % % % % % %
+\titleformat{\chapter}[display]
+{\bfseries\Large}
+{\hfill \tikz[remember picture] \node[] (nr)
+{\fontsize{120}{70}\selectfont\color{doc!80}\textbf{\thechapter}~};
+\begin{tikzpicture}[overlay,remember picture]
+\coordinate (leftborder) at ($(nr)-(100,0)$);
+\coordinate (leftborderhigh) at ($(nr.north west)-(100,0)$);
+\coordinate (leftborderlow) at ($(nr.south west)-(100,0)$);
+\coordinate (left) at ($(nr.west)-(1.5,0)$);
+\fill[doc!60] (leftborderhigh) -- ($(nr.north west)+(0,0.5)$) -- (left) --
+(leftborder) -- cycle;
+\fill[doc!30] (leftborderlow) -- ($(nr.south west)-(0,0.5)$) -- (left) --
+(leftborder) -- cycle;
+\draw[doc!30,line width=0.1em,line join=round] (left) -- ($(nr.south
+west)-(0,0.5)$) -- ($(nr.south east)-(0,0.5)$) -- ($(nr.north east)+(0,0.5)$) --
+($(nr.north west)+(0,0.5)$) -- (left) -- (leftborder);
+\end{tikzpicture}}
+{-2ex}
+{\filleft\fontsize{50}{70}\selectfont\scshape\color{doc!80}}
+[\vspace*{4pc}
+]
+\newcommand{\blackline}{{\setlength{\parindent}{0mm}\color{doc!90}\rule{
+\linewidth}{0.3mm}}}
+\newcommand{\blueline}{{\setlength{\parindent}{0mm}\color{doc!70}\rule{
+\linewidth}{1mm}}}
+\newcommand{\greenline}{{\setlength{\parindent}{0mm}\color{green}\rule{
+\linewidth}{1mm}}} %
+
+
+%%%%%%%%%%%%%%%%%%%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$%%%%%%%%%%%%%%%%%%
+\newcommand{\tikzit}[1]{
+\begin{tikzpicture}
+\node[](title){\color{doc!90}\Large\bfseries\thesection\ #1};
+\draw[doc!40,line width=0.15em] (title.north west) -- (title.north east) --
+($(title.south east) + (1,0.15)$) -- ($(title.south east) + (150,0.15)$);
+\end{tikzpicture}
+}
+\titleformat{\section}{}{}{0pt}{\tikzit}
+\titleformat{\subsection}{}{}{0pt}{\centering\sc\normalsize\color{doc!80}
+\thesubsection\,}[\blueline]
+\titleformat{\subsubsection}{}{}{0pt}{\centering\sc\normalsize\color{doc!70}
+\thesubsubsection\,}
+\setlength{\textheight}{19 cm} \setlength{\textwidth}{12cm}
+\headheight-0.5cm \headsep+2cm \oddsidemargin+2.5 cm
+\evensidemargin+1.5cm \topmargin-0.5 cm
+\cfoot{\rmfamily \small\color{doc} \thepage} \rhead{\small\color{doc}
+Probabilidad y
+Estad{\'\i}stica } \lhead{\small \color{doc} Antalcides Olivo B.} \rfoot{}
+\makeindex
+%\usepackage{minitoc}
+\begin{document}
+\frontmatter
+\title{ESTAD\'{I}STICA PARA INGENIEROS\\Notas De Clase}
+\author{UNIVERSIDAD DEL NORTE
+\and \'{A}REA DE CIENCIAS B\'{A}SICAS \and MATEM\'{A}TICAS Y
+F\'{I}SICA  \and LIC. ANTALCIDES OLIVO}\maketitle
+%\dominitoc% Initialization
+\pagestyle{plain}
+\tableofcontents
+\mainmatter
+%\minitoc
+\pagestyle{fancy}
+% \input{cap1m2.tex}
+% \input{CAP2m2}
+% \input{CAP3m2.tex}
+\setcounter{chapter}{4}
+\input{CAP4m2.tex}
+\input{CAP5m2.tex}
+
+\begin{thebibliography}{9}
+                                         %
+\addcontentsline{toc}{chapter}{Bibliograf{\'\i}a}%
+
+\bibitem{}Walpole Ronald. \emph{Probabilidad y estad\'{\i}stica}\newline Mac
+Graw-Hill. 1995
+
+\bibitem {}Douglas Montgomery. \emph{Probabilidad y estad\'{\i}stica}
+
+Mac Graw-Hill. 1997
+
+\bibitem {}Williams Mendenhall. \emph{Estad\'{\i}stica matem\'{a}tica con
+aplicaciones}\newline Grupo editorial iberoamericano. 1990
+
+\bibitem {}Paul Meyer. \emph{Probabilidad y aplicaciones estad\'{\i}sticas}%
+\newline Addison Wesley, 1992
+
+\bibitem {}Murray R. Spiegel. \emph{Estad\'{\i}stica} Mac Graw-Hill.1991
+
+\bibitem {}Hines William. \emph{Probabilidad y estad\'{\i}stica}\newline
+CECSA. 1993
+\end{thebibliography}
+\backmatter
+\printindex
+\end{document}

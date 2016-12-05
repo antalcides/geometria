@@ -1,0 +1,611 @@
+\chapter[
+     image=cap3a,%genetics-dogs,
+     image caption={The global option open right, triggers the typesetting of chapter on odd pages only. There are a  couple of layouts that must be typeset on an even pages.}]%
+         %{1}
+{Congruencia y semejanza}
+{\begin{itemize}
+\item En este cap\'itulo seguiremos con la construci\'on axiomática de la geometr\'ia y paralelamente presentaremos construcciones con regla y c\'ompas, que luego al
+final de este cap\'itulo empezaremos a demostrar.
+\item Del párrafo anterior se nos presenta una duda, ¿Qué es demostrar? 
+\item Podemos considerar la demostración de una proposición $q$ como una cadena finita
+de conclusiones que se realizan mediante reglas lógicas y que se forman a partir
+de proposiciones verdaderas o supuestamente verdaderas y las cuales nos conducen
+a una proposición $p$.
+\item La proposición o relación resultante de otras mediante el proceso de la
+demostración se llama \texttt{teorema} y este proceso podemos dividirlo
+tres partes (figura\ref{demos} ):
+\end{itemize}
+\begin{lista}
+\item  Conocer la proposición que se trata de demostrar. En esta parte es
+importante diferenciar muy claramente la información que nos dan (la
+hipótesis) de lo que nos solicitan que demostremos (la tesis).
+\item Los fundamentos empleados como base de la demostración. Estos fundamentos
+   están constituidos por los términos primitivos, las definiciones, los
+postulados y las proposiciones o teoremas ya demostrados.
+\item  El procedimiento usado para lograr que la proposición quede demostrada
+(elegir el método adecuado).
+\end{lista}}
+\seccion{Congruencia de triágulos}
+\subsection{Correspondencia entre triángulos}
+\begin{figura}{
+\definecolor{zzttqq}{rgb}{0.27,0.27,0.27}
+\definecolor{qqqqff}{rgb}{0.33,0.33,0.33}
+\begin{tikzpicture}[scale=0.4,font=\fontsize{7}{6}\selectfont,line
+cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+\clip(-4.13,-7.89) rectangle (16.39,4.53);
+\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (-3.07,-3.91) -- (-0.41,0.79)
+-- (3.41,-4.18) -- cycle;
+\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (6.97,-3.94) -- (10.58,0.76) --
+(13.9,-4.57) -- cycle;
+\draw [color=zzttqq] (-3.07,-3.91)-- (-0.41,0.79);
+\draw [color=zzttqq] (-0.41,0.79)-- (3.41,-4.18);
+\draw [color=zzttqq] (3.41,-4.18)-- (-3.07,-3.91);
+\draw [color=zzttqq] (6.97,-3.94)-- (10.58,0.76);
+\draw [color=zzttqq] (10.58,0.76)-- (13.9,-4.57);
+\draw [color=zzttqq] (13.9,-4.57)-- (6.97,-3.94);
+\draw[color=qqqqff,->] (4.73,2.82) -- (4.82,2.82) -- (4.91,2.81)
+-- (5,2.8) -- (5.09,2.79) -- (5.18,2.77) -- (5.27,2.76) -- (5.37,2.75) --
+(5.46,2.73) -- (5.55,2.72) -- (5.65,2.7) -- (5.74,2.68) -- (5.84,2.66) --
+(5.93,2.64) -- (6.03,2.62) -- (6.12,2.6) -- (6.22,2.57) -- (6.32,2.55) --
+(6.42,2.53) -- (6.51,2.5) -- (6.61,2.47) -- (6.71,2.44) -- (6.81,2.41) --
+(6.91,2.38) -- (7.01,2.35) -- (7.11,2.32) -- (7.21,2.29) -- (7.32,2.25) --
+(7.42,2.22) -- (7.52,2.18) -- (7.63,2.14) -- (7.73,2.1) -- (7.83,2.07) --
+(7.94,2.02) -- (8.04,1.98) -- (8.15,1.94) -- (8.26,1.9) -- (8.36,1.85) --
+(8.47,1.81) -- (8.58,1.76) -- (8.69,1.71) -- (8.79,1.66) -- (8.9,1.61) --
+(9.01,1.56) -- (9.12,1.51) -- (9.23,1.46) -- (9.35,1.41) -- (9.46,1.35) --
+(9.57,1.3) -- (9.68,1.24) -- (9.79,1.18) -- (9.91,1.12) -- (10.02,1.06) --
+(10.14,1) -- (10.25,0.94) -- (10.37,0.88) -- (10.48,0.81) -- (10.54,0.78) --
+(10.57,0.77) -- (10.58,0.76) -- (10.58,0.76) -- (10.58,0.76) -- (10.58,0.76) --
+(10.58,0.76) -- (10.58,0.76) -- (10.58,0.76) -- (10.58,0.76) --
+(10.58,0.76)(-0.41,0.79) -- (-0.41,0.79) -- (-0.41,0.79) -- (-0.41,0.79) --
+(-0.41,0.79) -- (-0.41,0.79) -- (-0.41,0.79) -- (-0.41,0.79) -- (-0.41,0.79) --
+(-0.41,0.79) -- (-0.41,0.79) -- (-0.41,0.79) -- (-0.41,0.79) -- (-0.41,0.79) --
+(-0.41,0.79) -- (-0.41,0.79) -- (-0.41,0.79) -- (-0.4,0.8) -- (-0.39,0.81) --
+(-0.37,0.83) -- (-0.34,0.87) -- (-0.28,0.94) -- (-0.22,1) -- (-0.17,1.06) --
+(-0.11,1.12) -- (-0.05,1.18) -- (0.01,1.24) -- (0.07,1.29) -- (0.12,1.35) --
+(0.18,1.4) -- (0.24,1.46) -- (0.31,1.51) -- (0.37,1.56) -- (0.43,1.61) --
+(0.49,1.66) -- (0.55,1.71) -- (0.62,1.76) -- (0.68,1.8) -- (0.75,1.85) --
+(0.81,1.89) -- (0.87,1.94) -- (0.94,1.98) -- (1.01,2.02) -- (1.07,2.06) --
+(1.14,2.1) -- (1.21,2.14) -- (1.28,2.18) -- (1.34,2.21) -- (1.41,2.25) --
+(1.48,2.28) -- (1.55,2.32) -- (1.62,2.35) -- (1.69,2.38) -- (1.77,2.41) --
+(1.84,2.44) -- (1.91,2.47) -- (1.98,2.5) -- (2.06,2.52) -- (2.13,2.55) --
+(2.2,2.57) -- (2.28,2.6) -- (2.35,2.62) -- (2.43,2.64) -- (2.51,2.66) --
+(2.58,2.68) -- (2.66,2.7) -- (2.74,2.71) -- (2.82,2.73) -- (2.89,2.75) --
+(2.97,2.76) -- (3.05,2.77) -- (3.13,2.79) -- (3.21,2.8) -- (3.29,2.81) --
+(3.38,2.82) -- (3.46,2.82) -- (3.54,2.83) -- (3.62,2.84) -- (3.71,2.84) --
+(3.79,2.85) -- (3.87,2.85) -- (3.96,2.85) -- (4.04,2.85) -- (4.13,2.85) --
+(4.22,2.85) -- (4.3,2.85) -- (4.39,2.85) -- (4.48,2.84) -- (4.57,2.84) --
+(4.66,2.83) -- (4.73,2.82);
+\draw[color=qqqqff,->] (5.4,-3.01) -- (5.43,-3.02) --
+(5.46,-3.02) -- (5.49,-3.02) -- (5.51,-3.03) -- (5.54,-3.03) -- (5.57,-3.03) --
+(5.6,-3.04) -- (5.62,-3.04) -- (5.65,-3.05) -- (5.68,-3.06) -- (5.71,-3.06) --
+(5.73,-3.07) -- (5.76,-3.08) -- (5.79,-3.09) -- (5.82,-3.1) -- (5.85,-3.11) --
+(5.87,-3.12) -- (5.9,-3.13) -- (5.93,-3.14) -- (5.96,-3.15) -- (5.98,-3.16) --
+(6.01,-3.18) -- (6.04,-3.19) -- (6.07,-3.2) -- (6.09,-3.22) -- (6.12,-3.23) --
+(6.15,-3.25) -- (6.18,-3.26) -- (6.2,-3.28) -- (6.23,-3.3) -- (6.26,-3.31) --
+(6.29,-3.33) -- (6.31,-3.35) -- (6.34,-3.37) -- (6.37,-3.39) -- (6.4,-3.41) --
+(6.42,-3.43) -- (6.45,-3.45) -- (6.48,-3.47) -- (6.51,-3.49) -- (6.53,-3.52) --
+(6.56,-3.54) -- (6.59,-3.56) -- (6.62,-3.59) -- (6.64,-3.61) -- (6.67,-3.63) --
+(6.7,-3.66) -- (6.73,-3.69) -- (6.75,-3.71) -- (6.78,-3.74) -- (6.81,-3.77) --
+(6.84,-3.8) -- (6.86,-3.82) -- (6.89,-3.85) -- (6.92,-3.88) -- (6.95,-3.91) --
+(6.96,-3.93) -- (6.97,-3.94) -- (6.97,-3.94) -- (6.97,-3.94) -- (6.97,-3.94) --
+(6.97,-3.94) -- (6.97,-3.94) -- (6.97,-3.94) -- (6.97,-3.94) -- (6.97,-3.94) --
+(6.97,-3.94)(3.41,-4.18) -- (3.41,-4.18) -- (3.41,-4.18) -- (3.41,-4.18) --
+(3.41,-4.18) -- (3.41,-4.18) -- (3.41,-4.18) -- (3.41,-4.18) -- (3.41,-4.18) --
+(3.41,-4.18) -- (3.41,-4.18) -- (3.41,-4.18) -- (3.41,-4.18) -- (3.41,-4.18) --
+(3.41,-4.18) -- (3.41,-4.17) -- (3.41,-4.17) -- (3.42,-4.17) -- (3.42,-4.16) --
+(3.43,-4.15) -- (3.45,-4.13) -- (3.48,-4.1) -- (3.51,-4.06) -- (3.53,-4.03) --
+(3.56,-4) -- (3.59,-3.97) -- (3.62,-3.94) -- (3.65,-3.91) -- (3.67,-3.88) --
+(3.7,-3.85) -- (3.73,-3.82) -- (3.76,-3.79) -- (3.79,-3.76) -- (3.81,-3.73) --
+(3.84,-3.71) -- (3.87,-3.68) -- (3.9,-3.66) -- (3.93,-3.63) -- (3.96,-3.61) --
+(3.98,-3.58) -- (4.01,-3.56) -- (4.04,-3.53) -- (4.07,-3.51) -- (4.1,-3.49) --
+(4.12,-3.47) -- (4.15,-3.45) -- (4.18,-3.42) -- (4.21,-3.4) -- (4.24,-3.38) --
+(4.26,-3.37) -- (4.29,-3.35) -- (4.32,-3.33) -- (4.35,-3.31) -- (4.38,-3.29) --
+(4.4,-3.28) -- (4.43,-3.26) -- (4.46,-3.25) -- (4.49,-3.23) -- (4.52,-3.22) --
+(4.54,-3.2) -- (4.57,-3.19) -- (4.6,-3.17) -- (4.63,-3.16) -- (4.66,-3.15) --
+(4.68,-3.14) -- (4.71,-3.13) -- (4.74,-3.12) -- (4.77,-3.11) -- (4.79,-3.1) --
+(4.82,-3.09) -- (4.85,-3.08) -- (4.88,-3.07) -- (4.91,-3.06) -- (4.93,-3.06) --
+(4.96,-3.05) -- (4.99,-3.04) -- (5.02,-3.04) -- (5.05,-3.03) -- (5.07,-3.03) --
+(5.1,-3.02) -- (5.13,-3.02) -- (5.16,-3.02) -- (5.18,-3.02) -- (5.21,-3.01) --
+(5.24,-3.01) -- (5.27,-3.01) -- (5.3,-3.01) -- (5.32,-3.01) -- (5.35,-3.01) --
+(5.38,-3.01) -- (5.4,-3.01);
+\draw[<-,color=qqqqff,->] (7.32,-5.85) -- (7.45,-5.84) --
+(7.57,-5.84) -- (7.7,-5.84) -- (7.83,-5.84) -- (7.96,-5.83) -- (8.08,-5.83) --
+(8.21,-5.82) -- (8.34,-5.82) -- (8.46,-5.81) -- (8.59,-5.8) -- (8.71,-5.79) --
+(8.83,-5.79) -- (8.96,-5.78) -- (9.08,-5.76) -- (9.2,-5.75) -- (9.32,-5.74) --
+(9.44,-5.73) -- (9.57,-5.71) -- (9.69,-5.7) -- (9.81,-5.68) -- (9.93,-5.67) --
+(10.04,-5.65) -- (10.16,-5.63) -- (10.28,-5.61) -- (10.4,-5.59) -- (10.52,-5.57)
+-- (10.63,-5.55) -- (10.75,-5.53) -- (10.86,-5.51) -- (10.98,-5.49) --
+(11.09,-5.46) -- (11.21,-5.44) -- (11.32,-5.41) -- (11.44,-5.39) --
+(11.55,-5.36) -- (11.66,-5.33) -- (11.77,-5.3) -- (11.89,-5.27) -- (12,-5.24) --
+(12.11,-5.21) -- (12.22,-5.18) -- (12.33,-5.15) -- (12.44,-5.11) --
+(12.54,-5.08) -- (12.65,-5.04) -- (12.76,-5.01) -- (12.87,-4.97) --
+(12.97,-4.94) -- (13.08,-4.9) -- (13.19,-4.86) -- (13.29,-4.82) -- (13.4,-4.78)
+-- (13.5,-4.74) -- (13.61,-4.7) -- (13.71,-4.65) -- (13.81,-4.61) --
+(13.86,-4.59) -- (13.89,-4.58) -- (13.9,-4.57) -- (13.9,-4.57) -- (13.9,-4.57)
+-- (13.9,-4.57) -- (13.9,-4.57) -- (13.9,-4.57) -- (13.9,-4.57) -- (13.9,-4.57)
+-- (13.9,-4.57)(-3.07,-3.91) -- (-3.07,-3.91) -- (-3.07,-3.91) -- (-3.07,-3.91)
+-- (-3.07,-3.91) -- (-3.07,-3.91) -- (-3.07,-3.91) -- (-3.07,-3.91) --
+(-3.07,-3.91) -- (-3.07,-3.91) -- (-3.07,-3.91) -- (-3.07,-3.91) --
+(-3.07,-3.91) -- (-3.06,-3.91) -- (-3.06,-3.91) -- (-3.06,-3.91) --
+(-3.05,-3.92) -- (-3.04,-3.92) -- (-3.01,-3.93) -- (-2.96,-3.95) --
+(-2.85,-3.98) -- (-2.77,-4.01) -- (-2.69,-4.04) -- (-2.61,-4.06) --
+(-2.53,-4.09) -- (-2.44,-4.12) -- (-2.36,-4.14) -- (-2.28,-4.17) -- (-2.2,-4.19)
+-- (-2.12,-4.22) -- (-2.04,-4.24) -- (-1.96,-4.27) -- (-1.89,-4.29) --
+(-1.81,-4.32) -- (-1.73,-4.34) -- (-1.65,-4.36) -- (-1.57,-4.39) --
+(-1.49,-4.41) -- (-1.41,-4.44) -- (-1.33,-4.46) -- (-1.25,-4.48) -- (-1.17,-4.5)
+-- (-1.1,-4.53) -- (-1.02,-4.55) -- (-0.94,-4.57) -- (-0.86,-4.59) --
+(-0.78,-4.62) -- (-0.7,-4.64) -- (-0.63,-4.66) -- (-0.55,-4.68) -- (-0.47,-4.7)
+-- (-0.39,-4.72) -- (-0.32,-4.74) -- (-0.24,-4.76) -- (-0.16,-4.78) --
+(-0.09,-4.8) -- (-0.01,-4.82) -- (0.07,-4.84) -- (0.14,-4.86) -- (0.22,-4.88) --
+(0.3,-4.9) -- (0.37,-4.92) -- (0.45,-4.94) -- (0.53,-4.96) -- (0.6,-4.98) --
+(0.68,-5) -- (0.75,-5.01) -- (0.83,-5.03) -- (0.9,-5.05) -- (0.98,-5.07) --
+(1.05,-5.08) -- (1.13,-5.1) -- (1.2,-5.12) -- (1.28,-5.13) -- (1.35,-5.15) --
+(1.43,-5.17) -- (1.5,-5.18) -- (1.58,-5.2) -- (1.65,-5.22) -- (1.73,-5.23) --
+(1.8,-5.25) -- (1.87,-5.26) -- (1.95,-5.28) -- (2.02,-5.29) -- (2.09,-5.31) --
+(2.17,-5.32) -- (2.24,-5.33) -- (2.31,-5.35) -- (2.39,-5.36) -- (2.46,-5.38) --
+(2.53,-5.39) -- (2.61,-5.4) -- (2.68,-5.42) -- (2.75,-5.43) -- (2.82,-5.44) --
+(2.89,-5.45) -- (2.97,-5.47) -- (3.04,-5.48) -- (3.11,-5.49) -- (3.18,-5.5) --
+(3.25,-5.51) -- (3.33,-5.52) -- (3.4,-5.53) -- (3.47,-5.55) -- (3.54,-5.56) --
+(3.61,-5.57) -- (3.68,-5.58) -- (3.75,-5.59) -- (3.82,-5.6) -- (3.89,-5.61) --
+(3.96,-5.62) -- (4.03,-5.63) -- (4.1,-5.63) -- (4.17,-5.64) -- (4.24,-5.65) --
+(4.31,-5.66) -- (4.38,-5.67) -- (4.45,-5.68) -- (4.52,-5.69) -- (4.59,-5.69) --
+(4.66,-5.7) -- (4.73,-5.71) -- (4.8,-5.72) -- (4.87,-5.72) -- (4.94,-5.73) --
+(5.01,-5.74) -- (5.08,-5.74) -- (5.14,-5.75) -- (5.21,-5.75) -- (5.28,-5.76) --
+(5.35,-5.77) -- (5.42,-5.77) -- (5.48,-5.78) -- (5.55,-5.78) -- (5.62,-5.79) --
+(5.69,-5.79) -- (5.75,-5.8) -- (5.82,-5.8) -- (5.89,-5.8) -- (5.96,-5.81) --
+(6.02,-5.81) -- (6.09,-5.82) -- (6.16,-5.82) -- (6.22,-5.82) -- (6.29,-5.82) --
+(6.42,-5.83) -- (6.55,-5.83) -- (6.69,-5.84) -- (6.82,-5.84) -- (6.95,-5.84) --
+(7.08,-5.85) -- (7.21,-5.85) -- (7.32,-5.85);
+\fill [color=qqqqff] (-3.07,-3.91) circle (1.5pt);
+\draw[color=qqqqff] (-3.36,-3.91) node {$A$};
+\fill [color=qqqqff] (-0.41,0.79) circle (1.5pt);
+\draw[color=qqqqff] (-0.44,1.21) node {$B$};
+\fill [color=qqqqff] (3.41,-4.18) circle (1.5pt);
+\draw[color=qqqqff] (3.81,-4.26) node {$C$};
+\fill [color=qqqqff] (6.97,-3.94) circle (1.5pt);
+\draw[color=qqqqff] (6.49,-3.96) node {$D$};
+\fill [color=qqqqff] (10.58,0.76) circle (1.5pt);
+\draw[color=qqqqff] (10.79,1.11) node {$E$};
+\fill [color=qqqqff] (13.9,-4.57) circle (1.5pt);
+\draw[color=qqqqff] (14.08,-4.23) node {$F$};
+\end{tikzpicture}}{Correspondencia entre tri\'angulos}{corres}
+\end{figura}
+Dados dos tri\'angulos como se muestra en la figura(\ref{corres}) siempre
+podemos establecer una correspondencia entre los v\'ertices, como por ejemplo:\\
+Podemos establecer $A\longleftrightarrow F , C \longleftrightarrow D$ y
+$B\longleftrightarrow E$.
+\begin{definicion}{La correspondencia establecida entre los v\'ertices
+de de dos tri\'angulos determina tres parejas de elementos del tri\'angulo
+llamados partes correspondientes. }{Partes correspondientes}
+ La correspondencia establecida en la figura \ref{corres} determina las
+siguientes partes correspondientes.\\
+$\angle A \longleftrightarrow \angle F, \angle B \longleftrightarrow \angle E,
+\angle C \longleftrightarrow \angle D, \overline{AB}\longleftrightarrow
+\overline{FE}, \overline{BC}\longleftrightarrow
+\overline{ED}$ y $\overline{AC}\longleftrightarrow
+\overline{DF}.$
+\end{definicion}
+\begin{definicion}{Dos tri\'angulos son congruentes si y s\'olo si existe una
+correspondencia entre los tr\'angulos de tal forma que sus partes
+correspodientes, sean congruentes.
+}{Tri\'angulos congruentes}
+
+\end{definicion}
+\subsection{Postulados de congruencia}
+\begin{postulado}{Si dos lados y el \'angulo comprendido de un tri\'angulo
+son respectivamente congruentes con dos lados y un \'angulo comprendido de
+otro tri\'angulo, entonces los dos tri\'angulos son congruentes.}{LAL}
+\end{postulado}
+\subsection{Postulados de congruencia}
+\begin{postulado}{Si dos \'angulos y el lado del tri\'angulo que es com\'un,
+son respectivamente congruentes con dos \'angulos y el lado comprendido de
+otro tri\'angulo, entonces los tri\'angulos son congruentes.}{ALA}
+\end{postulado}
+\subsection{Postulados de congruencia}
+\begin{postulado}{Si Los tres lados de un tri\'angulo son respectivamente
+congruentes con tres lados de otro tri\'angulos, los tri\'angulos son
+congruentes.}{LAL}
+\end{postulado}
+\begin{teorema}{
+En un tri\'angulo is\'oseles, la mediana al lado de la base forma dos
+tri\'angulos congruentes. punto medio 
+}{Tri\'angulo is\'osseles}
+\end{teorema}
+
+\begin{teorema}{
+Si en un tri\'angulo , dos \'angulos y un lado opuesto a uno de los \'angulos
+son congruentes con dos \'angulos y el lado correspondiente de un segundo
+tri\'angulo, entonces los tri\'angulos son congruentes.
+}{LAA}
+\end{teorema}
+
+\begin{teorema}{
+Si la hip\'otenusa y un \'angulo agudo de un tri\'angulo rect\'angulo son
+congruentes con la hipotenusa y un \'angulo agudo de otro tri\'angulo
+recta\'angulo, entonces los tri\'angulos son congruentes,
+}{Hipotenusa y \'angulo}
+\end{teorema}
+
+\begin{teorema}{si la hipotenusa y un cateto de un tri\'angulo rect\'angulo son
+congruentes con la hipotenusa y un cateto de otro tri\'angulo, entonces los
+tri\'angulos son congruentes.
+}{hipotenusa y el cateto}
+\end{teorema}
+\begin{teorema}{
+Si un punto equidista de los extremos de segmento, entonces pertenece a la
+mediatriz del segmento.
+}{Mediatriz}
+ \end{teorema}
+\begin{teorema}{
+El circuncentro equidista de los v\'ertices del tri\'angulo.
+}{circuncentro}
+\end{teorema}
+\begin{teorema}{
+El incentro de un tri\'angulo equidista de los lados del tri\'angulo
+}{Incentro}
+\end{teorema}
+\begin{teorema}{
+El centroide de un tri\'angulo se encuentra a dos tercios de la longitud de
+cada mediana. 
+}{Centroide}
+ 
+\end{teorema}
+\begin{teorema}{
+Si las medidas de dos \'angulos de un tri\'angulo son diferentes, entonces la
+longitud del lado opuesto al \'angulo mayor, es mayor que la longitud del
+lado opuesto al \'angulo menor.
+}{desigualdad triangular}
+\end{teorema}
+\begin{conjetura}{Un tri\'angulo es
+is\'osceles si y s\'olo si los
+\'angulos de la base son congruentes.}{Tri\'angulo is\'osceles}
+ \end{conjetura}
+\seccion{Proporciones}
+\begin{definicion}{ Si $a,b,c,d \in I\! \! R $
+ tal que se cumple $\dfrac{a}{b}=\dfrac{c}{d}, $ cuando $c,d\neq 0$, entonces
+se dice que $a,b,c$ y $d$ son proporcionales.
+}{Proporciones}
+ \end{definicion}
+    \subsection{Propiedades de las proporciones}
+\begin{lista}
+\item Si $\dfrac{a}{b}=\dfrac{c}{d}, $ entonces $ad=bc.$
+\item Si $\dfrac{a}{b}=\dfrac{c}{d}, $ entonces $\dfrac{a+b}{b}=\dfrac{c+d}{d}.$
+\item Si $\dfrac{a}{b}=\dfrac{c}{d}, $ entonces $\dfrac{a-b}{b}=\dfrac{c-d}{d}.
+$
+\item Si $\dfrac{a}{b}=\dfrac{c}{d}, $ entonces $\dfrac{a}{c}=\dfrac{b}{d}. $
+\item Si $ad=bc, $ entonces $\dfrac{a}{b}=\dfrac{c}{d}. $
+\seccion{Teorema fundamental de la proporcionalidad}
+\end{lista}
+\begin{definicion}{
+Cuatro segmentos son proporcionales si y s\'olo si sus longitudes son
+proporcionales
+}{Segmentos proporcionales}
+ 
+\end{definicion}
+
+\begin{teorema}{ Si una recta paralela a un lado de un tri\'angulo interseca a
+los otros dos lados, entonces divide a \'estos dos en segmentos proporcionales
+}{Teorema fundamental}
+\begin{figura}{
+\definecolor{ccqqtt}{rgb}{0.8,0,0.2}
+\definecolor{ttttff}{rgb}{0.2,0.2,1}
+\definecolor{uququq}{rgb}{0.25,0.25,0.25}
+\definecolor{xdxdff}{rgb}{0.49,0.49,1}
+\definecolor{qqqqff}{rgb}{0,0,1}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle
+45,x=1.0cm,y=1.0cm]
+\clip(-1.2,-4.82) rectangle (8.26,3.98);
+\draw (0.24,-2.68)-- (4.3,3.22);
+\draw (4.3,3.22)-- (7.3,-3.24);
+\draw (7.3,-3.24)-- (0.24,-2.68);
+\draw [domain=-1.2:8.26] plot(\x,{(-3.84--0.56*\x)/-7.06});
+\draw [color=ttttff] (4.3,3.22)-- (2.33,0.36);
+\draw [color=ccqqtt] (2.33,0.36)-- (0.24,-2.68);
+\draw [color=ttttff] (4.3,3.22)-- (5.75,0.09);
+\draw [color=ccqqtt] (5.75,0.09)-- (7.3,-3.24);
+\draw (0.06,0.54) node[anchor=north west] {$l$};
+\fill [color=qqqqff] (4.3,3.22) circle (1.5pt);
+\draw[color=qqqqff] (4.4,3.64) node {$A$};
+\fill [color=qqqqff] (0.24,-2.68) circle (1.5pt);
+\draw[color=qqqqff] (-0.16,-2.98) node {$B$};
+\fill [color=qqqqff] (7.3,-3.24) circle (1.5pt);
+\draw[color=qqqqff] (7.52,-3.42) node {$C$};
+\fill [color=xdxdff] (2.33,0.36) circle (1.5pt);
+\draw[color=xdxdff] (1.84,0.14) node {$D$};
+\fill [color=uququq] (5.75,0.09) circle (1.5pt);
+\draw[color=uququq] (5.98,0.56) node {$E$};
+\draw[color=ttttff] (3.12,2.12) node {$e$};
+\draw[color=ccqqtt] (1.06,-0.82) node {$f$};
+\draw[color=ttttff] (5.18,2.04) node {$g$};
+\draw[color=ccqqtt] (6.78,-1.52) node {$h$};
+\end{tikzpicture}
+}{Proporci\'on}{propr}
+ 
+\end{figura}
+\end{teorema}
+\begin{teorema}{Si una recta interseca a dos lados de un tri\'angulo y los
+divide proporcionalmente, entonces la recta es paralela al tercer lado.
+}{Rec\'iproco del teorema fundamental}
+\end{teorema}
+\seccion{Pol\'igonos semejantes}
+\begin{definicion}{Dos pol\'igonos son semejantes si hay una correspondencia
+entre los v\'ertices tal que los \'angulos correspondientes sean congruentes y
+los lados correspondientes sean proporcionales
+}{Pol\'igonos semejantes}
+\end{definicion}
+\subsection{Tri\'angulos semejantes}
+\begin{postulado}{
+Dos tri\'angulos son semejantes si existe una correspondencia entre ellos
+tal que Dos parejas de a\'ngulos correspondientes son congruentes.}{A.A}
+\end{postulado}
+\begin{teorema}{Dos tri\'angulos son semejantes si y s\'olo si al establecer
+una correspondencia entre ellos los \'angulos correspondientes son
+congruentes.}{A.A.A}
+ \end{teorema}
+\begin{teorema}{Dos tri\'angulos son semejantes si y s\'olo si al establecer
+una correspondencia entre los dos tri\'angulos sus lados correspondientes son
+proporcionales }{L.L.L}
+\end{teorema}
+\begin{teorema}{Si un \'angulo de un tri\'angulo es congruente con un \'angulo
+de otro tri\'angulo, y si los lados correspondientes que forman los \'angulos,
+son proporcionales, entonces los tri\'angulos son semejantes.
+}{L.A.L}
+\end{teorema}
+\subsection{Semejanza en tri\'angulos rect\'angulos}
+\begin{definicion}{
+Se dice que $x \in I\! \! R $ es media geom\'etrica de $a,b \in I\! \! R$ si y
+s\'olo si se cumple $\dfrac{x}{a}=\dfrac{b}{x}, a,x \neq 0$
+}{Media geom\'etrica}
+\end{definicion}
+
+\begin{teorema}{En un tri\'angulo rect\'angulo, la longitud de la altura a la
+hipotenusa es la media geom\'etrica entre las longitudes de los dos segmentos
+de la hip\'otenusa.}{Media geom\'etrica}
+\end{teorema}
+\begin{teorema}{Dados un tri\'angulo rect\'angulo y la altura a la
+hipotenusa, cada cateto es la media geom\'etrica entre la longitud de la
+hip\'otenusa y la longitud del segmento de la hipotenusa adyacente al
+cateto}{Altura-hipotenusa}
+\end{teorema}
+
+
+
+\seccion{Paralelogramos}
+\begin{definicion}{Un cuadril\'atero es un pol\'igono de cuatro
+lados}{Cuadril\'atero}
+\end{definicion}
+\begin{definicion}{Un trapecio es un cuadril\'atero que tiene exactamente dos
+lados paralelos}{Trapecio}
+\begin{figura}{\definecolor{xdxdff}{rgb}{0.49,0.49,1}
+\definecolor{qqqqff}{rgb}{0,0,1}
+\begin{tikzpicture}[scale=0.8,font=\fontsize{9}{8}\selectfont,line
+cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm,line width=1.2pt]
+\clip(-1.07,-1.25) rectangle (5.06,2.06);
+\draw (-0.91,-0.76)-- (-0.21,1.43);
+\draw (-0.21,1.43)-- (3.48,1.39);
+\draw (3.48,1.39)-- (4.77,-0.81);
+\draw (4.77,-0.81)-- (-0.91,-0.76);
+\draw (1.46,1.50) node[anchor=north west] {3.69};
+\draw (1.7,-0.650) node[anchor=north west] {5.69};
+\fill [color=qqqqff] (-0.21,1.43) circle (1.5pt);
+\draw[color=qqqqff] (-0.40,1.55) node {$A$};
+\fill [color=qqqqff] (3.48,1.39) circle (1.5pt);
+\draw[color=qqqqff] (3.55,1.7) node {$B$};
+\fill [color=xdxdff] (-0.91,-0.76) circle (1.5pt);
+\draw[color=xdxdff] (-0.9,-1.1) node {$D$};
+\fill [color=xdxdff] (4.77,-0.81) circle (1.5pt);
+\draw[color=xdxdff] (4.85,-1.1) node {$E$};
+\end{tikzpicture}}{Trapecio}{tra2}
+\nota: Los lados paralelos de trapecio se llaman bases.
+\end{figura}
+\end{definicion}
+\begin{construccion}{Para construir un trapecio, se construye dos segmentos
+paralelos,  como se explic\'o en las construcci\'on de
+paraleleas y luego se construye el cuadril\'atero. }{Trapecio}
+\begin{figura}{
+\definecolor{qqwuqq}{rgb}{0,0.39,0}
+\definecolor{xdxdff}{rgb}{0.49,0.49,1}
+\definecolor{ffttww}{rgb}{1,0.2,0.4}
+\definecolor{ffzzqq}{rgb}{1,0.6,0}
+\definecolor{ttttff}{rgb}{0.2,0.2,1}
+\definecolor{uququq}{rgb}{0.25,0.25,0.25}
+\definecolor{cccccc}{rgb}{0.8,0.8,0.8}
+\definecolor{qqqqff}{rgb}{0,0,1}
+\begin{tikzpicture}[scale=0.8,font=\fontsize{7}{6}\selectfont,line
+cap=round,line
+join=round,>=triangle 45,x=1.0cm,y=1.0cm,line width=1.2pt]
+\clip(-3.55,-2.62) rectangle (6.25,6.56);
+\draw [shift={(1,2)},color=qqwuqq,fill=qqwuqq,fill opacity=0.1] (0,0) --
+(0.09:0.35) arc (0.09:63.43:0.35) -- cycle;
+\draw [shift={(0,0)},color=qqwuqq,fill=qqwuqq,fill opacity=0.1] (0,0) --
+(0:0.35) arc (0:63.43:0.35) -- cycle;
+\draw [line width=1.6pt] (1,2)-- (0,0);
+\draw (0,0)-- (4,0);
+\draw [line width=1.6pt,dash pattern=on 1pt off
+1pt,color=cccccc,fill=cccccc,fill opacity=0.25] (0,0) circle (2.24cm);
+\draw [line width=1.6pt,dash pattern=on 3pt off 3pt,color=ttttff] (1,2)--
+(2.24,0);
+\draw [line width=1.6pt,dash pattern=on 3pt off 3pt,color=ffzzqq] (0,0)--
+(2.24,0);
+\draw [line width=1.6pt,dash pattern=on 3pt off
+3pt,color=ffttww,fill=ffttww,fill opacity=0.05] (2.24,0) circle (2.35cm);
+\draw [line width=1.2pt,dash pattern=on 1pt off
+1pt,color=cccccc,fill=cccccc,fill opacity=0.15] (1,2) circle (2.24cm);
+\draw [line width=1.6pt,dash pattern=on 3pt off 3pt,color=ffzzqq] (0,0)-- (2,4);
+\draw [line width=1.6pt,dash pattern=on 1pt off
+1pt,color=ffttww,fill=ffttww,fill opacity=0.05] (2,4) circle (2.35cm);
+\draw [line width=1.6pt,dash pattern=on 3pt off 3pt,color=ttttff] (2,4)--
+(3.24,2);
+\draw [line width=1.6pt,dash pattern=on 3pt off 3pt,color=ffzzqq] (1,2)--
+(-0.34,3.79);
+\draw [line width=1.6pt,dash pattern=on 3pt off 3pt,color=ffzzqq] (1,2)-- (6,2);
+\draw [line width=1.6pt,dash pattern=on 3pt off 3pt] (-3,0)-- (6,0);
+\fill [color=qqqqff] (0,0) circle (1.5pt);
+\draw[color=qqqqff] (0.04,-0.13) node {$A$};
+\fill [color=qqqqff] (4,0) circle (1.5pt);
+\draw[color=qqqqff] (4.1,0.15) node {$B$};
+\fill [color=qqqqff] (1,2) circle (1.5pt);
+\draw[color=qqqqff] (0.98,1.73) node {$C$};
+\draw[color=cccccc] (-1.09,1.76) node {$c$};
+\fill [color=uququq] (2.24,0) circle (1.5pt);
+\draw[color=uququq] (2.33,-0.11) node {$D$};
+\draw[color=ttttff] (1.49,0.99) node {$e$};
+\draw[color=ffzzqq] (0.69,0.74) node {$f$};
+\fill [color=xdxdff] (2,4) circle (1.5pt);
+\draw[color=xdxdff] (1.95,4.23) node {$E$};
+\fill [color=uququq] (-0.34,3.79) circle (1.5pt);
+\fill [color=xdxdff] (3.24,2) circle (1.5pt);
+\draw[color=xdxdff] (3.3,1.81) node {$H$};
+\draw (3.3,1.81)-- (4.1,0.15);
+\end{tikzpicture}}{Trapecio}{Tparll}
+\end{figura}
+En la figura(\ref{Tparll}) se observa el trapecio $ABHC$.
+\end{construccion}
+
+\begin{definicion}{Un paralelogramos es un cuadril\'atero que tiene sus lados
+opuestos paralelos}{Paralelogramo}
+\begin{figura}{\definecolor{uququq}{rgb}{0.25,0.25,0.25}
+\definecolor{qqqqff}{rgb}{0,0,1}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle
+45,x=1.0cm,y=1.0cm]
+\clip(1.4,-3.26) rectangle (10.18,1.4);
+\draw (2.14,-2.04)-- (7.36,-2.04);
+\draw (3.78,0.12)-- (2.14,-2.04);
+\draw (3.78,0.12)-- (9,0.12);
+\draw (9,0.12)-- (7.36,-2.04);
+\fill [color=qqqqff] (2.14,-2.04) circle (1.5pt);
+\draw[color=qqqqff] (1.9,-2.08) node {$A$};
+\fill [color=qqqqff] (7.36,-2.04) circle (1.5pt);
+\draw[color=qqqqff] (7.28,-2.32) node {$B$};
+\fill [color=qqqqff] (3.78,0.12) circle (1.5pt);
+\draw[color=qqqqff] (3.94,0.38) node {$C$};
+\fill [color=uququq] (9,0.12) circle (1.5pt);
+\draw[color=uququq] (9.16,0.38) node {$D$};
+\end{tikzpicture}}{Paralelogramo}{parreg}
+\end{figura}
+
+\end{definicion}
+\begin{definicion}{Un rombo es un paralelogramo que tiene sus lados
+congruentes}{Rombo}
+\end{definicion}
+\begin{definicion}{Un rect\'angulo es un paralelogramo que tiene dos lados
+contiguos perpendiculares.}{Rect\'angulo}
+\end{definicion}
+\begin{definicion}{El cuadrado es un paralelogramo que es rombo y
+rect\'angulo a la vez}{Cuadrado}
+\begin{figura}{
+\definecolor{qqwuqq}{rgb}{0,0.39,0}
+\definecolor{uququq}{rgb}{0.25,0.25,0.25}
+\definecolor{zzttqq}{rgb}{0.6,0.2,0}
+\definecolor{qqqqff}{rgb}{0,0,1}
+\begin{tikzpicture}[scale=0.8,font=\fontsize{7}{6}\selectfont,line
+cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+\clip(2.22,-4.1) rectangle (7.44,0.74);
+\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (4.04,0) -- (3.04,-2.2) --
+(5.24,-3.2) -- (6.24,-1) -- cycle;
+\draw[color=qqwuqq,fill=qqwuqq,fill opacity=0.1] (5.42,-2.81) -- (5.03,-2.64) --
+(4.85,-3.02) -- (5.24,-3.2) -- cycle;
+\draw [color=zzttqq] (4.04,0)-- (3.04,-2.2);
+\draw [color=zzttqq] (3.04,-2.2)-- (5.24,-3.2);
+\draw [color=zzttqq] (5.24,-3.2)-- (6.24,-1);
+\draw [color=zzttqq] (6.24,-1)-- (4.04,0);
+\fill [color=qqqqff] (4.04,0) circle (1.5pt);
+\draw[color=qqqqff] (4.2,0.26) node {$A$};
+\fill [color=qqqqff] (3.04,-2.2) circle (1.5pt);
+\draw[color=qqqqff] (2.78,-2.1) node {$B$};
+\fill [color=uququq] (5.24,-3.2) circle (1.5pt);
+\draw[color=uququq] (5.24,-3.48) node {$C$};
+\fill [color=uququq] (6.24,-1) circle (1.5pt);
+\draw[color=uququq] (6.4,-0.74) node {$D$};
+\draw[color=qqwuqq] (5.22,-2.3) node {$\beta = 90\textrm{\degre}$};
+\end{tikzpicture}}{Cuadrado}{cua}
+\end{figura}
+ \end{definicion}
+\begin{teorema}{
+Los \'angulos opuestos de un paralelogramo son congruentes.
+}{LOPC}
+
+\end{teorema}
+\begin{teorema}{
+Los \'angulos opuestos de un paralelogramos son congruentes
+}{AOPC}
+
+\end{teorema}
+
+\begin{teorema}{
+Los pares de \'angulos adyacentes de un paralelogramo son \'angulos
+suplementarios.
+}{PAAPC}
+
+\end{teorema}
+\begin{teorema}{
+Si los lados opuestos de un cuadri\'atero son congruentes, entonces el
+cuadril\'atero es un paralelogramo
+}{RLOPC}
+
+\end{teorema}
+
+\begin{teorema}{
+Si los \'angulos opuestos de un cuadril\'atero son congruentes, entonces el
+cuadril\'atero es un paralelogramo
+}{RPAAPC}
+\end{teorema}
+\begin{teorema}{
+El segmento que une los puntos medios de dos lados de un tri\'angulo es
+paralelo al tercer lado y tiene la mitad de su longitud
+}{Segmento medio}
+\end{teorema}
+
+\begin{teorema}{
+Los puntos medios de los lados de un cuadril\'atero son v\'ertices de un
+paralelogramp
+}{PMCDP}
+
+\end{teorema}
+\begin{teorema}{
+Un paralelogramo es un rect\'angulo si, y s\'olo si, sus diagonales son
+congruentes,
+}{Diagonales de un paralelogramo}
+
+\end{teorema}
+\begin{teorema}{
+Un paralelogramo es un rombo si, y s\'olo si sus diagonales son perpendiculares
+entre s\'i.
+}{ERSDP}
+\end{teorema}
+
+\begin{teorema}{
+Un paralelogramo es un rombo si, y s\'olo si, cada diagonal biseca a un par de
+\'angulos opuestos
+}{ERDBA}
+
+\end{teorema}
+\begin{teorema}{
+El segmento que une los puntos medios de dos lados no paralelos de un trapecio
+es paralelo a las dos bases y tiene una longitud igual a la semisuma de las
+longitudes de las bases.
+}{Segmento medio del trapecio}
+
+\end{teorema}
+
+\begin{teorema}{
+En un trapecio con sus lados no paralelos congruentes, los \'angulos de la base
+y las diagonales son congruentes
+}{trapecio is\'osceles}
+
+\end{teorema}
+
+\begin{teorema}{
+La suma de las medidas de los \'angulos exteriores de un pol\'igono, en cada 
+uno de sus v\'ertices es, $360^\circ$.
+}{}
+
+\end{teorema}
+ \begin{teorema}{
+La suma de los \'angulos de un pol\'igono convexo de $n$ lados es
+$(n-2)180^\circ$
+}{}
+
+\end{teorema}      
+

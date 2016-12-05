@@ -1,0 +1,2643 @@
+% \LaTeX-Main\
+%% The LaTeX package tcolorbox - version 1.30 (2012/04/20)
+%% tcolorbox.tex: Manual
+%%
+%% -------------------------------------------------------------------------------------------
+%% Copyright (c) 2006-2012 by Prof. Dr. Dr. Thomas F. Sturm <thomas dot sturm at unibw dot de>
+%% -------------------------------------------------------------------------------------------
+%%
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions of LaTeX
+%% version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `author-maintained'.
+%%
+%% This work consists of all files listed in README
+%%
+\documentclass[a4paper,11pt]{ltxdoc}
+
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern,parskip,array,ifthen,calc,makeidx}
+\usepackage{amsmath,amssymb}
+\usepackage[svgnames,table,hyperref]{xcolor}
+\usepackage{tikz}
+\usepackage[pdftex,bookmarks,raiselinks,pageanchor,hyperindex,colorlinks]{hyperref}
+\urlstyle{sf}
+
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=1.5cm,bottom=1.5cm,
+    marginparsep=5mm,marginparwidth=10mm,
+    headheight=0mm,headsep=0cm,
+    footskip=1.5cm,includeheadfoot]{geometry}
+\usepackage{fancyhdr}
+\fancyhf{}
+\fancyfoot[C]{\thepage}%
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\pagestyle{fancy}
+\tolerance=2000%
+\setlength{\emergencystretch}{20pt}%
+
+\RequirePackage{csquotes}
+\RequirePackage[style=numeric-comp,sorting=nyt,
+  maxnames=8,minnames=8,abbreviate=false,backend=biber]{biblatex}
+\DeclareFieldFormat{url}{\newline\url{#1}}%
+\DeclareListFormat{language}{}%
+\setlength{\bibitemsep}{\smallskipamount}
+\addbibresource{\jobname.bib}
+
+\usetikzlibrary{shadings,shadows}
+\usetikzlibrary{decorations.pathmorphing}
+
+\usepackage[listings,theorems,documentation,skins]{tcolorbox}
+
+\tcbmakedocSubKey{docTcbKey}{tcb}
+\tcbmakedocSubKey{langTcbKey}{tcb/doclang}
+
+\makeatletter
+\def\index@Skin#1{\index{#1\idx@actual\texttt{#1} Skin}\index{Skins\idx@level#1\idx@actual\texttt{#1}}}
+\newenvironment{docSkin}[1]{\begin{manual@entry}%
+\hypertarget{skin:#1}{\manual@top{\texttt{/tcb/skin=}\disp@com{#1}\index@Skin{#1}\protected@edef\@currentlabel{#1}\label{skin:#1}\hfill(skin)}}}%
+  {\end{manual@entry}}
+\def\refSkin#1{\ref@doc{skin:#1}}
+\makeatother
+
+
+\hypersetup{
+  pdftitle={Manual for the tcolorbox package},
+  pdfauthor={Thomas F. Sturm},
+  pdfsubject={colored boxes},
+  pdfkeywords={colored boxes, LaTeX examples, theorems}
+}
+
+\def\version{1.30}%
+\def\datum{2012/04/20}%
+\makeindex
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\begin{center}
+\vspace*{5mm}\par
+{\bfseries\LARGE The \texttt{tcolorbox} package\par}
+{\large Manual for version \version\ (\datum)\par}\bigskip
+{\large Thomas F.~Sturm%
+  \footnote{Prof.~Dr.~Dr.~Thomas F.~Sturm, Institut f\"{u}r Mathematik und Informatik,
+    Universit\"{a}t der Bundeswehr M\"{u}nchen, D-85577 Neubiberg, Germany;
+     email: \href{mailto:thomas.sturm@unibw.de}{thomas.sturm@unibw.de}} }
+\end{center}
+\bigskip
+\begin{absquote}
+  \begin{center}\bfseries Abstract\end{center}
+  |tcolorbox| provides an environment for colored and framed text boxes with a
+  heading line. Optionally, such a box can be split in an upper and a lower
+  part. The package |tcolorbox| can be used for the setting of \LaTeX\ examples where
+  one part of the box displays the source code and the other part shows the
+  output. Another common use case is the setting of theorems. The package supports
+  saving and reuse of source code and text parts.
+\end{absquote}
+
+
+\tableofcontents
+
+
+\clearpage
+\section{Introduction}
+The package originates from the first edition of my book
+\flqq{\citetitle{sturm:2011b}\frqq~\cite{sturm:2011b}
+in about 2006.
+For the \LaTeX\ examples and tutorials given there, I wanted to have
+accentuated and colored boxes to display source code and
+compiled text in combination.
+Since, in my opinion, this type of boxes is also quite useful to highlight definitions
+and theorems, I applied them for my lecture notes in
+mathematics \cite{sturm:2007b,sturm:2008b,sturm:2010a}
+as well.
+With this package, you are invited to apply these boxes for similar projects.
+
+
+\subsection{Loading the Package}
+The base package |tcolorbox| loads the packages
+|pgf| \cite{tantau:2010c}, |calc| \cite{thorub:2007a}, and |verbatim| \cite{schoepf:2001a}.
+|tcolorbox| itself is loaded in the usual manner in the preamble:
+\begin{dispListing}
+\usepackage{tcolorbox}
+\end{dispListing}
+The package takes option keys in the key-value syntax.
+Alternatively, you may use these keys later in the preamble with
+\refCom{tcbuselibrary} (see there).
+For example, the key to typeset listings is:
+\begin{dispListing}
+\usepackage[listings]{tcolorbox}
+\end{dispListing}
+
+
+\subsection{Libraries}\label{sec:bibliothek}
+The base package |tcolorbox| is extendable by program libraries.
+This is done by usage of option keys while loading the package or inside
+the preamble by applying the following macro with the same set of keys.
+
+\begin{docCommand}{tcbuselibrary}{\marg{key list}}
+  Loads the libraries given by the \meta{key list}.
+\begin{dispListing}
+\tcbuselibrary{listings,theorems}
+\end{dispListing}
+\end{docCommand}
+
+The following keys are used inside |\tcbuselibrary| respectively
+|\usepackage| without the key tree path |/tcb/library/|.
+
+\begin{docTcbKey}[library]{listings}{}{no value}
+  Loads the package |listings| \cite{heinz:2007a} and provides additional
+  macros for typesetting listings which are described in section \ref{sec:listings}
+  from page \pageref{sec:listings}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{theorems}{}{no value}
+  Provides additional
+  macros for typesetting theorems which are described in section \ref{sec:theorems}
+  from page \pageref{sec:theorems}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{documentation}{}{no value}
+  Provides additional
+  macros for typesetting \LaTeX\ documentations
+  which are described in section \ref{sec:documentation}
+  from page \pageref{sec:documentation}.
+\end{docTcbKey}
+
+\begin{docTcbKey}[library]{skins}{}{no value}
+  Loads the package |tikz| \cite{tantau:2010c} and provides additional
+  styles (skins) for the appearance of the colored boxes; see
+  section \ref{sec:skins} from page \pageref{sec:skins}.
+\end{docTcbKey}
+
+
+\clearpage
+\section{Macros for Box Creation}
+
+\begin{docEnvironment}{tcolorbox}{\oarg{options}}
+  This is the main environment to create an accentuated colored text box with
+  rounded corners and, optionally, two parts. The appearance of this box
+  is controlled by numerous options.
+  In the most simple case the source code
+
+\begin{dispListing}
+\begin{tcolorbox}
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispListing}
+
+creates the following compiled text box:
+\begin{tcolorbox}
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+
+The text content of the box can be divided
+in an upper and a lower part
+by the command \refCom{tcblower}. Visually, both parts are separated by a line.
+For example:
+
+\begin{dispListing}
+\begin{tcolorbox}
+This is another \textbf{tcolorbox}.
+\tcblower
+Here, you see the lower part of the box.
+\end{tcolorbox}
+\end{dispListing}
+
+This code gives the following box:
+\begin{tcolorbox}
+This is another \textbf{tcolorbox}.
+\tcblower
+Here, you see the lower part of the box.
+\end{tcolorbox}
+
+The \meta{options} control the appearance and several functions of the boxes,
+see section \ref{sec:optkeys} for the complete list.
+A quick example is given here:
+
+\begin{dispExample}
+\begin{tcolorbox}[colback=red!5,colframe=red!75!black,title=My nice heading]
+This is another \textbf{tcolorbox}.
+\tcblower
+Here, you see the lower part of the box.
+\end{tcolorbox}
+\end{dispExample}
+\end{docEnvironment}
+
+
+\begin{docCommand}{tcblower}{}
+  Used inside \refEnv{tcolorbox} to separate the upper box part from
+  the optional lower box part.
+\end{docCommand}
+
+
+\begin{docCommand}{tcbset}{\marg{options}}
+  Sets options for every following \refEnv{tcolorbox} inside the current \TeX\ group.
+  For example, the colors of the boxes may be defined for the whole document by this:
+\begin{dispListing}
+\tcbset{colback=red!5,colframe=red!75!black}
+\end{dispListing}
+\end{docCommand}
+
+
+\clearpage
+\section{Option Keys}\label{sec:optkeys}
+For the \meta{options} in \refEnv{tcolorbox} respectively \refCom{tcbset}
+the following |pgf| keys can be applied. The key tree path |/tcb/| is not to
+be used inside these macros. It is easy to add your own style keys using
+the syntax for |pgf| keys, see \cite{tantau:2010c,sturm:2011b} or the examples
+starting from page \pageref{sec:latextutorial}.
+
+
+\subsection{Title}
+\begin{docTcbKey}{title}{=\meta{text}}{no default, initially empty}
+  Creates a heading line with \meta{text} as content.
+\begin{dispExample}
+\begin{tcolorbox}[title=My heading line]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{notitle}{}{no value, initially set}
+  Removes the title line if set before.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{adjusted title}{=\meta{text}}{style, no default, initially unset}
+  Creates a heading line with \meta{text} as content. The minimal height of
+  this line is adjusted to fit the text '\"Apgjy'. This option makes sense
+  for single line headings if boxes are set side by side with equal height.
+  Note that it is very easy to trick this adjustment.
+\begin{dispExample}
+\tcbset{colback=White,arc=0mm,width=(\linewidth-4pt)/4,
+equal height group=AT,before=,after=\hfill,fonttitle=\bfseries}
+
+The following titles are not adjusted:\\
+\foreach \n in {xxx,ggg,AAA,\"Agypten}
+{\begin{tcolorbox}[title=\n,colframe=red!75!black]
+  Some content.\end{tcolorbox}}
+Now, we try again with adjusted titles:\\
+\foreach \n in {xxx,ggg,AAA,\"Agypten}
+{\begin{tcolorbox}[adjusted title=\n,colframe=blue!75!black]
+  Some content.\end{tcolorbox}}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\subsection{Lower Part}
+\begin{docTcbKey}{lowerbox}{=\meta{mode}}{no default, initially \texttt{visible}}
+  Controls the treatment of the lower part of the box.
+  Feasible values for \meta{mode} are:
+  \begin{itemize}
+  \item |visible|: usual type setting of the lower part,
+  \item |invisible|: empty space instead of the lower part contents,
+  \item |ignored|: the lower part is not used (here).
+  \end{itemize}
+  The last two values are usually applied in connection with |savelowerto|.
+\begin{dispExample}
+\begin{tcolorbox}[lowerbox=invisible]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part (but invisible).
+\end{tcolorbox}
+
+\begin{tcolorbox}[lowerbox=ignored]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part (but ignored).
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{savelowerto}{=\meta{file name}}{no default, initially empty}
+  Saves the content of the lower box in a file for an optional later usage.
+\begin{dispExample}
+\begin{tcolorbox}[lowerbox=invisible,savelowerto=\jobname_bspsave.tex]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part which may be quite complex:
+$\displaystyle f(x)=\frac{1+x^2}{1-x^2}$.
+\end{tcolorbox}
+
+Now, we load the saved text:\\
+\input{\jobname_bspsave.tex}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}{savedelimiter}{=\meta{name}}{no default, initially \texttt{tcolorbox}}
+  Used in connection with new environment definitions which extend
+  |tcolorbox| and use or allow the option |savelowerto|.
+  To catch the end of the new box environment \meta{name} has to be the name of
+  this environment. Additionally, the environment definition has to use
+  |\tcolorbox| instead of
+  |\begin{tcolorbox}| and |\endtcolorbox| instead of |\end{tcolorbox}|.
+\begin{dispExample}
+\newenvironment{mybox}[1]{%
+  \tcolorbox[savedelimiter=mybox,
+             savelowerto=\jobname_bspsave2.tex,
+             lowerbox=ignored,
+             colback=red!5,colframe=red!75!black,fonttitle=\bfseries,title=#1]}%
+  {\endtcolorbox}
+
+\begin{mybox}{My Example}
+Upper part.
+\tcblower
+Saved lower part!
+\end{mybox}
+
+Now, the saved part is used:
+\begin{tcolorbox}[colback=green!5]
+\input{\jobname_bspsave2.tex}
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+
+\subsection{Colors and Fonts}
+\begin{docTcbKey}{colback}{=\meta{color}}{no default, initially \texttt{black!5!white}}
+  Sets the background \meta{color} of the box.
+\begin{dispExample}
+\begin{tcolorbox}[colback=white]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{colframe}{=\meta{color}}{no default, initially \texttt{black!75!white}}
+  Sets the frame \meta{color} of the box.
+\begin{dispExample}
+\begin{tcolorbox}[colframe=red!50!yellow]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{colupper}{=\meta{color}}{no default, initially \texttt{black}}
+  Sets the text \meta{color} of the upper part.
+\begin{dispExample}
+\begin{tcolorbox}[colupper=yellow,colback=blue!50,colframe=blue]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{collower}{=\meta{color}}{no default, initially \texttt{black}}
+  Sets the text \meta{color} of the lower part.
+\begin{dispExample}
+\begin{tcolorbox}[collower=yellow,colback=blue!50,colframe=blue]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{coltext}{=\meta{color}}{style, no default, initially \texttt{black}}
+  Sets the text \meta{color} of the box. This is an abbreviation for setting
+  |colupper| and |collower| to the same value.
+\begin{dispExample}
+\begin{tcolorbox}[coltext=yellow,colback=blue!50,colframe=blue]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{coltitle}{=\meta{color}}{no default, initially \texttt{white}}
+  Sets the title text \meta{color} of the box.
+\begin{dispExample}
+\begin{tcolorbox}[coltitle=blue!50!black,colframe=blue!25,title=Test]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{fontupper}{=\meta{text}}{no default, initially empty}
+  Sets \meta{text} before the content of the upper part (e.\,g.\ font settings).
+\begin{dispExample}
+\begin{tcolorbox}[fontupper=Hello!~\sffamily]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{fontlower}{=\meta{text}}{no default, initially empty}
+  Sets \meta{text} before the content of the lower part (e.\,g.\ font settings).
+\begin{dispExample}
+\begin{tcolorbox}[fontlower=\sffamily\bfseries]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{fonttitle}{=\meta{text}}{no default, initially empty}
+  Sets \meta{text} before the content of the title text (e.\,g.\ font settings).
+\begin{dispExample}
+\begin{tcolorbox}[fonttitle=\sffamily\bfseries\large,title=Hello]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\subsection{Geometry}
+\begin{docTcbKey}{width}{=\meta{length}}{no default, initially \cs{linewidth}}
+  Sets the total width of the colored box to \meta{length}.
+  See also \refKey{/tcb/height}.
+\begin{dispExample}
+\begin{tcolorbox}[width=\linewidth/2]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{boxrule}{=\meta{length}}{no default, initially \texttt{0.5mm}}
+  Sets the frame width to \meta{length}.
+\begin{dispExample}
+\begin{tcolorbox}[boxrule=2mm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{arc}{=\meta{length}}{no default, initially \texttt{1mm}}
+  Sets the radius of the four frame arcs to \meta{length}.
+\begin{dispExample}
+\begin{tcolorbox}[arc=0mm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\begin{tcolorbox}[arc=4mm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{boxsep}{=\meta{length}}{no default, initially \texttt{1mm}}
+  Sets a common padding of \meta{length} between the text content and the
+  frame of the box. This value is added to the key values of
+  |left|, |right|, |top|, |bottom|, and |middle| at the appropriate places.
+\begin{dispExample}
+\begin{tcolorbox}[boxsep=5mm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}{left}{=\meta{length}}{style, no default, initially \texttt{4mm}}
+  Sets the left space between all text parts and frame (additional to |boxsep|).
+  This is an abbreviation for setting
+  |lefttitle|, |leftupper|, and |leftlower| to the same value.
+\begin{dispExample}
+\begin{tcolorbox}[left=0mm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{lefttitle}{=\meta{length}}{no default, initially \texttt{4mm}}
+  Sets the left space between title text and frame (additional to |boxsep|).
+\begin{dispExample}
+\begin{tcolorbox}[lefttitle=3cm,title=My Title]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{leftupper}{=\meta{length}}{no default, initially \texttt{4mm}}
+  Sets the left space between upper text and frame (additional to |boxsep|).
+\begin{dispExample}
+\begin{tcolorbox}[leftupper=3cm,title=My Title]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{leftlower}{=\meta{length}}{no default, initially \texttt{4mm}}
+  Sets the left space between lower text and frame (additional to |boxsep|).
+\begin{dispExample}
+\begin{tcolorbox}[leftlower=3cm]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}{right}{=\meta{length}}{style, no default, initially \texttt{4mm}}
+  Sets the right space between all text parts and frame (additional to |boxsep|).
+  This is an abbreviation for setting
+  |righttitle|, |rightupper|, and |rightlower| to the same value.
+\begin{dispExample}
+\begin{tcolorbox}[width=5cm,right=2cm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+
+\begin{docTcbKey}{righttitle}{=\meta{length}}{no default, initially \texttt{4mm}}
+  Sets the right space between title text and frame (additional to |boxsep|).
+\begin{dispExample}
+\begin{tcolorbox}[width=5cm,righttitle=2cm,title=My very long title text]
+This is a \textbf{tcolorbox} with standard upper box dimensions.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{rightupper}{=\meta{length}}{no default, initially \texttt{4mm}}
+  Sets the right space between upper text and frame (additional to |boxsep|).
+\begin{dispExample}
+\begin{tcolorbox}[width=5cm,rightupper=2cm,title=My very long title text]
+This is a \textbf{tcolorbox} with compressed upper box dimensions.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}{rightlower}{=\meta{length}}{no default, initially \texttt{4mm}}
+  Sets the right space between lower text and frame (additional to |boxsep|).
+\begin{dispExample}
+\begin{tcolorbox}[width=5cm,rightlower=2cm]
+This is a \textbf{tcolorbox} with standard upper box dimensions.
+\tcblower
+This is the lower part with large space at right.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+
+\begin{docTcbKey}{top}{=\meta{length}}{no default, initially \texttt{2mm}}
+  Sets the top space between text and frame (additional to |boxsep|).
+\begin{dispExample}
+\begin{tcolorbox}[top=0mm]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{bottom}{=\meta{length}}{no default, initially \texttt{2mm}}
+  Sets the bottom space between text and frame (additional to |boxsep|).
+\begin{dispExample}
+\begin{tcolorbox}[bottom=0mm]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}{middle}{=\meta{length}}{no default, initially \texttt{2mm}}
+  Sets the space between upper and lower text to the separation line
+  (additional to |boxsep|).
+\begin{dispExample}
+\begin{tcolorbox}[middle=0mm,boxsep=0mm]
+This is a \textbf{tcolorbox}.
+\tcblower
+This is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+
+\subsection{Height Control}
+In a typical usage scenario, the height of a |tcolorbox| is computed automatically
+to fit the content. Nevertheless, the height can be set to a fixed value
+or to fit commonly for several boxes, e.\,g. if boxes are set side by side.
+
+
+\begin{docTcbKey}{natural height}{}{no value, initially set}
+  Sets the total height of the colored box to its natural height depending
+  on the box content.
+\end{docTcbKey}
+
+\begin{docTcbKey}{height}{=\meta{length}}{no default}
+  Sets the total height of the colored box to \meta{length} independent
+  of the box content.
+\begin{dispExample}
+\tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,
+colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[height=1cm,valign=center]
+  This box has a height of 1cm.
+\end{tcolorbox}
+\begin{tcolorbox}[height=2cm,valign=center]
+  This box has a height of 2cm.
+\end{tcolorbox}
+\begin{tcolorbox}[height=3cm,split=0.5,valign=center,valign lower=center]
+  This box has a height of 3cm.
+  \tcblower
+  Lower part.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{space}{=\meta{fraction}}{no default, initially 0}
+  If the height of a |tcolorbox| is not the natural height, the space
+  difference between the forced and the natural size is distributed
+  between the upper and the lower part of the box. This space could also
+  be negative.
+  \meta{fraction} with a value between 0 and 1 is the amount of space
+  which is added to the upper part, the rest is added to the lower part.
+  If there is no lower part, then all of the space is added to
+  the upper part always.
+\begin{dispExample}
+\tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,
+colframe=blue!75!black,colback=white,height=3cm}
+
+\foreach \f in {0.2,0.4,0.7}
+{\begin{tcolorbox}[space=\f]
+    This is the upper part.
+    \tcblower
+    This is the lower part.
+\end{tcolorbox}}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{space to upper}{}{style}
+  This is an abbreviation for |space=1|, i.\,e. all extra space is added
+  to the upper part.
+\end{docTcbKey}
+
+\begin{docTcbKey}{space to lower}{}{style, initially set}
+  This is an abbreviation for |space=0|, i.\,e. all extra space is added
+  to the lower part (if there is any).
+\end{docTcbKey}
+
+\begin{docTcbKey}{space to both}{}{style}
+  This is an abbreviation for |space=0.5|, i.\,e. the extra space
+  equally distributed between the upper and the lower part.
+\begin{dispExample}
+\tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,
+colframe=blue!75!black,colback=white,height=3cm}
+
+\foreach \myspace in {space to upper,space to both,space to lower}
+{\begin{tcolorbox}[\myspace]
+    This is the upper part.
+    \tcblower
+    This is the lower part.
+\end{tcolorbox}}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}{split}{=\meta{fraction}}{no default}
+  If the height of a |tcolorbox| is not the natural height, the
+  \meta{fraction} with a value between 0 and 1 determines the positioning
+  of the segmentation between the upper and the lower part. Here, 0 stands
+  for top and 1 for bottom. Note that the box is split regardless of
+  the actual dimensions of the text parts!
+\begin{dispExample}
+\tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,height=3cm,
+colback=white,colframe=blue!75!black,valign=center,valign lower=center}
+
+\foreach \f in {0.1,0.5,0.8}
+{\begin{tcolorbox}[split=\f]
+This is the upper part.
+\tcblower
+This is the lower part with a lot of text in several lines.
+\end{tcolorbox}}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{valign}{=\meta{alignment}}{no default, initially |top|}
+  If the height of a |tcolorbox| is not the natural height, |valign|
+  determines the vertical \meta{alignment} of the upper part.
+  Feasible values are |top|, |center|, and |bottom|. For a box with natural
+  height, these values are meaningless.
+\begin{dispExample}
+\tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,
+colframe=blue!75!black,colback=white,height=2cm}
+
+\foreach \myalign in {top,center,bottom}
+{\begin{tcolorbox}[valign=\myalign]
+  This is a \textbf{tcolorbox}.
+\end{tcolorbox}}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{valign lower}{=\meta{alignment}}{no default, initially |top|}
+  This key has the same meaning for the lower part as |valign|
+  for the upper part, i.\,e. it determines
+  the vertical \meta{alignment} of the lower part with feasible values
+  |top|, |center|, and |bottom|.
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}{equal height group}{=\meta{id}}{no default}
+  Boxes which are members of an |equal height group| will all get the
+  same height, i.\,e. the maximum of all their natural heights. The
+  \meta{id} serves to distinguish between different height groups.
+  This \meta{id} should contain only characters which are feasible
+  for \TeX\ macro names, typically alphabetic characters but no numerals
+  and spaces. Note that you have to compile twice to see changes and
+  that height groups are global definitions.
+
+
+\begin{dispExample}
+\tcbset{width=(\linewidth-2mm)/3,before=,after=\hfill,arc=0mm,
+colframe=blue!75!black,colback=white,fonttitle=\bfseries}
+
+\begin{tcolorbox}[equal height group=A,adjusted title={One}]
+  My smallest box.
+\end{tcolorbox}%
+\begin{tcolorbox}[equal height group=A,adjusted title={Two}]
+  This box is also small.
+  \tcblower
+  But with a lower part.
+\end{tcolorbox}%
+\begin{tcolorbox}[equal height group=A,adjusted title={Three}]
+  This box contains a lot of text just to fill the space
+  with word flowing and flowing and flowing until the box
+  is filled with all of it.
+\end{tcolorbox}\linebreak
+%
+\tcbset{width=(\linewidth-1mm)/2,before=,after=\hfill,arc=0mm,
+colframe=red!75!black,colback=white}
+%
+\begin{tcolorbox}[equal height group=B]
+  Now, we use another equal height group.
+\end{tcolorbox}%
+\begin{tcolorbox}[equal height group=B]
+  \begin{equation*}
+    \int\limits_{0}^{1} x^2 = \frac13.
+  \end{equation*}
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{minimum for equal height group}{=\meta{id}:\meta{length}}{no default, initially unset}
+  Plants a \meta{length} into the equal height group with
+  the given \meta{id}. This ensures that the height will not drop below
+  \meta{length}. Note that you cannot reduce a computed height value
+  by using this key with a small value.
+  The difference to applying \refKey{/tcb/height} directly is that the boxes
+  are never too small for their content.
+
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white,arc=0mm,
+  before=,after=\hfill,fonttitle=\bfseries,left=2mm,right=2mm,
+  width=3.5cm,
+  equal height group=C,
+  minimum for equal height group=C:3.5cm}
+
+\begin{tcolorbox}
+  My first box. All boxes will get 3.5cm times 3.5cm
+  if the content height is not too large.
+\end{tcolorbox}%
+\begin{tcolorbox}
+  My second box.
+  \tcblower
+  This is the lower part.
+\end{tcolorbox}%
+\begin{tcblisting}{}
+\textbf{Mixed}
+with a listing.
+\end{tcblisting}
+\begin{tcolorbox}[title={Fourth box}]
+  My final box.
+\end{tcolorbox}%
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\subsection{Floating Objects}
+\begin{docTcbKey}{floatplacement}{=\meta{values}}{no default, initially \texttt{htb}}
+  Sets \meta{values} as default values for the usage of |float|.
+  Feasible are the usual parameters for floating objects.
+\begin{dispListing}
+\begin{tcolorbox}[floatplacement=t,float,
+                  title=Floating box from |floatplacement|]
+  This floating box is placed at the top of a page.
+\end{tcolorbox}
+\end{dispListing}
+\tcbusetemp
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{float}{\colOpt{=\meta{values}}}{default from \texttt{floatplacement}}
+  Turns the box to a floating object where \meta{values} are the
+  usual parameters for such floating objects.
+  If they are not used, the placement uses the default values given by
+ |floatplacement|.
+\begin{dispListing}
+\begin{tcolorbox}[float, title=Floating box from |float|]
+  This box floats to a feasible place automatically. You do not have to
+  use a numbering for this floating object.
+\end{tcolorbox}
+\end{dispListing}
+\tcbusetemp
+\end{docTcbKey}
+
+
+\subsection{Embedding into the Surroundings}
+\begin{docTcbKey}{before}{=\meta{macros}}{no default, initially \cs{par}\cs{pagebreak[0]}\cs{noindent}}
+  Sets the \meta{macros} which are executed before the colored box.
+  They are not used for floating boxes.
+\end{docTcbKey}
+
+\begin{docTcbKey}{after}{=\meta{macros}}{no default, initially \cs{par}}
+  Sets the \meta{macros} which are executed after the colored box.
+  They are not used for floating boxes.
+\end{docTcbKey}
+
+\begin{docTcbKey}{parskip}{}{style, no value}
+  Sets the keys |before| and |after| to their default values.
+  This is recommended, if the package |parskip| is used and there is no better
+  idea for |before| and |after|.
+\end{docTcbKey}
+
+\begin{docTcbKey}{noparskip}{}{style, no value}
+  Sets the keys |before| and |after| to values which are
+  recommended, if the package |parskip| is \emph{not} used and there is no better
+  idea for |before| and |after|.
+\begin{dispListing}
+\tcbset{noparskip/.style={before={\par\smallskip\pagebreak[0]\noindent},
+                          after={\par\smallskip}}}
+\end{dispListing}
+\end{docTcbKey}
+
+
+
+
+\clearpage
+\subsection{Bounding Box}
+Normally, every |tcolorbox| has a bounding box which fits exactly to the
+dimensions of the outer frame. Therefore, \LaTeX\ reserves exactly the space
+needed for the box.
+This behavior can be changed by enlarging (or shrinking) the bounding box.
+If the bounding box is enlarged, the |tcolorbox| will get some clearance
+around it. If the bounding box is shrunk, i.\,e.\ enlarged with negative
+values, the |tcolorbox| will overlap to other parts of the page.
+For example, the |tcolorbox| could be stretched into the page margin.
+
+\begin{docTcbKey}{enlarge top by}{=\meta{length}}{no default, initially |0mm|}
+  Enlarges the bounding box distance to the top of the box by \meta{length}.
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[enlarge top by=-5mm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\begin{tcolorbox}[enlarge top by=5mm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{enlarge bottom by}{=\meta{length}}{no default, initially |0mm|}
+  Enlarges the bounding box distance to the bottom of the box by \meta{length}.
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[enlarge bottom by=5mm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\begin{tcolorbox}[enlarge bottom by=-5mm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{enlarge left by}{=\meta{length}}{no default, initially |0mm|}
+  Enlarges the bounding box distance to the left side of the box by \meta{length}.
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[enlarge left by=2cm,width=\linewidth-2cm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\begin{tcolorbox}[enlarge left by=-2cm,width=\linewidth+2cm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{enlarge right by}{=\meta{length}}{no default, initially |0mm|}
+  Enlarges the bounding box distance to the right side of the box by \meta{length}.
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white}
+
+\begin{tcolorbox}[enlarge right by=-2cm,width=\linewidth+2cm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\begin{tcolorbox}[enlarge right by=2cm,width=\linewidth-2cm]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{toggle enlargement}{=\meta{toggle preset}}{no default, initially |none|}
+  According to the \meta{toggle preset}, the left and the right enlargements of
+  the bounding box are switched or not. Feasible values are:
+  \begin{itemize}
+  \item |none|: no switching.
+  \item |forced|: the values of the left and right enlargement are switched.
+  \item |evenpage|: if the page is an even page, the values of the left and
+    right enlargement are switched. Note that the page number detection may
+    fail in certain cases. For these cases, use the |forced| value.
+  \end{itemize}
+\begin{dispExample}
+\tcbset{colframe=blue!75!black,colback=white,
+enlarge left by=-20mm,enlarge right by=5mm,width=\linewidth+15mm}
+
+\begin{tcolorbox}[toggle enlargement=none]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\begin{tcolorbox}[toggle enlargement=forced]
+This is a \textbf{tcolorbox}.
+\end{tcolorbox}
+\begin{tcolorbox}[toggle enlargement=evenpage]
+  This page is an \ifthenelse{\isodd{\thepage}}{odd}{even} page.
+  Therefore, the left and right enlargements
+  \ifthenelse{\isodd{\thepage}}{are not}{are} toggled (with some luck).
+\end{tcolorbox}
+\end{dispExample}
+
+\begin{dispListing}
+\begin{tcolorbox}[colframe=red!60!black,colback=red!15!white,
+  fonttitle=\bfseries,title=Floating box from \texttt{toggle enlargement},
+  width=\textwidth+20mm,enlarge right by=-20mm,
+  toggle enlargement=evenpage,float=t]
+  This page is an \ifthenelse{\isodd{\thepage}}{odd}{even} page.
+  Therefore, the left and right enlargements
+  \ifthenelse{\isodd{\thepage}}{are not}{are} toggled (with some luck; otherwise
+  use |forced|). This box stretches to the right margin on odd pages and to the left
+  margin on even pages. The current document is one-sided -- this feature makes
+  sense for two-sided documents only.
+\end{tcolorbox}
+\end{dispListing}
+\tcbusetemp
+\end{docTcbKey}
+
+\clearpage
+
+\subsection{Files}
+\begin{docTcbKey}{tempfile}{=\meta{file name}}{no default, initially \cs{jobname.tcbtemp}}
+  Sets \meta{file name} as name for the temporary file which is used inside
+  \refEnv{tcbwritetemp} and \refCom{tcbusetemp} implicitely.
+\end{docTcbKey}
+
+\subsection{Skins}
+There are additional option keys which change the appearance of a |tcolorbox|.
+If only the core package is used, there is only one \emph{skin} and these
+keys are meaningless.
+The library 'skins' adds more skins. The appropriate option keys for skins of
+the core package are therefore described in section \ref{sec:skincorekeys} from
+page \pageref{sec:skincorekeys}.
+
+
+\clearpage
+\section{Saving and Loading of Verbatim Texts}
+The following macros are slightly modified versions of the original macros
+from the known packages |moreverb| and |verbatim|.
+They are used implicitly inside of a |tcolorbox| environment,
+but they can be used outside also.
+\enlargethispage*{1.5cm}
+
+\begin{docEnvironment}{tcbverbatimwrite}{\marg{file name}}
+  Saves the \meta{environment content} to a file named by \meta{file name}.
+  \TeX\ macros inside the environment are not expanded.
+\begin{dispExample}
+\begin{tcbverbatimwrite}{\jobname_verbexp.tex}
+  This text is saved \textit{as is}.
+\end{tcbverbatimwrite}
+
+Now, we are using the file:\par
+\input{\jobname_verbexp.tex}
+\end{dispExample}
+
+This environment may be used inside an own environment. Note, that inside
+the environment definition |\tcbverbatimwrite| has to be used instead of
+|\begin{tcbverbatimwrite}| and |\endtcbverbatimwrite| instead of |\end{tcbverbatimwrite}|.
+\begin{dispExample}
+\newenvironment{myverbatim}{%
+  \begingroup\tcbverbatimwrite{\jobname_myverb.tex}}%
+  {\endtcbverbatimwrite\endgroup}
+
+\begin{myverbatim}
+  This is the text which is saved by my own environment.
+\end{myverbatim}
+
+Now, we are using the file:\par
+\input{\jobname_myverb.tex}
+\end{dispExample}
+\end{docEnvironment}
+
+\begin{docEnvironment}{tcbwritetemp}{}
+  Has the same function as \refEnv{tcbverbatimwrite}, but uses the key value
+  of |tempfile| for the file name.
+\begin{dispExample}
+\begin{tcbwritetemp}
+  This text is saved \textit{as is}.
+\end{tcbwritetemp}
+
+Now, we are using the file:\par
+\tcbusetemp
+\end{dispExample}
+\end{docEnvironment}
+
+
+\begin{docCommand}{tcbusetemp}{}
+  Loads the current temporary file which was saved by \refEnv{tcbwritetemp}.
+\end{docCommand}
+
+
+
+\clearpage
+\section{Library 'listings'}\label{sec:listings}
+The library is loaded by a package option or inside the preamble by:
+\begin{dispListing}
+\tcbuselibrary{listings}
+\end{dispListing}
+This also loads the package |listings| \cite{heinz:2007a}.
+
+\subsection{Macros of the Library}
+
+\begin{docEnvironment}{tcblisting}{\marg{options}}
+  Creates a colored box based on a \refEnv{tcolorbox}.
+  Controlled by the given \meta{options}, the
+  environment content is typesetted normally and/or as a listing.
+  Furthermore, the \meta{options} control appearance and functions of
+  the |tcolorbox|.
+  By default, the listing is interpreted as a \LaTeX\ listing.
+\begin{dispExample}
+\begin{tcblisting}{colback=red!5,colframe=red!75!black}
+This is a \LaTeX\ example which displays the text as source code
+and in compiled form.
+\end{tcblisting}
+\end{dispExample}
+\begin{dispExample}
+\begin{tcblisting}{colback=yellow!5,colframe=yellow!50!black,listing only,
+    title=This is source code in another language (XML), fonttitle=\bfseries,
+  listing options={language=XML,columns=fullflexible,keywordstyle=\color{red}}}
+<?xml version="1.0"?>
+<project name="Package tcolorbox" default="documentation" basedir=".">
+  <description>
+    Apache Ant build file (http://ant.apache.org/)
+  </description>
+</project>
+\end{tcblisting}
+\end{dispExample}
+\end{docEnvironment}
+
+
+\clearpage
+\begin{docEnvironment}{tcboutputlisting}{}
+  Saves the environment content to a file which is named by the key value of
+  |listing file|. Later, this file can be loaded by
+  |\tcbinputlisting| or |\tcbuselistingtext| or |\tcbuselistinglisting|.
+\begin{dispExample}
+\begin{tcboutputlisting}
+This \textbf{text} is written to a standardized file for later usage.
+\end{tcboutputlisting}
+\end{dispExample}
+\end{docEnvironment}
+
+
+\begin{docCommand}{tcbinputlisting}{\marg{options}}
+  Creates a colored boxed based on a |tcolorbox|. The text content is read
+  from a file named by the key value of |listing file|. Apart from that,
+  the function is equal to that of \refEnv{tcblisting}.
+\begin{dispExample}
+\tcbinputlisting{colback=red!5,colframe=red!75!black,text only}
+\tcbinputlisting{colback=green!5,colframe=green!75!black,listing only}
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}{tcbuselistingtext}{}
+  Loads text from a file named by the key value of |listing file|.
+\begin{dispExample}
+\tcbuselistingtext
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}{tcbuselistinglisting}{}
+  Typesets text as listing from a file named by the key value of |listing file|.
+\begin{dispExample}
+\tcbuselistinglisting
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}{tcbusetemplisting}{}
+  Typesets text as listing from a temporary file which was written by
+  \refEnv{tcbwritetemp}.
+\end{docCommand}
+
+
+\clearpage
+\subsection{Option Keys of the Library}
+For the \meta{options} in \refEnv{tcblisting} respectively \refCom{tcbinputlisting}
+the following |pgf| keys can be applied. The key tree path |/tcb/| is not to
+be used inside these macros.
+
+\begin{docTcbKey}{listing file}{=\meta{file name}}{no default, initially \cs{jobname.listing}}
+  Sets the \meta{file name} of the file which is used to save listings.
+\end{docTcbKey}
+
+\begin{docTcbKey}{listing options}{=\meta{key list}}{no default, initially |style=tcblatex|}
+  Sets the options from the package |listings| \cite{heinz:2007a}
+  which are used during typesetting of the listing.
+  For \LaTeX\ listings, there is a predefined |listings| style named |tcblatex|
+  which can be used.
+\begin{dispExample}
+\begin{tcblisting}{colback=red!5,colframe=red!25,left=6mm,
+listing options={style=tcblatex,numbers=left,numberstyle=\tiny\color{red!75!black}}}
+This is a \LaTeX\ example which displays the text as source code
+and in compiled form. Additionally, we use line numbers here.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{listing style}{=\meta{style}}{no default, initially |tcblatex|}
+  Abbreviation for |listing options={style=...}|. This key sets a \meta{style}
+  for the |listings| package, see \cite{heinz:2007a}.
+  For \LaTeX, there is a predefined style named |tcblatex|.
+\begin{dispExample}
+\begin{tcblisting}{colback=red!5,colframe=red!75!black,
+listing style=tcblatex}
+Here, we use the predefined style.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{listing and text}{}{no value, initially set}
+  Typesets the environment content as listing in the upper part and
+  as compiled text in the lower part.
+\begin{dispExample}
+\begin{tcblisting}{colback=red!5,colframe=red!75!black,listing and text}
+This is a \LaTeX\ example.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{text and listing}{}{no value}
+  Typesets the environment content as compiled text in the upper part and
+  as listing in the lower part.
+\begin{dispExample}
+\begin{tcblisting}{colback=red!5,colframe=red!75!black,text and listing}
+This is a \LaTeX\ example.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{listing only}{}{no value}
+  Typesets the environment content as listing.
+\begin{dispExample}
+\begin{tcblisting}{colback=red!5,colframe=red!75!black,listing only}
+This is a \LaTeX\ example.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+\begin{docTcbKey}{text only}{}{no value}
+  Typesets the environment content as compiled text.
+\begin{dispExample}
+\begin{tcblisting}{colback=red!5,colframe=red!75!black,text only}
+This is a \LaTeX\ example.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\begin{docTcbKey}{comment}{=\meta{text}}{no default, initially empty}
+  Records a comment with \meta{text} as content. The comment is displayed
+  only in conjunction with \refKey{/tcb/listing and comment}
+  and \refKey{/tcb/comment and listing}.
+\begin{dispExample}
+\begin{tcblisting}{comment={This comment is really only a comment},
+  colback=red!5,colframe=red!75!black}
+This is a \textbf{tcolorbox}.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{listing and comment}{}{no value}
+  Typesets the environment content as listing in the upper part and
+  a given comment in the lower part.
+\begin{dispExample}
+\begin{tcblisting}{colback=red!5,colframe=red!75!black,listing and comment,
+  comment={This is my comment. It may contain line breaks.\par
+    It can even use the environment content
+    \flqq\ignorespaces\tcbuselistingtext\unskip\frqq}}
+This is a \LaTeX\ example.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+
+
+\begin{docTcbKey}{comment and listing}{}{no value}
+  Typesets a given comment in the upper part and
+  the environment content as listing in the lower part.
+\begin{dispExample}
+\begin{tcblisting}{colback=red!5,colframe=red!75!black,comment and listing,
+comment={This is my comment.}}
+This is a \LaTeX\ example.
+\end{tcblisting}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\clearpage
+\subsection{Creation of \LaTeX\ Tutorials}\label{sec:latextutorial}
+The following source code gives a guideline for the creation of \LaTeX\ tutorials.
+In the next section, a framework for \LaTeX\ exercises is described.
+All examples shall be numbered optionally.
+
+Firstly, some additional |tcb| keys are defined for the appearance and automatic
+numbering.
+
+\begin{dispListing}
+\newcounter{texexp}
+
+\tcbset{
+  texexp/.style={colframe=red!50!yellow!50!black, colback=red!50!yellow!5!white,
+      coltitle=red!50!yellow!3!white,
+      fonttitle=\small\sffamily\bfseries, fontupper=\small, fontlower=\small},
+  example/.code 2 args={\refstepcounter{texexp}\label{#2}%
+      \pgfkeysalso{texexp,title={Example \thetexexp: #1}}},
+}
+\end{dispListing}
+\tcbusetemp
+
+
+\begin{dispExample}
+\begin{tcblisting}{texexp}
+This is a \LaTeX\ example which displays the text as source code
+and in compiled form.
+\end{tcblisting}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{tcblisting}{example={Direct application of \texttt{example}}{firstExample}}
+Here, we use Example \ref{firstExample} with a title line.
+\end{tcblisting}
+\end{dispExample}
+
+For the next examples, two environments
+|texexp| and |texexptitled|
+are defined for abbreviation.
+
+\begin{dispListing}
+\newenvironment{texexp}[1]{\tcblisting{texexp,#1}}{\endtcblisting}
+
+\newenvironment{texexptitled}[3][]{\tcblisting{example={#2}{#3},#1}}{\endtcblisting}
+\end{dispListing}
+\tcbusetemp
+
+For special cases, |tcolorbox| with the key
+|texexp| can be used instead of these two environments.
+
+Now, we have a flexible box for \LaTeX\ examples which is demonstrated in
+the following.
+
+\begin{dispExample}
+\begin{texexp}{}
+This is a \LaTeX\ example which displays the text as source code
+and in compiled form.
+\end{texexp}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{texexp}{text and listing}
+This is a \LaTeX\ example which displays the text as source code
+and in compiled form.
+\end{texexp}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{texexp}{listing only}
+This is a \LaTeX\ example which displays the text as source code only.
+\end{texexp}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{texexp}{text only}
+This is a \LaTeX\ example which displays the text in compiled form only.
+\end{texexp}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{texexptitled}{An Example with a Heading}{heading1}
+This is a \LaTeX\ example with a numbered heading line
+which can be referred to.
+\end{texexptitled}
+Here, we see Example \ref{heading1}.
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{texexptitled}[listing only]{Another Example with a Heading}{heading2}
+The keys can be used in combination. Here, an example with a heading line
+and source code only is given.
+\end{texexptitled}
+Here, we see Example \ref{heading2}.
+\end{dispExample}
+
+
+\begin{dispListing}
+\begin{texexptitled}[float]{A floating Example with a Heading}{heading3}
+This is another \LaTeX\ example with numbered heading line.
+But now, the box is a floating object.
+\end{texexptitled}
+\end{dispListing}
+\tcbusetemp
+
+\begin{dispExample}
+The floating box of the last example is seen as Example \ref{heading3}
+on page \pageref{heading3}.
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{tcolorbox}[example={Direct application of the style |texexp|}{texexpbox1}]
+\begin{lstlisting}[style=tcblatex]
+Some \LaTeX\ source code.
+\end{lstlisting}
+\tcblower
+For special cases, the environment |tcolorbox| with style
+|example| can be used directly. As one can see, the upper and the lower
+part of the box can be used uncoupled also.
+\end{tcolorbox}
+\end{dispExample}
+
+
+\subsection{Creation of \LaTeX\ Exercises}
+In the following, a guideline is given for the creation of \LaTeX\ exercises
+with solutions. These solutions are saved to disk for application at a place of
+choice.
+Therefore, all used exercises are logged to a file |\jobname.sol| for automatic
+processing. The solution contents themselves are saved to a subdirectory named
+|solutions|.
+
+\begin{dispListing}
+\newcounter{texercise}
+
+\newwrite\solout
+\def\openoutsol{\immediate\openout\solout\jobname.sol}
+\def\solfile#1{solutions/texercise#1.tex}
+\def\writesol#1{\immediate\write\solout{\noexpand\processsol{\thetexercise}{#1}}}%
+\def\closeoutsol{\immediate\closeout\solout}
+\def\inputsol{\IfFileExists{\jobname.sol}{\input{\jobname.sol}}{}}
+\end{dispListing}
+\tcbusetemp
+
+\begin{itemize}
+\item Before the first exercise is given,
+  |\openoutsol| has to be called to start logging.
+\item The solution is given as content of a \refEnv{tcboutputlisting}
+  environment. Note, that you can use this content also inside the
+  exercise with \refCom{tcbuselistingtext} in compiled form.
+\item After the last exercise is given (and before using the solutions),
+  |\closeoutsol| has to be called to stop logging.
+\item The solutions are loaded by |\inputsol|.
+\end{itemize}
+
+Inside the excercise text, there may be text parts which are needed as
+\LaTeX\ source code and as compiled text as well. These parts can be
+saved by \refEnv{tcbwritetemp} and used in compiled form by \refCom{tcbusetemp}
+or as source code by \refCom{tcbusetemplisting}.
+
+At first, we generate some new keys. Since exercises und solutions should
+be numbered, we force to use a label \meta{marker} while using the style |texercise|.
+Automatically, the label |exe:|\meta{marker} is used to mark the exercise
+and the label |sol:|\meta{marker} is used to mark the solution.
+
+\begin{dispListing}
+\tcbset{
+texercisestyle/.style={arc=0.5mm, colframe=blue!25!yellow!90!white,
+  colback=blue!25!yellow!5!white, coltitle=blue!25!yellow!40!black,
+  fonttitle=\small\sffamily\bfseries, fontupper=\small, fontlower=\small},
+texercise/.code={\refstepcounter{texercise}\label{exe:#1}\writesol{#1}%
+  \pgfkeysalso{texercisestyle,
+    listing file={\solfile\thetexercise},
+    title={Exercise \arabic{texercise}\hfill\mdseries Solution on page \pageref{sol:#1}}
+  }}
+}
+\end{dispListing}
+\tcbusetemp
+
+With these preparations, the kernel environment |texercise| for our
+exercises is created quickly:
+
+\begin{dispListing}
+\newenvironment{texercise}[2][]{%
+  \tcolorbox[texercise=#2,savedelimiter=texercise,#1]}%
+  {\endtcolorbox}
+\end{dispListing}
+\tcbusetemp
+
+The following examples demonstrate the application.
+\openoutsol
+
+
+\begin{dispExample}
+\begin{texercise}{tabular_example}
+\textit{Create the following table:}\par\smallskip%
+\begin{tcboutputlisting}
+\begin{tabular}{|p{3cm}|p{3cm}|p{3cm}|p{3cm}|}\hline
+\multicolumn{4}{|c|}{\bfseries\itshape Das alte Italien}\\\hline
+\multicolumn{2}{|c|}{\bfseries Antike} &
+\multicolumn{2}{c|}{\bfseries Mittelalter}\\\hline
+\multicolumn{1}{|c|}{\itshape Republik}&
+\multicolumn{1}{c|}{\itshape Kaiserreich}&
+\multicolumn{1}{c|}{\itshape Franken}&
+\multicolumn{1}{c|}{\itshape Teilstaaten}\\\hline
+In den Zeiten der r\"{o}mischen Republik standen dem Staat jeweils zwei
+Konsuln vor, deren Machtbefugnisse identisch waren. &
+Das r\"{o}mische Kaiserreich wurde von einem Alleinherrscher, dem Kaiser,
+regiert.
+& In der V\"{o}lkerwanderungszeit \"{u}bernahmen die Goten und sp\"{a}ter die
+Franken die Vorherrschaft.
+& Im sp\"{a}teren Mittelalter regierten F\"{u}rsten einen Fleckenteppich
+von Einzelstaaten.\\\hline
+\end{tabular}
+\end{tcboutputlisting}
+\tcbuselistingtext%
+\end{texercise}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{texercise}{macro_oneparam}
+\begin{tcboutputlisting}
+\newcommand{\headingline}[1]{%
+  \begin{center}\Large\bfseries #1\end{center}}
+\end{tcboutputlisting}
+\tcbuselistingtext%
+
+Create a new macro \verb+\headingline+ which produces the
+following output:\par\smallskip
+\begin{tcbwritetemp}
+\headingline{Very important heading}
+\end{tcbwritetemp}
+\tcbusetemplisting\tcbusetemp%
+\end{texercise}
+\end{dispExample}
+
+
+
+\begin{dispExample}
+\begin{texercise}{macro_twoparam}
+\begin{tcboutputlisting}
+\newcommand{\minitable}[2]{%
+  \begin{center}\begin{tabular}{p{10cm}}\hline%
+  \multicolumn{1}{c}{\bfseries#1}\\\hline%
+  #2\\\hline%
+  \end{tabular}\end{center}}
+\end{tcboutputlisting}
+\tcbuselistingtext%
+Create a new macro \verb+\minitable+ which produces the
+following output:\par\smallskip
+\begin{tcbwritetemp}
+\minitable{My heading}{In this tiny tabular, there is only a heading
+  and some text below which has a width of ten centimeters.}
+\end{tcbwritetemp}
+\tcbusetemplisting\par\smallskip\tcbusetemp%
+\end{texercise}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{texercise}{macro_threeparam}
+\begin{tcboutputlisting}
+\newcommand{\synop}[3]{%
+  \begin{tabular}{@{}p{(\linewidth-\tabcolsep*2-\arrayrulewidth)/2}|%
+    p{(\linewidth-\tabcolsep*2-\arrayrulewidth)/2}@{}}\hline
+  \multicolumn{2}{c}{\bfseries #1}\\\hline
+  \multicolumn{1}{c|}{\itshape English}&
+  \multicolumn{1}{c}{\itshape German}\\\hline
+  #2 & #3
+  \end{tabular}}
+\end{tcboutputlisting}
+\tcbuselistingtext%
+Create a new macro \verb+\synop+ which typesets a synoptic text according
+to the following example. Base your macro on a tabular which takes the
+total line width.\par\smallskip
+\begin{tcbwritetemp}
+\synop{Neil Armstrong}%
+{That's one small step for a man, one giant leap for mankind.}%
+{Das ist ein kleiner Schritt f\"{u}r einen Mann,
+   ein riesiger Sprung f\"{u}r die Menschheit.}
+\end{tcbwritetemp}
+\tcbusetemplisting\par\smallskip\tcbusetemp%
+\end{texercise}
+\end{dispExample}
+
+
+
+\closeoutsol
+\subsection{Solutions for the given \LaTeX\ Exercises}
+
+For all solutions, a macro |\processsol| was written to the file |\jobname.sol|.
+Now, we need a definition for this macro to use the solutions.
+
+\begin{dispListing}
+\newcommand{\processsol}[2]{%
+  \tcbinputlisting{texercisestyle,listing only,
+    title={Solution for Exercise \ref{exe:#2} on page \pageref{exe:#2}\label{sol:#2}},
+    listing file={\solfile#1}%
+  }}
+\end{dispListing}
+\tcbusetemp
+
+The loading of all solutions is done by:
+
+\begin{dispListing}
+\inputsol
+\end{dispListing}
+
+With this, we get:
+
+\tcbusetemp
+
+
+\clearpage
+\section{Library 'theorems'}\label{sec:theorems}
+The library is loaded by a package option or inside the preamble by:
+\begin{dispListing}
+\tcbuselibrary{theorems}
+\end{dispListing}
+
+\subsection{Macros of the Library}
+
+\begin{docCommand}{tcbmaketheorem}{\marg{name}\marg{display name}\marg{options}\marg{counter}\marg{prefix}}
+  Creates a new environment \meta{name} based on |tcolorbox| to frame a
+  (mathematical) theorem. The \meta{display name} is used in the title line
+  with a number, e.\,g. \mbox{\flqq Theorem 5.1\frqq}.
+  The \meta{options} are given to the underlying |tcolorbox| to control
+  the appearance.
+  The \meta{counter} is used for automatic numbering.
+  The new environment \meta{name} takes one optional and two mandatory
+  parameters. The optional parameter supplements the options and should be
+  used only in rare cases.
+  The first mandatory parameter is the title text for the theorem and
+  the second mandatory parameter is a \meta{marker}. The theorem is
+  automatically labeled with \meta{prefix}|:|\meta{marker}.
+\begin{dispExample}
+\tcbmaketheorem{theo}{My Theorem}{colback=green!5,colframe=green!35!black,
+  fonttitle=\bfseries}{texercise}{th}
+
+\begin{theo}{This is my title}{theoexample}
+  This is the text of the theorem. As can be seen, the counter \texttt{texercise}
+  is reused. The theorem is numbered with \ref{th:theoexample} and is
+  given on page \pageref{th:theoexample}.
+\end{theo}
+\end{dispExample}
+\end{docCommand}
+
+%
+
+\subsection{Option Keys of the Library}
+\enlargethispage*{1cm}
+
+\begin{docTcbKey}{theorem}{=\marg{display name}\marg{counter}\marg{title}\marg{marker}}{no default}
+  This key is internally used by \refCom{tcbmaketheorem}, but can be used
+  directly in a |tcolorbox| for a more flexible approach.
+  The \meta{display name} is used together with the increased \meta{counter} value
+  and the \meta{title} for the title line of the box. Additionally, a
+  |\label| with the given \meta{marker} is created.
+\begin{dispExample}
+\begin{tcolorbox}[colback=green!10,colframe=green!50!black,arc=4mm,
+                  theorem={Test}{texercise}{Direct usage}{myMarker}]
+Here, we see the test \ref{myMarker}.
+\end{tcolorbox}
+\end{dispExample}
+For a common appearance inside the document, the key |theorem| should not be
+used directly as in the example above, but as part of a new environment
+created by hand or using \refCom{tcbmaketheorem}.
+\end{docTcbKey}
+
+%
+
+\subsection{Examples for Definitions and Theorems}
+In the following, the application of \refCom{tcbmaketheorem}
+to highlight mathematical definitions, theorems, or the like is demonstrated.
+
+At first, additional |tcb| keys are created for the appearance of
+the colored boxes. It is assumed that theorems and corollaries should be
+identically colored.
+All following environments are numbered with a common counter, but this
+can be changed easily. Here, the counter output is supplemented by
+the section number.
+
+\begin{dispListing}
+\newcounter{mytheorem}[section]
+\def\themytheorem{\thesection.\arabic{mytheorem}}
+
+\tcbset{
+  defstyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
+              arc=0mm, colback=blue!5,colframe=blue!75!black},
+  theostyle/.style={fonttitle=\bfseries\upshape, fontupper=\slshape,
+               colback=red!10,colframe=red!75!black},
+}
+\end{dispListing}
+\tcbusetemp
+
+By \refCom{tcbmaketheorem}, commonly numbered theorem environments are
+created now. |defstyle| and |theostyle| are used for the appearance.
+
+\begin{dispListing}
+\tcbmaketheorem{Definition}{Definition}{defstyle}{mytheorem}{def}
+\tcbmaketheorem{Theorem}{Theorem}{theostyle}{mytheorem}{theo}
+\tcbmaketheorem{Corollary}{Corollary}{theostyle}{mytheorem}{cor}
+\end{dispListing}
+\tcbusetemp
+
+Now, everything is prepared for the following examples.
+
+\begin{dispExample}
+The following theorem is numbered as Theorem \ref{theo:diffbarstetig} and
+referenced with the marker \texttt{theo:diffbarstetig}.\bigskip
+
+\begin{Theorem}{Differenzierbarkeit bedingt Stetigkeit, wobei diese Benennung
+  zu Testzwecken ungew\"{o}hnlich lang ist}{diffbarstetig}%
+  Eine Funktion $f:I\to\mathbb{R}$ ist in $x_0\in I$ stetig, wenn $f$ in
+  $x_0$ differenzierbar ist.
+\end{Theorem}
+\end{dispExample}
+
+
+\begin{dispExample}
+The following definition is numbered as Definition \ref{def:diffbarkeit} and
+referenced with the marker \texttt{def:diffbarkeit}.\bigskip
+
+\begin{Definition}{Differenzierbarkeit}{diffbarkeit}
+  Eine Funktion $f:~I\to\mathbb{R}$ auf einem Intervall $I$ hei\ss{}t in
+  $x_0\in I$ differenzierbar oder linear approximierbar,
+  wenn der Grenzwert
+  \begin{equation*}
+  \lim\limits_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}=
+  \lim\limits_{h\to 0}\frac{f(x_0+h)-f(x_0)}{h}
+  \end{equation*}
+  existiert. Bei Existenz hei\ss{}t dieser Grenzwert Ableitung
+  oder Differentialquotient von $f$ in $x_0$ und man
+  schreibt f\"{u}r ihn
+  \begin{equation*}
+  f'(x_0)\quad\text{oder}\quad\frac{df}{dx}(x_0).
+  \end{equation*}
+\end{Definition}
+\end{dispExample}
+
+
+\begin{dispExample}
+The following corollary is numbered as Corollary \ref{cor:nullstellen} and
+referenced with the marker \texttt{cor:nullstellen}.\bigskip
+
+\begin{Corollary}{Nullstellenexistenz}{nullstellen}
+  Ist $f:[a,b]\to\mathbb{R}$ stetig und haben $f(a)$ und $f(b)$ entgegengesetzte
+  Vorzeichen, also $f(a)f(b)<0$, so besitzt $f$ eine Nullstelle $x_0\in]a,b[$,
+  also $f(x_0)=0$.
+\end{Corollary}
+\end{dispExample}
+
+
+\begin{dispExample}
+\begin{Theorem}[boxrule=2mm]{Hinreichende Bedingung
+                             f\"{u}r Wendepunkte}{wendehinreichend}%
+  $f$ sei eine auf einem Intervall $]a,b[$ dreimal stetig differenzierbare Funktion.
+  Ist $f''(x_0)=0$ in $x_0\in]a,b[$ und $f'''(x_0)\ne 0$, so ist
+  $(x_0,f(x_0))$ ein Wendepunkt von $f$.
+\end{Theorem}
+\end{dispExample}
+
+
+
+\clearpage
+\section{Library 'documentation'}\label{sec:documentation}
+This library has the single purpose to support \LaTeX\ package documentations
+like this one. Actually, the visual nature follows the approach from
+Till Tantau's |pgf| \cite{tantau:2010c} documentation.
+Typically, this library is assumed to be used in conjunction with the
+class |ltxdoc| or alike.
+
+The library is loaded by a package option or inside the preamble by:
+\begin{dispListing}
+  \tcbuselibrary{documentation}
+\end{dispListing}
+This also loads the library 'listings', see section \ref{sec:listings},
+and a bunch of packages, namely
+|doc|, |pifont|, |marvosym|, |hyperref|, and |makeidx|.
+
+
+\subsection{Macros of the Library}
+
+\begin{docEnvironment}{docCommand}{\marg{name}\marg{parameters}}
+  Documents a \LaTeX\ macro with given \meta{name} where \meta{name} is
+  written without backslash. This macro takes mandatory or optional \meta{parameters}.
+  It is automatically indexed and can be referenced with
+  \refCom{refCom}\marg{name}.
+\begin{dispExample}
+\begin{docCommand}{foomakedocSubKey}{\marg{name}\marg{key path}}
+  Creates a new environment \meta{name} based on \refEnv{docKey} for the
+  documentation of keys with the given \meta{key path}.
+\end{docCommand}
+\end{dispExample}
+\end{docEnvironment}
+
+
+{\let\xdocEnvironment\docEnvironment
+\let\endxdocEnvironment\enddocEnvironment
+\begin{xdocEnvironment}{docEnvironment}{\marg{name}\marg{parameters}}
+  Documents a \LaTeX\ environment with given \meta{name}.
+  This environment takes mandatory or optional \meta{parameters}.
+  It is automatically indexed and can be referenced with
+  \refCom{refEnv}\marg{name}.
+\begin{dispExample}
+\begin{docEnvironment}{foocolorbox}{\oarg{options}}
+  This is the main environment to create an accentuated colored text box with
+  rounded corners and, optionally, two parts.
+\end{docEnvironment}
+\end{dispExample}
+\end{xdocEnvironment}}
+
+\clearpage
+\begin{docEnvironment}{docKey}{\oarg{key path}\marg{name}\marg{parameters}\marg{description}}
+  Documents a key with given \meta{name} and an optional \meta{key path}.
+  This key takes mandatory or optional \meta{parameters} as value
+  with a short \meta{description}.
+  It is automatically indexed and can be referenced with
+  \refCom{refKey}\marg{name}.
+\begin{dispExample}
+\begin{docKey}[foo]{footitle}{=\meta{text}}{no default, initially empty}
+  Creates a heading line with \meta{text} as content.
+\end{docKey}
+\end{dispExample}
+\end{docEnvironment}
+
+
+\begin{docCommand}{docAuxCommand}{\marg{name}}
+  Documents an auxiliary or minor \LaTeX\ macro with given \meta{name}
+  where \meta{name} is written without backslash.
+  This macro is automatically indexed.
+\begin{dispExample}
+The macro \docAuxCommand{fooaux} holds some interesting data.
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}{docColor}{\marg{name}}
+  Documents a color with given \meta{name}. The color is automatically indexed.
+\begin{dispExample}
+The color \docColor{foocolor} is available.
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}{cs}{\marg{name}}
+  Macro from |ltxdoc| \cite{carlisle:2007a} to typeset a command word \meta{name}
+  where the backslash is prefixed. The library overwrites the original macro.
+\begin{dispExample}
+This is a \cs{foocommand}.
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}{meta}{\marg{text}}
+  Macro from |doc| \cite{mittelbach:2011a} to typeset a meta \meta{text}.
+\begin{dispExample}
+This is a \meta{text}.
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}{marg}{\marg{text}}
+  Macro from |ltxdoc| \cite{carlisle:2007a} to typeset a \meta{text} with
+  curly brackets as a mandatory argument. The library overwrites the original macro.
+\begin{dispExample}
+This is a mandatory \marg{argument}.
+\end{dispExample}
+\end{docCommand}
+
+\clearpage
+\begin{docCommand}{oarg}{\marg{text}}
+  Macro from |ltxdoc| \cite{carlisle:2007a} to typeset a \meta{text} with
+  square brackets as an optional argument. The library overwrites the original macro.
+\begin{dispExample}
+This is an optional \oarg{argument}.
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}{brackets}{\marg{text}}
+  Sets the given \meta{text} with curly brackets.
+\begin{dispExample}
+  Here we use \brackets{some text}.
+\end{dispExample}
+\end{docCommand}
+
+
+
+{\let\xdispExample\dispExample
+  \let\endxdispExample\enddispExample
+\begin{docEnvironment}{dispExample}{}
+  Creates a colored box based on a \refEnv{tcolorbox}.
+  It displays the environment content as source code in the upper part
+  and as compiled text in the lower part of the box.
+  The appearance is controlled by \refKey{/tcb/documentation listing style}
+  and the style \refKey{/tcb/docexample}. It may be
+  changed by redefining this style.
+\begin{xdispExample}
+\begin{dispExample}
+This is a \LaTeX\ example.
+\end{dispExample}
+\end{xdispExample}
+\end{docEnvironment}}
+
+
+\begin{docEnvironment}{dispListing}{}
+  Creates a colored box based on a \refEnv{tcolorbox}.
+  It displays the environment content as source code.
+  The appearance is controlled by \refKey{/tcb/documentation listing style}
+  and the style \refKey{/tcb/docexample}. It may be
+  changed by redefining this style.
+\begin{dispExample}
+\begin{dispListing}
+This is a \LaTeX\ example.
+\end{dispListing}
+\end{dispExample}
+\end{docEnvironment}
+
+\clearpage
+\begin{docEnvironment}{absquote}{}
+  Used to typeset an abstract as quoted and small text.
+\begin{dispExample}
+\begin{absquote}
+|tcolorbox| provides an environment for colored and framed text boxes with a
+heading line. Optionally, such a box can be split in an upper and a lower part.
+\end{absquote}
+\end{dispExample}
+\end{docEnvironment}
+
+\begin{docCommand}{tcbmakedocSubKey}{\marg{name}\marg{key path}}
+  Creates a new environment \meta{name} based on \refEnv{docKey} for the
+  documentation of keys with the given \meta{key path} as default.
+  The new environment \meta{name} takes the same para\-meters as \refEnv{docKey} itself.
+\begin{dispExample}
+\tcbmakedocSubKey{docFooKey}{foo}
+
+\begin{docFooKey}{foodummy}{=\meta{nothing}}{no default, initially empty}
+Some key.
+\end{docFooKey}
+\end{dispExample}
+\end{docCommand}
+
+
+\begin{docCommand}{refCom}{\marg{name}}
+  References a documented \LaTeX\ macro with given \meta{name} where \meta{name} is
+  written without backslash.
+\begin{dispExample}
+We have created \refCom{foomakedocSubKey} as an example.
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}{refEnv}{\marg{name}}
+  References a documented \LaTeX\ environment with given \meta{name}.
+\begin{dispExample}
+We have created \refEnv{foocolorbox} as an example.
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}{refKey}{\marg{name}}
+  References a documented key with given \meta{name} where \meta{name}
+  is the full path name of the key.
+\begin{dispExample}
+We have created \refKey{/foo/footitle} as an example.
+\end{dispExample}
+\end{docCommand}
+
+\clearpage
+\begin{docCommand}{colDef}{\marg{text}}
+Sets \meta{text} with the definition color, see \refKey{/tcb/color definition}.
+\begin{dispExample}
+This is my \colDef{text}.
+\end{dispExample}
+\end{docCommand}
+
+\begin{docCommand}{colOpt}{\marg{text}}
+  Sets \meta{text} with the option color, see \refKey{/tcb/color option}.
+\begin{dispExample}
+This is my \colOpt{text}.
+\end{dispExample}
+\end{docCommand}
+
+
+
+\subsection{Option Keys of the Library}
+
+\begin{docTcbKey}{docexample}{}{style, no value}
+  Sets the style for \refEnv{dispExample} and \refEnv{dispListing}
+  with the colors |ExampleBack| and |ExampleFrame|.
+  To change the appearance of the examples, this style could be
+  redefined.
+\end{docTcbKey}
+
+\begin{docTcbKey}{documentation listing style}{=\meta{listing style}}{no default, initially |tcbdocumentation|}
+  Sets a \meta{listing style} for the |listings| package \cite{heinz:2007a}.
+  It is used inside \refEnv{dispExample} and \refEnv{dispListing} to typeset
+  the listings. Note that this is not identical to the key
+  \refKey{/tcb/listing style} which is used for 'normal' listings.
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{color definition}{=\meta{color}}{no default, initially |Definition|}
+  Sets the highlight color used by macro and key definitions.
+\end{docTcbKey}
+
+\begin{docTcbKey}{color option}{=\meta{color}}{no default, initially |Option|}
+  Sets the color used for optional arguments.
+\end{docTcbKey}
+
+\begin{docTcbKey}{color hyperlink}{=\meta{color}}{no default, initially |Hyperlink|}
+  Sets the color for all hyper-links, i.\,e. all internal and external links.
+\end{docTcbKey}
+
+\begin{docTcbKey}{before example}{=\meta{macros}}{no default, initially \cs{par}\cs{smallskip}}
+  Sets the \meta{macros} which are executed before \refEnv{dispExample} and \refEnv{dispListing}
+  additional to \refKey{/tcb/before}.
+\end{docTcbKey}
+
+\begin{docTcbKey}{after example}{=\meta{macros}}{no default, initially empty}
+  Sets the \meta{macros} which are executed after \refEnv{dispExample} and \refEnv{dispListing}
+  additional to \refKey{/tcb/after}.
+\end{docTcbKey}
+
+\begin{docTcbKey}{index actual}{=\meta{character}}{no default, initially |@|}
+  Sets the character for 'actual' in automatic indexing.
+\end{docTcbKey}
+
+\begin{docTcbKey}{index quote}{=\meta{character}}{no default, initially |"|}
+  Sets the character for 'quote' in automatic indexing.
+\end{docTcbKey}
+
+\begin{docTcbKey}{index level}{=\meta{character}}{no default, initially |!|}
+  Sets the character for 'level' in automatic indexing.
+\end{docTcbKey}
+
+\begin{docTcbKey}{index default settings}{}{style, no value}
+  Sets the |makeindex| default values for
+  \refKey{/tcb/index actual},
+  \refKey{/tcb/index quote}, and
+  \refKey{/tcb/index level}.
+\end{docTcbKey}
+
+\clearpage
+\begin{docTcbKey}{index german settings}{}{style, no value}
+  Sets the |makeindex| values recommended for German language texts.
+  This is identical to setting the following:
+\begin{dispListing}
+\tcbset{index actual={=},index quote={!},index level={>}}
+\end{dispListing}
+\end{docTcbKey}
+
+The following keys are provided for language specific settings.
+The English language is predefined.
+
+\begin{docTcbKey}{english language}{}{style, no value}
+  Sets all language specific settings to English.
+\end{docTcbKey}
+
+\begin{langTcbKey}{color}{=\meta{text}}{no default, initially |color|}
+  Text used in the index for colors.
+\end{langTcbKey}
+
+\begin{langTcbKey}{colors}{=\meta{text}}{no default, initially |Colors|}
+  Heading text in the index for colors.
+\end{langTcbKey}
+
+\begin{langTcbKey}{environment content}{=\meta{text}}{no default, initially |environment content|}
+  Text used in \refEnv{docEnvironment}.
+\end{langTcbKey}
+
+\begin{langTcbKey}{environment}{=\meta{text}}{no default, initially |environment|}
+  Text used in the index for environments.
+\end{langTcbKey}
+
+\begin{langTcbKey}{environments}{=\meta{text}}{no default, initially |Environments|}
+  Heading text in the index for environments.
+\end{langTcbKey}
+
+\begin{langTcbKey}{key}{=\meta{text}}{no default, initially |key|}
+  Text used in the index for keys.
+\end{langTcbKey}
+
+\begin{langTcbKey}{index}{=\meta{text}}{no default, initially |Index|}
+  Heading text for the index.
+\end{langTcbKey}
+
+\begin{langTcbKey}{pageshort}{=\meta{text}}{no default, initially |P.|}
+  Short text for page references.
+\end{langTcbKey}
+
+
+\subsection{Predefined Colors of the Library}
+The following colors are predefined. They are used as default colors
+in some library commands.
+
+\def\dispColor#1{\docColor{#1}~\tikz[baseline=1mm]\path[fill=#1,draw] (0,0) rectangle (0.4,0.4);~}
+
+\dispColor{Option},
+\dispColor{Definition},
+\dispColor{ExampleFrame},
+\dispColor{ExampleBack},
+\dispColor{Hyperlink}.
+
+
+\clearpage
+\section{Library 'skins'}\label{sec:skins}
+The library is loaded by a package option or inside the preamble by:
+\begin{dispListing}
+\tcbuselibrary{skins}
+\end{dispListing}
+This also loads the package |tikz| \cite{tantau:2010c}. Typically but not necessarily,
+the following skins use |tikz| instead of |pgf|.
+
+\subsection{Technical Overview and Core Package Option Keys}\label{sec:skincorekeys}
+From a technical point of view, a \emph{skin} is a style definition for the
+appearance of a |tcolorbox|. The core package provides some additional
+option keys for skins but only a single skin called \refSkin{standard}.
+The 'skins' library adds several more skins. To change a skin, only one
+option from the core package has to be set.
+
+\begin{docTcbKey}{skin}{=\meta{name}}{style, no default, initially \texttt{standard}}
+  Sets the current skin to \meta{name}. This is a style definition which sets all the following
+  keys, i.\,e.\ for many use cases there is nothing more to do.
+\begin{dispExample}
+\tcbset{colback=Salmon!50!white,colframe=FireBrick!75!black,
+  width=(\linewidth-8mm)/2,before=,after=\hfill,equal height group=ske}
+
+\begin{tcolorbox}[adjusted title=My title]
+  This is my content.
+\end{tcolorbox}
+\begin{tcolorbox}[skin=beamer,adjusted title=My title]
+  This is my content.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\begin{docTcbKey}{graphical environment}{=\meta{name}}{no default, initially \texttt{pgfpicture}}
+  Sets the graphical environment for the |tcolorbox| to \meta{name}.
+  Feasible values are |pgfpicture| and |tikzpicture| or environments which
+  inherit from one of these two. This key is set by a \refKey{/tcb/skin} and
+  may seldom be used directly.
+\end{docTcbKey}
+
+The skin of a |tcolorbox| is drawn by up to three \emph{engines}.
+Afterwards, the text content is drawn which is not part of a skin.
+The three steps are:
+\begin{enumerate}
+\item The \emph{frame} of the box.
+\item The \emph{interior} of the box. The interior of a box with title is
+  drawn differently from a box without title.
+\item The \emph{segmentation} (line) of the box, if there is a lower part.
+\end{enumerate}
+
+Every engine for the up to three steps can be set to one of three types:
+\begin{enumerate}
+\item |standard|: the original code from the core package.
+\item |path|: a |tikz| path which can be controlled by options.
+\item |freelance|: arbitrary user code.
+\end{enumerate}
+\clearpage
+
+\begin{docTcbKey}{frame engine}{=\meta{name}}{no default, initially \texttt{standard}}
+  Sets the \emph{frame} drawing engine for a box to \meta{name}.
+  Typically, this key is set by a \refKey{/tcb/skin}.
+  Feasible values for \meta{name} are:
+  \begin{itemize}
+  \item |standard|: the original code from the core package,
+  \item |path|: a |tikz| path which is controlled by \refKey{/tcb/frame style},
+  \item |freelance|: arbitrary user code which is given by \refKey{/tcb/frame code}.
+  \end{itemize}
+\end{docTcbKey}
+
+\begin{docTcbKey}{interior titled engine}{=\meta{name}}{no default, initially \texttt{standard}}
+  Sets the \emph{interior} drawing engine for a titled box to \meta{name}.
+  Typically, this key is set by a \refKey{/tcb/skin}.
+  Feasible values for \meta{name} are:
+  \begin{itemize}
+  \item |standard|: the original code from the core package,
+  \item |path|: a |tikz| path which is controlled by \refKey{/tcb/interior style},
+  \item |freelance|: arbitrary user code which is given by \refKey{/tcb/interior titled code}.
+  \end{itemize}
+\end{docTcbKey}
+
+\begin{docTcbKey}{interior engine}{=\meta{name}}{no default, initially \texttt{standard}}
+  Sets the \emph{interior} drawing engine for an untitled box to \meta{name}.
+  Typically, this key is set by a \refKey{/tcb/skin}.
+  Feasible values for \meta{name} are:
+  \begin{itemize}
+  \item |standard|: the original code from the core package,
+  \item |path|: a |tikz| path which is controlled by \refKey{/tcb/interior style},
+  \item |freelance|: arbitrary user code which is given by \refKey{/tcb/interior code}.
+  \end{itemize}
+\end{docTcbKey}
+
+\begin{docTcbKey}{segmentation engine}{=\meta{name}}{no default, initially \texttt{standard}}
+  Sets the \emph{segmentation} (line) drawing engine for a box to \meta{name}.
+  Typically, this key is set by a \refKey{/tcb/skin}.
+  Feasible values for \meta{name} are:
+  \begin{itemize}
+  \item |standard|: the original code from the core package,
+  \item |path|: a |tikz| path which is controlled by \refKey{/tcb/segmentation style},
+  \item |freelance|: arbitrary user code which is given by \refKey{/tcb/segmentation code}.
+  \end{itemize}
+\end{docTcbKey}
+
+\begin{docTcbKey}{geometry nodes}{\colOpt{=\meta{boolean value}}}{default |true|, initially |false|}
+  If set to |true|, three |tikz| nodes are defined for a |tcolorbox|
+  which are named |frame|, |interior|, and |segmentation|. These nodes
+  describe the boundaries of the equally named parts of a |tcolorbox|.
+  They are used by all engines of type |path| and they may be used by engines
+  of type |freelance|. Typically, this key is set by a \refKey{/tcb/skin}.
+\begin{dispExample}
+\tcbset{colback=Salmon!50!white,colframe=FireBrick!75!black,
+  width=(\linewidth-8mm)/2,before=,after=\hfill,equal height group=geon}
+
+\begin{tcolorbox}[adjusted title=The title]
+  The upper part.\tcblower The lower part.
+\end{tcolorbox}
+\begin{tcolorbox}[adjusted title=The title,skin=freelance,
+  frame code={\path[draw=red,fill=red!25]
+      (frame.south west) rectangle (frame.north east);},
+  interior titled code={\path[draw=blue,fill=blue!25]
+      (interior.south west) rectangle (interior.north east);},
+  segmentation code={\path[draw=green,fill=green!25]
+      (segmentation.south west) rectangle (segmentation.north east);}]
+  The upper part.\tcblower The lower part.
+\end{tcolorbox}
+\end{dispExample}
+\end{docTcbKey}
+
+
+\subsection{Skin 'standard'}
+\begin{docSkin}{standard}
+  This is the standard skin from the core package. All drawing engines
+  are set to type |standard|. The drawing is based on |pgf| commands and
+  does not need the |tikz| package.
+\end{docSkin}
+
+
+\subsection{Skin 'enhanced'}
+\begin{docSkin}{enhanced}
+  This skin translates the drawing commands of the core package into |tikz|
+  path commands. Therefore, it allows all |tikz| high level options for
+  these paths and has more flexibility compared to the \refSkin{standard} skin.
+  You pay for this with some prolonged compilation time.
+  All drawing engines are set to type |path|; they use the |tikz| package
+  and compute the \refKey{/tcb/geometry nodes}.
+  The |tikz| path options can
+  be given with the following option keys.
+\end{docSkin}
+
+\begin{docTcbKey}{frame style}{=\meta{\texttt{\upshape tikz} keys}}{style, no default}
+  The \meta{\texttt{\upshape tikz} keys} are used inside the |tikz| path command
+  for drawing the \emph{frame} of the box.
+\end{docTcbKey}
+
+\begin{docTcbKey}{interior style}{=\meta{\texttt{\upshape tikz} keys}}{style, no default}
+  The \meta{\texttt{\upshape tikz} keys} are used inside the |tikz| path command
+  for drawing the \emph{interior} of the box. They are used for the titled
+  and for the untitled version as well.
+\end{docTcbKey}
+
+\begin{docTcbKey}{segmentation style}{=\meta{\texttt{\upshape tikz} keys}}{style, no default}
+  The \meta{\texttt{\upshape tikz} keys} are used inside the |tikz| path command
+  for drawing the \emph{segmentation} line of the box.
+\end{docTcbKey}
+
+\begin{dispExample}
+% needs shadings library
+\tcbset{skin=enhanced,fonttitle=\bfseries,
+  frame style={upper left=blue,upper right=red,lower left=yellow,lower right=green},
+  interior style={white,opacity=0.5},
+  segmentation style={black,solid,opacity=0.2,line width=1pt}}
+
+\begin{tcolorbox}[title=Nice box in rainbow colors]
+  With the 'enhanced' skin, it is quite easy to produce fancy looking effects.
+  \tcblower
+  Note that this is still a \texttt{tcolorbox}.
+\end{tcolorbox}
+\end{dispExample}
+
+
+\begin{dispExample}
+% needs shadows and decorations.pathmorphing library
+\tcbset{skin=enhanced,fonttitle=\bfseries,boxrule=1mm,
+  frame style={draw=FireBrick,fill=Salmon,drop shadow},
+  interior style={draw=FireBrick,top color=Salmon!10,bottom color=Salmon!20},
+  segmentation style={draw=FireBrick,solid,decorate,
+        decoration={coil,aspect=0,segment length=10.1mm}}}
+
+\begin{tcblisting}{title=A listing box with shadow and some specials}
+Of course, skins can be used for listings also.
+\begin{equation}
+  \int\limits_1^2 \frac{1}{x}~dx = \ln(2).
+\end{equation}
+\end{tcblisting}
+\end{dispExample}
+
+
+\clearpage
+\subsection{Skin 'freelance'}
+\begin{docSkin}{freelance}
+  This skin gives full freedom for the appearance of the |tcolorbox|.
+  All drawing engines are set to type |freelance|; they use the |tikz| package
+  and compute the \refKey{/tcb/geometry nodes}.
+  This skin is useful for boxes which should differ much from the normal
+  appearance. Note that this difference has to be programmed by the user.
+  The drawing code can be given
+  with the following option keys. As default value, the code from the |standard|
+  skin is set.
+\end{docSkin}
+
+
+\begin{docTcbKey}{frame code}{\colOpt{=\meta{graphical code}}}{code, default from |standard|}
+  The given \meta{graphical code} is used for drawing the \emph{frame} of the box.
+\end{docTcbKey}
+
+\begin{docTcbKey}{interior titled code}{\colOpt{=\meta{graphical code}}}{code, default from |standard|}
+  The given \meta{graphical code} is used
+  for drawing the \emph{interior} of the box, if the box comes with a title.
+\end{docTcbKey}
+
+\begin{docTcbKey}{interior code}{\colOpt{=\meta{graphical code}}}{code, default from |standard|}
+  The given \meta{graphical code} is used
+  for drawing the \emph{interior} of the box, if the box is without a title.
+\end{docTcbKey}
+
+\begin{docTcbKey}{segmentation code}{\colOpt{=\meta{graphical code}}}{code, default from |standard|}
+  The given \meta{graphical code} is used for drawing the
+  \emph{segmentation} area of the box.
+\end{docTcbKey}
+
+
+\begin{dispExample}
+  \tcbset{skin=freelance,boxrule=2mm,enlarge top by=2mm,enlarge bottom by=2mm,
+    enlarge left by=3mm,enlarge right by=3mm,width=\linewidth-6mm,
+  frame code={\path[top color=FireBrick,bottom color=FireBrick,middle color=FireBrick!50,
+    draw=FireBrick!75!black,double=Gold,rounded corners=1mm]
+    (frame.south west) -- ([xshift=-3mm]frame.west) -- (frame.north west)
+    -- ([yshift=2mm]frame.north) -- (frame.north east) -- ([xshift=3mm]frame.east)
+    -- (frame.south east) -- ([yshift=-2mm]frame.south) -- cycle;},
+  interior titled code={\path[outer color=Gold,inner color=white,draw=Gold,
+    double=FireBrick!75!black,rounded corners=5mm]
+    (interior.south west) rectangle (interior.north east);},
+  segmentation code={\path[draw=FireBrick,opacity=0.25] ([xshift=2cm]segmentation.west)
+    -- (segmentation.north) -- ([xshift=-2cm]segmentation.east)
+    -- (segmentation.south) -- cycle;}}
+
+\begin{tcolorbox}[title=My title]
+  This is the upper part.
+  \tcblower
+  This is the lower part.
+\end{tcolorbox}
+\end{dispExample}
+
+\clearpage
+\subsection{Skin 'bicolor'}
+\begin{docSkin}{bicolor}
+  This skin is quite similar to the \refSkin{standard} and \refSkin{enhanced} skin.
+  But instead of a segmentation line, the optional lower part of the box is filled with a
+  different color or drawn with a different style.
+  \begin{itemize}
+  \item The most basic usage of this skin is to set the background color of
+    the lower part by \refKey{/tcb/colbacklower} and all other options like for
+    the \refSkin{standard} skin.
+\begin{dispExample}
+\begin{tcolorbox}[skin=bicolor,title=The title,
+    colframe=FireBrick!75!black,colback=Salmon!50!white,colbacklower=Salmon]
+  The upper part.
+  \tcblower
+  The lower part.
+\end{tcolorbox}
+\end{dispExample}
+  \item The more advanced usage of this skin is to apply the \refKey{/tcb/frame style}
+    and the \refKey{/tcb/interior style} like for
+    the \refSkin{enhanced} skin. Also, the \refKey{/tcb/segmentation style} can be
+    used, but it is applied to the whole lower part.
+\begin{dispExample}
+\begin{tcolorbox}[skin=bicolor,title=The title,
+    frame style={top color=FireBrick,
+                 bottom color=FireBrick!15!white,draw=black},
+    interior style={left color=Salmon,right color=Salmon!50!white},
+    segmentation style={right color=Salmon,left color=Salmon!50!white}]
+  The upper part.
+  \tcblower
+  The lower part.
+\end{tcolorbox}
+\end{dispExample}
+  \end{itemize}
+\end{docSkin}
+
+
+\begin{docTcbKey}{colbacklower}{=\meta{color}}{no default, initially \texttt{black!15!white}}
+  Sets the background \meta{color} of the lower part. It depends on the skin,
+  if this value is used.
+\end{docTcbKey}
+
+
+\begin{dispExample}
+\tcbset{skin=bicolor,colback=LightGreen,colframe=DarkGreen,
+  colbacklower=LimeGreen!75!LightGreen,
+  width=(\linewidth-8mm)/4,before=,after=\hfill,equal height group=bicolg,
+  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
+
+\begin{tcolorbox}
+  This is my content.
+\end{tcolorbox}
+\begin{tcolorbox}
+  This is my content.
+  \tcblower
+  More content.
+\end{tcolorbox}
+\begin{tcolorbox}[adjusted title=My title]
+  This is my content.
+\end{tcolorbox}
+\begin{tcolorbox}[adjusted title=My title]
+  This is my content.
+  \tcblower
+  More content.
+\end{tcolorbox}
+\end{dispExample}
+
+
+\begin{dispExample}
+\tcbset{gitexample/.style={listing and comment,comment={#1},
+  skin=bicolor,boxrule=1mm,fonttitle=\bfseries,coltitle=black,
+  frame style={draw=black,left color=Gold,right color=Goldenrod!50!Gold},
+  colback=black,colbacklower=Goldenrod!75!Gold,
+  colupper=white,collower=black,
+  listing options={language={bash},aboveskip=0pt,belowskip=0pt,nolol,
+  basicstyle=\ttfamily\bfseries,extendedchars=true}}}
+
+\begin{tcblisting}{title={Snapshot of the staging area},
+  gitexample={The option '-a' automatically stages all tracked and modified
+              files before the commit.\par
+              This can be combined with the message option '-m'
+              as seen in the third line.}}
+git commit
+git commit -a
+git commit -am 'changes to my example'
+\end{tcblisting}
+\end{dispExample}
+
+
+\clearpage
+\subsection{Skin 'beamer'}
+\begin{docSkin}{beamer}
+  This skin resembles boxes known from the |beamer| class and therefore is
+  called 'beamer'. It uses the normal colors from the core package but shades
+  them a little bit. To use this skin, the |tikz| libraries |shadings|
+  and |shadows| have to be included in the preamble by:
+\begin{dispListing}
+\usetikzlibrary{shadings,shadows}
+\end{dispListing}
+The appearance of the skin can be controlled by \refKey{/tcb/frame style}
+and \refKey{/tcb/interior style}, if needed. Here, the \emph{segmentation}
+cannot be controlled by a style.
+\end{docSkin}
+
+\begin{dispExample}
+\begin{tcolorbox}[skin=beamer,colback=Salmon!50!white,colframe=FireBrick!75!black,
+  adjusted title=A colored box with the 'beamer' skin]
+This box looks like a box provided by the \texttt{beamer} class.
+\end{tcolorbox}
+\end{dispExample}
+
+\begin{dispExample}
+\tcbset{skin=beamer,colback=LightGreen,colframe=DarkGreen,
+  width=(\linewidth-8mm)/4,before=,after=\hfill,equal height group=beamg,
+  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
+
+\begin{tcolorbox}
+  This is my content.
+\end{tcolorbox}
+\begin{tcolorbox}
+  This is my content.
+  \tcblower
+  More content.
+\end{tcolorbox}
+\begin{tcolorbox}[adjusted title=My title]
+  This is my content.
+\end{tcolorbox}
+\begin{tcolorbox}[adjusted title=My title]
+  This is my content.
+  \tcblower
+  More content.
+\end{tcolorbox}
+\end{dispExample}
+
+
+\clearpage
+\subsection{Skin 'widget'}
+\begin{docSkin}{widget}
+  This skin uses the normal colors from the core package but shades
+  them a little bit. To use this skin, the |tikz| library |shadings|
+  has to be included in the preamble by:
+\begin{dispListing}
+\usetikzlibrary{shadings}
+\end{dispListing}
+The appearance of the skin can be controlled by \refKey{/tcb/frame style},
+\refKey{/tcb/interior style}, and \refKey{/tcb/segmentation style},
+if needed.
+\end{docSkin}
+
+\begin{dispExample}
+\begin{tcolorbox}[skin=widget,colback=Salmon!50!white,colframe=FireBrick!75!black,
+  adjusted title=A colored box with the 'widget' skin]
+This is my content.
+\end{tcolorbox}
+\end{dispExample}
+
+\begin{dispExample}
+\tcbset{skin=widget,colback=LightGreen,colframe=DarkGreen,
+  width=(\linewidth-8mm)/4,before=,after=\hfill,equal height group=widg,
+  left=1mm,right=1mm,top=1mm,bottom=1mm,middle=1mm}
+
+\begin{tcolorbox}
+  This is my content.
+\end{tcolorbox}
+\begin{tcolorbox}
+  This is my content.
+  \tcblower
+  More content.
+\end{tcolorbox}
+\begin{tcolorbox}[adjusted title=My title]
+  This is my content.
+\end{tcolorbox}
+\begin{tcolorbox}[adjusted title=My title]
+  This is my content.
+  \tcblower
+  More content.
+\end{tcolorbox}
+\end{dispExample}
+
+
+% Actually, it is not a good idea to include the references like this!
+% Do not follow this bad example ...
+\begin{tcbverbatimwrite}{\jobname.bib}
+@manual{heinz:2007a,
+   author    = {Carsten Heinz and Brooks Moses},
+   title     = {The Listings Package},
+   url       = {http://mirror.ctan.org/macros/latex/contrib/listings/listings.pdf},
+   note      = {Version 1.4},
+   month     = feb,
+   year      = 2007,
+   language  = {english}
+}
+
+@manual{schoepf:2001a,
+  author    = {Rainer Sch{\"o}pf and Bernd Raichle and Chris Rowley},
+   title     = {A New Implementation of {\LaTeX}'s verbatim and verbatim* Environments},
+   url       = {http://mirror.ctan.org/macros/latex/required/tools/verbatim.pdf},
+   date      = {2001-03-12},
+}
+
+@techreport{sturm:2007b,
+   author      = {Thomas F. Sturm},
+   title       = {Mathematik 1 (B.Eng.)},
+   type        = {Vorlesungs-Skriptum},
+   institution = {Universit{\"a}t der Bundeswehr M{\"u}nchen},
+   address     = {Neubiberg},
+   url         = {http://www.unibw.de/bw/Fakultat/we2/Sturm},
+   year        = 2007,
+   language    = {german}
+}
+
+@techreport{sturm:2008b,
+   author      = {Thomas F. Sturm},
+   title       = {Mathematik 2 (B.Eng.)},
+   type        = {Vorlesungs-Skriptum},
+   institution = {Universit{\"a}t der Bundeswehr M{\"u}nchen},
+   address     = {Neubiberg},
+   url         = {http://www.unibw.de/bw/Fakultat/we2/Sturm},
+   year        = 2008,
+   language    = {german}
+}
+
+@techreport{sturm:2010a,
+   author      = {Thomas F. Sturm},
+   title       = {H{\"o}here Mathematik: Fortgeschrittene mathematische Methoden (M.Eng.)},
+   type        = {Vorlesungs-Skriptum},
+   institution = {Universit{\"a}t der Bundeswehr M{\"u}nchen},
+   address     = {Neubiberg},
+   url         = {http://www.unibw.de/bw/Fakultat/we2/Sturm},
+   year        = 2010,
+   language    = {german}
+}
+
+@book{sturm:2011b,
+   author      = {Thomas F. Sturm},
+   title       = {\LaTeX\ -- Einf{\"u}hrung in das Textsatzsystem},
+   publisher   = {Regionales Rechenzentrum f{\"u}r Niedersachsen (RRZN)},
+   address     = {Hannover},
+   edition     = 8,
+   series      = {RRZN-Handb{\"u}cher},
+   url         = {http://www.rrzn.uni-hannover.de/buecher.html},
+   month       = sep,
+   year        = 2011,
+   language    = {german}
+}
+
+@manual{tantau:2010c,
+   author    = {Till Tantau},
+   title     = {The TikZ and PGF Packages},
+   subtitle  = {Manual for version 2.10},
+   url       = {http://mirror.ctan.org/graphics/pgf/base/doc/generic/pgf/pgfmanual.pdf},
+   date      = {2010-10-25},
+}
+
+@manual{thorub:2007a,
+   author    = {Kresten Krab Thorub and Frank Jensen and Chris Rowley},
+   title     = {The calc package -- Infix notation arithmetic in \LaTeX},
+   url       = {http://mirror.ctan.org/macros/latex/required/tools/},
+   day       = 22,
+   month     = aug,
+   year      = 2007,
+   language  = {english}
+}
+
+@manual{carlisle:2007a,
+  author    = {David Carlisle},
+  title     = {The file ltxdoc.dtx for use with \LaTeXe},
+  url       = {http://mirror.ctan.org/macros/latex/base/ltxdoc.dtx},
+  date      = {2007-11-11}
+}
+
+@manual{mittelbach:2011a,
+  author    = {Frank Mittelbach},
+  title     = {The doc and shortvrb Packages},
+  url       = {http://mirror.ctan.org/macros/latex/base/doc.dtx},
+  date      = {2011-06-30}
+}
+
+\end{tcbverbatimwrite}
+
+\clearpage
+\printbibliography[heading=bibintoc]
+
+\printindex
+
+\end{document}

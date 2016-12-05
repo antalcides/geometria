@@ -1,0 +1,43 @@
+\documentclass[openany,twoside,svgnames,x11names]{book}
+
+\input{paquetes}
+\input{definiciones}
+\input{entornos}
+\usepackage[colorlinks=true,linkcolor = caper, citecolor = black, pdftex,bookmarks=true]{hyperref}% es mejor colocarlo al final
+\usepackage[open,openlevel=2,atend]{bookmark}
+\makeindex
+\begin{document}
+\frontmatter
+\title{Geometr\'ia con regla y compás}
+\author{UNIVERSIDAD DEL NORTE
+\and \'{A}REA DE CIENCIAS B\'{A}SICAS
+\and MATEM\'{A}TICAS Y ESTAD\'ISTICA
+\and Esp. ANTALCIDES OLIVO}
+\maketitle
+%\pdfbookmark[0]{Índice}{ind} 
+\tableofcontents
+\mainmatter
+\setdefaults
+\cxset{
+ name={CHAPTER CONCEPT},
+ numbering=none,
+ number font-size=,
+ number font-family=,
+ number font-weight=,
+ number color=white,
+ chapter color={black},
+ chapter font-family=\sffamily,
+ chapter font-size=\large,
+ chapter font-weight=\bfseries,
+ title font-family=\sffamily,
+ title font-color=teal,
+ rule off,
+}
+\setcounter{chapter}{0}
+\setcounter{page}{1}
+\pagestyle{headings}
+\input{cap1_geo}
+\input{cap2_geo}
+\input{cap3_geo}
+
+\end{document}

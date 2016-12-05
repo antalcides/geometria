@@ -1,0 +1,820 @@
+\documentclass[11pt,spanish,letter]{book}
+%%%%%%%%%%%%%%%%%%%%%%%%%%% paquetes %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{calc}
+\usepackage{chngcntr}%para referenciar cualquier entorno
+\usepackage[notref,color]{showkeys} %para mostrar etiquetas de las referencias
+\usepackage{pifont}
+\usepackage{tikz}
+\usetikzlibrary{shapes,snakes}
+\usepackage{pgf}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\usepackage{epstopdf}
+%\usepackage{floatflt}
+\usepackage{multirow}
+\usepackage{bigstrut}
+\usepackage{type1ec}       % Tildes en el pdf
+\usepackage{times}          % Usar tipo Times-Roman
+\usepackage[T1]{fontenc}    % Usar la codificación T1
+%\usepackage[spanish]{babel}
+%\usepackage{gnuplot-lua-tikz}
+%\usepackage{maxiplot}
+%\usepackage{gnuplottex}
+\usepackage{pgfplots}
+\usepackage{amsmath,amssymb}
+%\usepackage{helvet}
+\usepackage[T1]{fontenc}
+%\geometry{verbose}
+\usepackage{booktabs}
+\usepackage{courier}
+\usepackage{units}
+\usepackage{url}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{mathpazo}
+\usepackage{amsfonts}
+\usepackage{fancyvrb}
+\usepackage{multicol}
+\usepackage[utf8x]{inputenc}
+%\usepackage[latin1]{inputenc}
+\usepackage[calcwidth]{titlesec}
+\usepackage{graphicx}
+\usepackage[oneline,flushleft,footnotesize]{caption2}
+\usepackage{enumerate}
+\usepackage{comment}
+\usepackage{ifthen}
+\usepackage{cancel}
+\usepackage{layout}
+\usepackage{footnote}
+\usepackage{hyperref}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Fancy %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+%%%%%%%%%%%%%%%%%%%%%Página par en blanco al final del capítulo%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Abre Introducción de tipos  @  %%%%%%%%%%%
+ \makeatletter
+\def\clearpage{\ifvmode
+\ifnum \@dbltopnum =\m@ne \ifdim \pagetotal <\topskip \hbox{} \fi
+\fi \fi
+\newpage
+\thispagestyle{empty} \write\m@ne{} \vbox{} \penalty -\@Mi }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\@endchapter{\vfil\newpage
+              \if@twoside
+               \if@openright
+                \null
+                \thispagestyle{empty}%
+                \newpage
+               \fi
+              \fi
+              \if@tempswa
+                \twocolumn
+              \fi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Definicion de subsecciones%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\blackline}{{\setlength{\parindent}{0mm}\color{black}\rule{\linewidth}{0.3mm}}}
+\newcommand{\blueline}{{\setlength{\parindent}{0mm}\color{blue}\rule{\linewidth}{1mm}}}
+\newcommand{\greenline}{{\setlength{\parindent}{0mm}\color{green}\rule{\linewidth}{1mm}}}
+% \renewcommand\section{\@startsection {section}{1}{-10pt}%
+%                                    {3.5ex \@plus 1ex \@minus .2ex
+%                                    }%
+%                                    {2.3ex\@plus .2ex
+%                                    \vskip 0.2\p@ \blackline \vskip 1pt}%
+%                                    {\centering\sc\normalsize\color{black}}}
+
+\renewcommand\subsection{\@startsection {subsection}{1}{-5pt}%
+                                   {3.5ex \@plus 1ex \@minus .2ex
+                                   }%
+                                   {2.3ex\@plus .2ex
+                                   \vskip 0.2\p@ \vskip 1pt}%
+                                   {\centering\sc\large\color{blue}}}
+
+\renewcommand\subsubsection{\@startsection {subsubsection}{1}{-5pt}%
+                                   {3.5ex \@plus 1ex \@minus .2ex
+                                   }%
+                                   {2.3ex\@plus .2ex
+                                   \vskip 0.2\p@ \vskip 1pt}%
+                                   {\centering\sc\large\color{red}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%&&%%
+\setlength{\parindent}{0pt}
+%%%%%%%%%%%%%tabla de contenido%%%%%%%%%%%%
+  \newif\if@toc \@tocfalse
+\renewcommand\tableofcontents{ \if@twocolumn
+\@restonecoltrue\onecolumn \else \@restonecolfalse \fi
+\begingroup                     \@toctrue
+\chapter*{\contentsname}
+\endgroup
+\pagestyle{empty} \baselineskip=18pt plus .5pt minus .5pt
+{\raggedleft P\'{a}gina \par\vskip-\parskip} \@starttoc{toc}
+\newpage
+\if@restonecol\twocolumn\fi \baselineskip=\normalbaselineskip
+}\let\par \par
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Tipos en caption%%%%%%%%%%%%%%%%%
+\renewcommand{\captionfont}{\rmfamily}
+\renewcommand{\captionlabelfont}{\footnotesize\bfseries \sffamily}
+\renewcommand\footnoterule{  \kern-3\p@
+\hrule\@width.2\columnwidth \kern2.6\p@}
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Encajonado%%%%%%%%%%%%%%%%%%%%%
+% \setlength{\marginparwidth}{5cm} \setlength{\marginparsep}{0.5cm}
+% \setlength{\textheight}{22 cm} \setlength{\textwidth}{15cm}
+% \oddsidemargin -1cm
+% \evensidemargin -1cm
+% \topmargin-1 cm
+% \headsep+22pt
+% \headheight9pt
+% \hoffset -0.8cm
+% \voffset -1.8cm
+% \footskip 1cm
+\usepackage[paperheight=25cm,%
+paperwidth=19cm,%
+centering,%
+left=1.5cm,%
+right=2cm,%
+top=2.5cm,%
+bottom=1.5cm,%
+headheight=0.5cm,%
+headsep=10pt,%
+%footskip=1cm,%
+marginparsep=20pt,
+pdftex=false
+]{geometry}
+\usepackage[frame,center,letter,pdflatex,cam]{crop}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%titulo de secciones%%%%%%%%%%%%%%%%%%%%%%
+\def\indexname{\'{\I}ndice}
+\def\contentsname{ Contenido}
+\def\listfigurename{Tabla de figuras}
+\def\bibname{\Large Bibliograf\'{\i}a}
+\def\tablename{Tabla}
+\def\proofname{Demostraci\'on}
+\def\appendixname{Ap\'endice}
+\def\chaptername{ Cap\'{\i}tulo}
+\def\figurename{Figura}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\listtablename}{\'{\I}ndice de Tablas}
+\newdimen\myboxnot
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%definicion de capitulos%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\nomproprebib}[2]{#1 \textsc{#2}}
+\newcommand{\entreebiblivre}[4]{#1, \emph{#2}, #3, #4.}
+\newcommand{\entreebibarticle}[7]{#1, \og #2\fg{}, \emph{#3} \textbf{#4} (#5), p.~#6-#7.}
+\newcommand{\ifempty}[3]{\ifx#1\empty#2\else#3\fi}
+\newcommand{\thechapterimage}{}
+\newcommand{\chapterimage}[1]{\renewcommand*{\thechapterimage}{#1}}
+\newcommand{\chapterheadfont}{\fontfamily{phv}\fontsize{20pt}{24pt}\selectfont}
+\newcommand{\sectionheadfont}{\fontfamily{phv}\fontsize{18pt}{20pt}\selectfont}
+% \newcommand{\chapimage}{\begin{figure*}[H]
+%                                                 \centering
+% \includegraphics[width=1.2\paperwidth]{\thechapterimage}
+%                        \end{figure*}
+% }
+\newcommand{\newchaptercmd}[1]{%
+ \begin{figure}[H]
+ %\centering
+\begin{tikzpicture}[overlay,remember picture]
+\begin{scope}
+\clip (current page.north west) rectangle ($ (current page.north east) + (5cm,-12cm)$);
+\fill[blue!20] (current page.north west) rectangle
+($ (current page.north east) + (5cm,-12cm)$);
+\node[below=-0.35cm] at (current page.north)
+{\ifempty{\thechapterimage}{}{\centering\includegraphics[width=2\paperwidth]{\thechapterimage}}};
+\end{scope}
+\node[right=2cm,rectangle,draw,color=white,fill=white,opacity=0.7,inner ysep=10pt,
+inner xsep=15pt,rounded corners=0.75cm] at ($ (current page.north west) + (0cm,-7cm)$)
+{\chapterheadfont\vphantom{pb}\phantom{#1}\hspace{\paperwidth}\null};
+\node[right=2cm,inner ysep=10pt,inner xsep=15pt] at ($ (current page.north west) + (0cm,-7cm)$)
+{\chapterheadfont\vphantom{pb}\color{red!60!black}\chapterlabel#1};
+\end{tikzpicture}\end{figure}
+}
+\titleformat{\chapter}
+{\gdef\chapterlabel{}}
+{\gdef\chapterlabel{\thechapter.\ }}
+{0pt}
+{\newchaptercmd}
+{}
+\titlespacing*{\chapter}{0pt}{0pt}{8cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5 definicion seccion %%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\newsectioncmd}[1]{ %\vskip 5pt
+\hspace*{-25pt}
+        \tikzstyle{mybox} = [ draw=blue, fill=red!10, very thick,
+    rectangle,opacity=0.7,inner ysep=10pt,inner xsep=15pt,rounded corners=15pt]
+         \tikzstyle{fancytitle} =[fill=blue, text=white]
+                        \begin{tikzpicture}
+                 \node [mybox] (box){ \begin{minipage}[r][15pt]{0.75\paperwidth}
+
+\chapterheadfont\vphantom{pb}\phantom{#1}\hspace{0.7\paperwidth}\null
+                                \end{minipage}};
+                             \node[right=-5cm,inner ysep=10pt,inner xsep=15pt]
+at (-3cm,0cm)
+{\sectionheadfont\vphantom{pb}\color{red!60!black}\thesection \, #1};
+                        \end{tikzpicture}
+
+
+\vskip -10pt
+}
+\titleformat{\section}
+{\gdef\sectionlabel{}}
+{\gdef\sectionlabel{\thesection.\ }}
+{0pt}
+{\newsectioncmd}
+{}
+\titlespacing*{\section}{12pt}{2cm}{20pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Encabezado %%%%%%%%%%%%%%%%%%%
+\newpagestyle{estilonew}[\small\sffamily]{\headrule
+\sethead[\thesection. \ \sectiontitle][][A.Olivo]{Geometr\'{\i}a con regla y comp\'as}{}{}
+\footrule\setfoot{}{\usepage}{}}
+\pagestyle{estilonew}
+\renewcommand{\makeheadrule}{%
+\makebox[0pt][l]{\rule[.9\baselineskip]{\linewidth}{0.8pt}}%
+\rule[-.4\baselineskip]{\linewidth}{0.8pt}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entornos %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%% Lista %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Lista    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{lista}{
+\begin{itemize}
+ \renewcommand{\labelitemi}{{
+ \colorbox{blue!90!black}{\color{white}{\ding{42}}}
+ }}
+}{\end{itemize}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Termino  Ideas  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{ideas}[section]
+\newenvironment{ideas}[2]{\vskip 5pt
+\refstepcounter{ideas}
+   \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=yellow!20, very thick,    
+    rectangle, rounded corners, inner sep=20pt, inner ysep=20pt]   
+\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+ %\hspace*{-15pt}
+   \node [mybox] (box){ %
+ \begin{minipage}[r]{0.9\textwidth}
+                                     #1
+                                          \end{minipage}};
+\node[fancytitle, right=10pt] at (box.north west) {T\'ermino.\theideas.\
+\bf{#2}};
+\node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};  
+ \end{tikzpicture} 
+          \hspace*{10pt}                }
+                              {\vskip 5pt }%
+\counterwithin{ideas}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ejemplo%%%%%%%%%%%%%%%%%%%%
+\newcounter{ejemplo}[section]% para ligar el contador con la seccion.
+\newenvironment{ejemplo}[1]{\vskip 5pt
+\refstepcounter{ejemplo}%para adicionar un valor+ al contador y poder referenciarlo
+\begin{tikzpicture}
+\tikzstyle{mybox} = [draw=red, fill=blue!20, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=red, text=black]
+%\hspace*{-10pt}
+\node [mybox] (box){%
+     \begin{minipage}[r]{0.95\textwidth} 
+                                     {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west) {Ejemplo. \theejemplo\hspace*{50pt}};
+ \node[fancytitle, rounded corners] at (box.east) {$\blacktriangle$};                    
+      \end{tikzpicture} 
+                        \hspace*{10pt}         }{
+ 
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+\counterwithin{ejemplo}{section} %Para que en la referencia aparezca el counter Chapter.section.ejemplo 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Axioma %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{axioma}[section]
+\newenvironment{axioma}[2]{\vskip 5pt
+\refstepcounter{axioma}
+  \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=red!10, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=blue, text=white]
+\node [mybox] (box){ %
+     \begin{minipage}[r]{\textwidth}
+                                    {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west)
+{Postulado.\theaxioma. \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+     \end{tikzpicture}
+              \hspace*{10pt}                }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+\counterwithin{axioma}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% postulado %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{postulado}[section]
+\newenvironment{postulado}[2]{\vskip 5pt
+\refstepcounter{postulado}
+  \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=red!10, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=blue, text=white]
+\node [mybox] (box){ %
+     \begin{minipage}[r]{\textwidth} 
+                                    {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west)
+{Postulado.\thepostulado. \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};                    
+     \end{tikzpicture} 
+              \hspace*{10pt}                }{
+ 
+                \vskip 5pt 
+ }%\greenline \vskip 0.1pt}
+\counterwithin{postulado}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conjetura %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{conjetura}[section]
+\newenvironment{conjetura}[2]{\vskip 5pt
+\refstepcounter{conjetura}
+  \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=green!20, very thick,
+    rectangle, rounded corners, inner sep=20pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+\node [mybox] (box){ %
+     \begin{minipage}[r]{0.9\textwidth} 
+                                    {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west) {Conjetura.
+\theconjetura. \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};                    
+     \end{tikzpicture} 
+              \hspace*{10pt}                }{
+ 
+                \vskip 5pt 
+ }%\greenline \vskip 0.1pt}
+\counterwithin{conjetura}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Definicion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{definicion}[section]
+\newenvironment{definicion}[2]{\vskip 5pt
+\refstepcounter{definicion}
+  \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=yellow!20, very thick,
+    rectangle, rounded corners, inner sep=20pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=red!60, text=white, ellipse]
+\stepcounter{definicion}
+\hspace*{-15pt}
+\node [mybox] (box){ %
+     \begin{minipage}[r]{\textwidth} 
+                                    {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west) {Definici\'on.
+\thedefinicion. \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\heartsuit$};                    
+     \end{tikzpicture} 
+              \hspace*{10pt}                }{
+ 
+                \vskip 5pt 
+ }%\greenline \vskip 0.1pt}
+\counterwithin{definicion}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Teorema %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{teorema}[chapter]
+\newenvironment{teorema}[2]{\vskip 5pt
+  \begin{tikzpicture}
+\refstepcounter{teorema}
+\tikzstyle{mybox} = [draw=blue, fill=red!10, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+\stepcounter{teorema}
+\hspace*{-15pt}
+\node [mybox] (box){ %
+     \begin{minipage}[r]{\textwidth}
+                                    {#1}
+                                 \end{minipage} };
+ \node[fancytitle, right=10pt] at (box.north west) {Teorema. \theteorema.  \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};                    
+     \end{tikzpicture} 
+              \hspace*{10pt}                }{
+ 
+                \vskip 5pt 
+ }%\greenline \vskip 0.1pt}
+\counterwithin{teorema}{chapter}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% construccion%%%%%%%%%%%%%%%%%%%%
+\newcounter{construccion}[section]
+\newenvironment{construccion}[2]{\vskip 5pt
+\refstepcounter{construccion}
+\begin{tikzpicture}
+\tikzstyle{mybox} = [draw=red, fill=blue!20, very thick,
+    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=red, text=black]
+\node [mybox] (box){%
+     \begin{minipage}[r]{\textwidth}
+                                     {#1}
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west) {Construcci\'on.
+\theconstruccion \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\bigstar$};
+      \end{tikzpicture}
+                        \hspace*{10pt}         }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+\counterwithin{construccion}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NoDefinicion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{tndefinido}[section]
+\newenvironment{tndefinido}[2]{\vskip 5pt
+\refstepcounter{tndefinido}
+  \begin{tikzpicture}
+\tikzstyle{mybox} = [draw=blue, fill=yellow!20, very thick,
+    rectangle, rounded corners, inner sep=20pt, inner ysep=20pt]
+\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+\stepcounter{tndefinido}
+ \hspace*{-15pt}
+\node [mybox] (box){ %
+     \begin{minipage}[r]{0.9\textwidth}
+                                    #1
+                                 \end{minipage}};
+ \node[fancytitle, right=10pt] at (box.north west) {T\'ermino no definido.
+\thetndefinido. \ \bf{#2}};
+ \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};  
+     \end{tikzpicture} 
+                             }
+                             {\vskip 5pt }%\greenline \vskip 0.1pt}
+\counterwithin{tndefinido}{section}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fontfamily{pbk}
+\selectfont
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Figura %%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{figura}[3]{\begin{figure}[H]
+\centering
+                               #1
+                              \caption{#2}
+                              \label{#3}
+                              \end{figure}
+}{ \vskip 5pt }
+%%%%%%%%%%%%%%%%%%%%%%%%cambiando margen%%%%%%%%%%%%%%%%
+\newenvironment{changemargin}[2]
+{
+\begin{list}{}
+{
+\setlength{\topsep}{0pt}
+\setlength{\evensidemargin}{0pt}%
+\setlength{\oddsidemargin}{0pt}
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}
+\item[]
+}
+{\end{list}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Notas %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{notas}[2]{\vskip 5pt  \colorbox{blue!30}{\color{white}{#1:\, #2}}
+                                     
+                                     }{ \vskip 5pt
+                                        %\blackline
+                                        \vskip 0.2pt}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Prueba %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\newenvironment{prueba}[2]{\renewcommand{\arraystretch}{2.06}
+\newcommand{\tn}{\tabularnewline}
+\newcommand{\rr}{\raggedright}
+\fontsize{7}{6}\selectfont
+\vskip 5pt  {
+ \colorbox{red!30}{\color{white}{Prueba:}}
+ }\vskip 5pt
+ %
+\begin{center}
+\begin{tabular}
+[t]{ll||l}\hline
+\multicolumn{2}{c||}{Afirmaciones} & Razones\\\hline\hline
+1. & #1 & \multicolumn{1}{|l}{Dado}\\
+#2
+\end{tabular}\end{center}
+\ \ \  \vskip 5pt}{\hfill  \raggedright{ \rule{0.5em}{0.5em} }\vskip 5pt }
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Solucion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{sol}[2]{\renewcommand{\arraystretch}{2.06}
+\newcommand{\tn}{\tabularnewline}
+\newcommand{\rr}{\raggedright}
+\fontsize{7}{6}\selectfont
+\vskip 5pt  {
+ \colorbox{red!30}{\color{white}{Soluci\'on:}}
+ }\vskip 5pt
+ %
+\begin{center}
+ \begin{tabular}
+[t]{ll||l}\hline
+\multicolumn{2}{c||}{Afirmaciones} & Razones\\\hline\hline
+1. & #1 & \multicolumn{1}{|l}{Dado}\\
+#2
+\end{tabular}\end{center}
+\ \ \  \vskip 5pt}{\hfill  \raggedright{ \rule{0.5em}{0.5em} }\vskip 5pt }
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Ejemplocon grafica
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% % % %
+%   \newcounter{ejemplo}
+% \newenvironment{ejemplo}[1]{\vskip 5pt
+% \stepcounter{ejemplo}
+% \begin{tikzpicture}
+% \tikzstyle{mybox} = [draw=red, fill=blue!20, very thick,
+%     rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+% \tikzstyle{fancytitle} =[fill=red, text=black]
+% \node [mybox] (box){%
+%      \begin{minipage}[r]{\textwidth} 
+%                                      {#1}
+%                                  \end{minipage}};
+%  \node[fancytitle, right=10pt] at (box.north west) {Ejemplo.
+% \thechapter.\theejemplo};
+%  \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};              
+ 
+%    
+%       \end{tikzpicture} 
+%                         \hspace*{10pt}         }{
+%  
+%                 \vskip 5pt
+%  }%\greenline \vskip 0.1pt}
+% 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcounter{ejemplo}
+\newenvironment{ejemgraf}[2]{\vskip 5pt
+\stepcounter{ejemplo}
+\begin{minipage}[t][0.8\height]{0.35\textwidth}
+\bf{Ejemplo. \theejemplo\ } {#1}
+
+\end{minipage}\vline \vline \vline \hfill
+\begin{minipage}[t][0.9\height][t]{0.50\textwidth}
+ {#2}
+\end{minipage}
+ }
+ %\counterwithin{ejemplo}{section} 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%$$$$$$$$$$$$$$$$$$$$$$$ Comandos $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% solucion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\solucion}
+ {\vskip 5pt
+  {
+ \colorbox{red!30}{\color{white}{Soluci\'on: \,}}
+ }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% problemas %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\problema}[1]
+{
+%\noindent
+\section{Problemas}
+\begin{multicols}{2}
+\begin{enumerate}
+ #1
+\end{enumerate}
+\end{multicols}
+{\setlength{\parindent}{0mm}\color{black}\rule{\linewidth}{1mm}}
+}         
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Arco %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\arco}[2][30pt]{\overset{\tikz \draw[rotate=60,line width=1pt]
+ (#1,0pt) arc (0:60:#1);}{#2}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Nota y solución%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand{\solucion}{\colorbox{black}{\color{white}{Soluciön:}}}
+\newcommand{\nota}{\colorbox{red!20!white}{\color{black}{Nota:}}}
+\newcommand{\degre}{\ensuremath{^\circ}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Cierra Introducción de tipos  @ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%Regla y transportador %%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\regla}[1]{
+\begin{center}
+\begin{tikzpicture}[scale=#1,font=\fontsize{7}{7}\selectfont]
+% La regla de plastico
+\draw[thick,red] (-0.25,0.0) rectangle (25.25,2.5);
+% Marcas de milímetros
+\foreach \x in{0.0, 0.1,...,25.0}
+	\draw[blue,shift={(\x,0)}] (0,0.5pt) -- (0,5pt);
+% Marcas de centímetros	
+\foreach \x in{0, 1, ..., 25}
+	\draw[thick,shift={(\x,0)}] (0,-0.5pt) -- (0,7.5pt) node[above]{$\x$};
+% Para que escriban su nombre los niños:
+%\node[blue,right]	at (0,1.75) {\textbf{Nombre:} \rule{7.5cm}{0.5pt}};
+\end{tikzpicture}
+\end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\transportador}[1]{
+\begin{center}
+\begin{tikzpicture}[scale=#1,font=\fontsize{7}{7}\selectfont]
+\draw[thick] (5,0) arc (0:180:5);
+\draw[thick] (5,0) -- (5,-5pt) -- (-5,-5pt) -- (-5,0);
+%
+\draw[red,fill=red] (0,0) circle (3.5pt);
+% Grados
+\foreach \ang in {0,1,...,180}
+	\draw[rotate=\ang] (4.9,0) -- (5.0,0);
+% Multiplos de 5
+\foreach \mult in {0, 5,..., 180}
+	\draw[thick,rotate=\mult] (4.8,0) -- (5.0,0);
+% Multiplos de 10 (Solamente nodos)
+\foreach \nodo in {0, 10, ...,180}
+	\node[red] at (\nodo:4.5) {\nodo};
+% Multiplos de 10 [los últimos]
+\foreach \ult in {0, 10, ...,180}
+	\draw[very thick,rotate=\ult,red]	(4.8,0) -- (5.0,0);
+\end{tikzpicture}
+\end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\instruccion}[1]{
+	\vspace{\fill}
+	\begin{center}
+	\cooltooltip
+	[1 1 0]
+	{Instrucciones:}
+	{Imprima en hojas tamaño carta sin lineas. \\
+	Utilice sólo regla sin graduar y compás.	
+	}
+	{http://www.uninorte.edu.co}{Catálogo Web}
+	{#1\strut}
+	\end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%triangulo    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\triangulo}{\tikz \draw[scale=0.5] (0,0) -- ++(60:1)
+-- ++(-60:1) -- cycle ;
+                 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5Probar %%%%%%%%%%%%%%%%%%%%%
+\newenvironment{probar}[1]
+ {\vskip 5pt
+  
+ \colorbox{red!30}{\color{white}{Prueba}}\vskip 5pt
+
+#1 
+ }
+{\hfill  \raggedright{ \rule{0.5em}{0.5em} }\vskip 5pt }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%b Cuerpo del Documento %%%%%%%%%%%%%%%
+%$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% makeidx
+\makeindex
+\begin{document}
+\frontmatter
+\title{Geometr\'ia con regla y compás}
+\author{UNIVERSIDAD DEL NORTE
+\and \'{A}REA DE CIENCIAS B\'{A}SICAS
+\and MATEM\'{A}TICAS Y ESTAD\'ISTICA
+\and Esp. ANTALCIDES OLIVO}
+\maketitle
+\chapterimage{./circulo2.jpg}
+\tableofcontents
+\mainmatter
+\thispagestyle{plain}
+\setcounter{chapter}{1}
+\setcounter{page}{1}
+%\begin{quote}
+\bigskip
+%\end{quote}
+\chapterimage{./1.jpg}
+\chapter{\'Area , per\'imetro y volumen  }
+\label{chap:2}
+\vspace{40pt}
+\section*{Introducci\'on}
+ En este cap\'itulo veremos las propiedades de las circunferencias
+
+\section{Postulados del \'area}
+
+\begin{definicion}{Una regi\'on poligonal es un subconjunto de un plano
+acotado por un poligono}{}
+\end{definicion}
+
+\begin{postulado}{A cada regi\'on poligonal se le puede asignar un n\'umero
+positivo \'unico denominado \'area }{}
+
+\end{postulado}
+
+\begin{postulado}{Si dos rect\'angulos o dos tri\'angulos son congruentes,
+entonces, las regiones que acotan tienen la misma \'area.}{}
+\end{postulado}
+
+\begin{postulado}{Si una regi\'on poligonal es la uni\'on de $n$ regiones
+poligonales que no se solapan, su \'area  es la suma de las \'areas de las $n$
+regiones. }{}
+ \end{postulado}
+\begin{postulado}{El \'area de un rect\'angulo de longitud $l$ y ancho $w$
+est\'a dada por la f\'rmula $lw$}{}
+\end{postulado}
+\begin{definicion}{Una unidad cuadrada es una regi\'on cuadrada en la cual
+cada uno de sus lados mide una unidad de longitud.}{}
+
+\end{definicion}
+\begin{teorema}{Dado un paralelogramo con base $b$ y altura correspondiente
+$h$, el \'area $A$ est\'a dada por la f\'ormula $A=bh$}{}
+\end{teorema}
+\begin{teorema}{Dado un tri\'angulo con base $b$ y altura correspondiente
+$h,$ el \'area $A$ est\'a dada por la f\'ormula $A=\frac{1}{2}bh$}{}
+\end{teorema}
+\begin{teorema}{Dado un trapecio con bases $b_1 $ y $b_2,$ y altura $h,$ el
+\'area $A$ est\'a dada por la f\'ormula $A=\frac{}1{2}h(b_1 + b_1)$ }{}
+\end{teorema}
+\begin{teorema}{Dado un pol\'igono regular de $n$ lados de longitud $s$ y
+apotema $a,$ el \'area $A$ est\'a dada por la f\'ormula $A=(\frac{1}{2}ans) $
+}{}
+ 
+\end{teorema}
+
+\begin{teorema}{La raz\'on entre los per\'imetros de dos pol\'igonos semejantes
+es igual a la raz\'on entre las longitudes de cualquier par de lados
+correspondientes. }{}
+
+\end{teorema}
+\begin{teorema}{La raz\'on entre las \'areas de dos pol\'igonos semejanntes
+es igual al cuadrado de la razo\'on entre las longitudes de cualquier par de
+lados correspondientes}{}
+
+\end{teorema}
+\begin{teorema}{La raz\'on entre la circunferencia y el di\'ametro es la
+misma para todos las circunferencias.}{}
+\end{teorema}
+\begin{teorema}{Dada una circunferencia de radio $r$ y di\'ametro $d,$ la
+circunferencia $C$ est\'a dada por la f\'ormula $C=\pi d$}{}
+\end{teorema}
+
+\begin{teorema}{Dado un circulo de radio $r,$ el \'area est\'a dada por la
+f\'ormula $A=\pi r^2$ }{}
+
+\end{teorema}
+
+\begin{definicion}{Un poliedro esta formado por un n\'umero finito de
+regiones poligonales. Cada arista de una regi\'on es la arista de exactamente
+otra regi\'on. si dos regiones se intersecan, lo hacen en una arista o en un
+v\'ertice}{}
+
+\end{definicion}
+
+\begin{definicion}{Una piramide es un poliedro en el cual todas las caras,
+menos una tienen un v\'ertice com\'un}{}
+
+\end{definicion}
+\begin{definicion}{Un prisma es un poliedro que sastisface estas condiciones:
+\begin{lista}
+ \item Hay un par de caras congruentes sobre planos paralelos.
+\item Todas las dem\'as caras son paralelogramos.
+\end{lista}
+}{}
+
+\end{definicion}
+\begin{teorema}{dado un prisma con caras laterales rctangulares, si la altura
+del prisma es $h$ y las bases tienen \'area $B$ y per\'imetro $p,$ entonces
+el \'area $S$ se encuentra con la f\'ormulas $S=hp+2B$}{}
+\end{teorema}
+\begin{teorema}{Dada una pir\'amide regular con altura inclinada $l$ y base
+con \'area $S$ se encuentra con la f\'ormula $S=\frac{1}{2} lp +B$}{}
+\end{teorema}
+
+ \begin{teorema}{El volumen de un prisma cualquiera es el producto de la
+longitud de una altura por el \'area de la base}{}
+
+ \end{teorema}
+\begin{teorema}{Dada una pir\'amide de altura $h$ y \`area de la base $B,$ el
+volumen se encuentra por la f\'ormula $V=\frac{1}{2} hB$.  }{}
+\end{teorema}
+
+\begin{teorema}{Dado un cilindro circular recto de altura $h,$ si la
+circunferencia de la base es $C$ y el \'area de la base es $B,$ el \'area $S$
+est\'a dada por la f\'ormula $$S=Ch+2B=2\pi rh +2\pi r^2$$ }{}
+ 
+\end{teorema}
+
+\begin{teorema}{Dado un cilindro circular recto con \'area de la base $B$ y
+altura $h,$ su volumen est\'a dado por la f\'ormula. $$V=Bh=\pi r^{2}h.$$ }{}
+ 
+\end{teorema}
+
+\begin{teorema}{Dado un cono circular recto con altura inclinada $l,$ si la
+circunferencia de su base es $S$ est\'a dada por la f\'ormula.
+$$S=\frac{1}{2}lC=\pi rl + \pi r^2.$$ }{}
+ 
+\end{teorema}
+\begin{teorema}{Dado un cono circular recto con altura $h$ y \'area de la
+base $B,$ el volumen est\'a dado por la f\'ormula
+$$V=\frac{1}{3}hB=\frac{1}{3}\pi r^{2}h.$$}{}
+ 
+\end{teorema}
+\begin{teorema}{Dada una esfera de radio $r,$ el volumen se encuentra con la
+f\'ormula $$V=\frac{1}{4}\pi r^3.$$ }{}
+ 
+\end{teorema}
+\begin{teorema}{Dada una esfera de radio $r,$ el \'area $S$ se encuentra con
+la f\'ormula $$S=4\pi r^2.$$}{}
+ 
+\end{teorema}
+
+
+
+
+
+
+
+ 
+
+ 
+
+\problema{
+\item Utilice las tablas de verdad para verificar que se cumplen las relaciones
+ logicas propuestas en el  ejemplo \ref{ej2_11}
+\item Demuestre el teorema \ref{pro2}
+\item Demuestre el teorema \ref{pro3}}
+\end{document}

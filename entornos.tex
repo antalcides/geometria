@@ -1,0 +1,384 @@
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%% Lista %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Lista    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{lista}{
+\begin{itemize}
+ \renewcommand{\labelitemi}{{
+ \colorbox{wood!90!black}{\color{white}{\ding{42}}}
+ }}
+}{\end{itemize}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ejemplo%%%%%%%%%%%%%%%%%%%%
+\newcounter{ejemplo}
+\newenvironment{ejemplo}[1]{\vskip 5pt
+\stepcounter{ejemplo}
+%\begin{tikzpicture}
+%\tikzstyle{mybox} = [draw=red, fill=blue!20, very thick,
+%    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+%\tikzstyle{fancytitle} =[fill=red, text=black]
+%\node [mybox] (box){%
+%     \begin{minipage}[r]{\textwidth}
+%                                     {#1}
+%                                 \end{minipage}};
+% \node[fancytitle, right=10pt] at (box.north west) {Ejemplo. \thechapter.\theejemplo};
+% \node[fancytitle, rounded corners] at (box.east) {$\blacktriangle$};
+%      \end{tikzpicture}
+%                        \hspace*{10pt}  
+\begin{tcolorbox}[colback=GreenTea!5,colframe=GreenTea!75!black,title=Ejemplo \ \thechapter.\ \thesection .\ \theejemplo]
+  #1
+\end{tcolorbox}
+       }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% postulado %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{postulado}
+\newenvironment{postulado}[2]{\vskip 5pt
+\stepcounter{postulado}
+  %\begin{tikzpicture}
+%\tikzstyle{mybox} = [draw=blue, fill=red!10, very thick,
+%    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+%\tikzstyle{fancytitle} =[fill=blue, text=white]
+%\node [mybox] (box){ %
+%     \begin{minipage}[r]{\textwidth}
+%                                    {#1}
+%                                 \end{minipage}};
+% \node[fancytitle, right=10pt] at (box.north west) {Postulado.\thechapter.\thepostulado. \ \bf{#2}};
+% \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+%     \end{tikzpicture}
+%              \hspace*{10pt} 
+   \begin{tcolorbox}[colback=thegrey!5,colframe=thegrey!75!black,title=Postulado.\thechapter.\thepostulado . \ \bf{#2}]
+ #1
+\end{tcolorbox}            }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Axioma %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{axioma}
+\newenvironment{axioma}[2]{\vskip 5pt
+\stepcounter{axioma}
+%  \begin{tikzpicture}
+%\tikzstyle{mybox} = [draw=blue, fill=red!10, very thick,
+%    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+%\tikzstyle{fancytitle} =[fill=blue, text=white]
+%\node [mybox] (box){ %
+%     \begin{minipage}[r]{\textwidth}
+%                                    {#1}
+%                                 \end{minipage}};
+% \node[fancytitle, right=10pt] at (box.north west)
+%{Postulado.\thechapter.\thepostulado. \ \bf{#2}};
+% \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+%     \end{tikzpicture}
+%              \hspace*{10pt}  
+\begin{tcolorbox}[colback=doc!5,colframe=doc!75!black,title=Axioma.\thechapter.\theaxioma. \ \bf{#2}]
+ #1
+\end{tcolorbox}              }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Conjetura %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{conjetura}
+\stepcounter{conjetura}
+\newenvironment{conjetura}[1]{\vskip 5pt
+%  \begin{tikzpicture}
+%\tikzstyle{mybox} = [draw=blue, fill=green!20, very thick,
+%    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+%\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+%\node [mybox] (box){ %
+%     \begin{minipage}[r]{\textwidth}
+%                                    {#1}
+%                                 \end{minipage}};
+% \node[fancytitle, right=10pt] at (box.north west) {Conjetura. \thechapter.\theconjetura};
+% \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+%     \end{tikzpicture}
+%              \hspace*{10pt}  
+\begin{tcolorbox}[colback=burl!5,colframe=burl!75!black,title=Conjetura. \thechapter.\theconjetura]
+  #1
+\end{tcolorbox}              }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Definicion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{definicion}
+\newenvironment{definicion}[2]{\vskip 3pt
+\stepcounter{definicion}
+%  \begin{tikzpicture}
+%\tikzstyle{mybox} = [draw=blue, fill=yellow!20, very thick,
+%    rectangle, rounded corners, inner sep=20pt, inner ysep=20pt]
+%\tikzstyle{fancytitle} =[fill=red!60, text=white, ellipse]
+%\stepcounter{definicion}
+%\hspace*{-15pt}
+%\node [mybox] (box){ %
+%     \begin{minipage}[r]{\textwidth}
+%                                    {#1}
+%                                 \end{minipage}};
+% \node[fancytitle, right=10pt] at (box.north west) {Definici\'on. \thechapter.\thedefinicion. \ \bf{#2}};
+% \node[fancytitle, rounded corners] at (box.east) {$\heartsuit$};
+%     \end{tikzpicture}
+%              \hspace*{10pt} 
+     \begin{tcolorbox}[colback=caper!5,colframe=caper!75!black,title=Definici\'on. \theechap@cx.\thedefinicion. \ \bf{#2}]
+#1
+\end{tcolorbox}        
+  }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Teorema %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{teorema}
+\newenvironment{teorema}[2]{\vskip 5pt
+%  \begin{tikzpicture}
+%\tikzstyle{mybox} = [draw=blue, fill=red!10, very thick,
+%    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+%\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+\stepcounter{teorema}
+%\hspace*{-15pt}
+%\node [mybox] (box){ %
+%     \begin{minipage}[r]{0.85\textwidth}
+%                                    {#1}
+%                                 \end{minipage} };
+% \node[fancytitle, right=10pt] at (box.north west) {Teorema. \thechapter.\theteorema.  \ \bf{#2}};
+% \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+%     \end{tikzpicture}
+%              \hspace*{10pt}     
+\begin{tcolorbox}[colback=wood!5,colframe=wood!75!black,title=Teorema. \theechap@cx.\theteorema. \ \bf{#2}]
+#1
+\end{tcolorbox}            }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% construccion%%%%%%%%%%%%%%%%%%%%
+\newcounter{construccion}
+\newenvironment{construccion}[2]{\vskip 5pt
+\stepcounter{construccion}
+%\begin{tikzpicture}
+%\tikzstyle{mybox} = [draw=red, fill=blue!20, very thick,
+%    rectangle, rounded corners, inner sep=10pt, inner ysep=20pt]
+%\tikzstyle{fancytitle} =[fill=red, text=black]
+%\node [mybox] (box){%
+%     \begin{minipage}[r]{\textwidth}
+%                                     {#1}
+%                                 \end{minipage}};
+% \node[fancytitle, right=10pt] at (box.north west) {Construcci\'on. \thechapter.\theconstruccion \ \bf{#2}};
+% \node[fancytitle, rounded corners] at (box.east) {$\bigstar$};
+%      \end{tikzpicture}
+%                        \hspace*{10pt}  
+\begin{tcolorbox}[colback=mesh!5,colframe=mesh!75!black,title=Construcci\'on. \theechap@cx .\theconstruccion. \ \bf{#2}]
+#1
+\end{tcolorbox}        }{
+
+                \vskip 5pt
+ }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Ideas  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{ideas}
+\newenvironment{ideas}[2]{\vskip 5pt
+\stepcounter{ideas}
+%   \begin{tikzpicture}
+%\tikzstyle{mybox} = [draw=blue, fill=yellow!20, very thick,
+%    rectangle, rounded corners, inner sep=20pt, inner ysep=20pt]
+%\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+% \hspace*{-15pt}
+%   \node [mybox] (box){ %
+% \begin{minipage}[r]{0.9\textwidth}
+%                                     #1
+%                                          \end{minipage}};
+%\node[fancytitle, right=10pt] at (box.north west) {T\'ermino. \thechapter. \theideas. \ \bf{#2}};
+%\node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+% \end{tikzpicture}
+\begin{tcolorbox}[colback=Sienna!5,colframe=Sienna!75!black,title=T\'ermino. \theechap@cx .\theideas. \ \bf{#2}]
+#1
+\end{tcolorbox} 
+                         }
+                              {\vskip 5pt }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NoDefinicion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{tndefinido}
+\newenvironment{tndefinido}[2]{\vskip 5pt
+%  \begin{tikzpicture}
+%\tikzstyle{mybox} = [draw=blue, fill=yellow!20, very thick,
+%    rectangle, rounded corners, inner sep=20pt, inner ysep=20pt]
+%\tikzstyle{fancytitle} =[fill=blue, text=white, ellipse]
+\stepcounter{tndefinido}
+% \hspace*{-15pt}
+%\node [mybox] (box){ %
+%     \begin{minipage}[r]{0.9\textwidth}
+%                                    #1
+%                                 \end{minipage}};
+% \node[fancytitle, right=10pt] at (box.north west) {T\'ermino no definido. \thechapter. \thetndefinido. \ \bf{#2}};
+% \node[fancytitle, rounded corners] at (box.east) {$\clubsuit$};
+%     \end{tikzpicture}
+      \begin{tcolorbox}[colback=rhodo!5,colframe=rhodo!75!black,title=T\'ermino no definido. \theechap@cx .\thedefinicion. \ \bf{#2}]
+#1
+\end{tcolorbox}                        }
+                             {\vskip 5pt }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fontfamily{pbk}
+\selectfont
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Figura %%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{figura}[3]{\begin{figure}[H]
+\centering
+                               #1
+                              \caption{#2}
+                              \label{#3}
+                              \end{figure}
+}{ \vskip 5pt }
+%%%%%%%%%%%%%%%%%%%%%%%%cambiando margen%%%%%%%%%%%%%%%%
+%\newenvironment{changemargin}[2]
+%{
+%\begin{list}{}
+%{
+%\setlength{\topsep}{0pt}
+%\setlength{\evensidemargin}{0pt}%
+%\setlength{\oddsidemargin}{0pt}
+%\setlength{\leftmargin}{#1}%
+%\setlength{\rightmargin}{#2}%
+%\setlength{\listparindent}{\parindent}%
+%\setlength{\itemindent}{\parindent}%
+%\setlength{\parsep}{\parskip}%
+%}
+%\item[]
+%}
+%{\end{list}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Notas %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{notas}[2]{\vskip 5pt  \colorbox{wood!30}{\color{white}{#1:\, #2}}
+
+                                     }{ \vskip 5pt
+                                        %\blackline
+                                        \vskip 0.2pt}
+   %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Prueba %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{prueba}[2]{\renewcommand{\arraystretch}{1.06}
+\vskip 5pt  {
+ \colorbox{teal!30}{\color{white}{Prueba:}}
+ }\vskip 5pt
+$ %
+\begin{tabular}
+[t]{ll||l}\hline
+\multicolumn{2}{c||}{\mbox{Afirmaciones}} & \mbox{Razones}\\\hline\hline
+1. & 
+#1 
+& \multicolumn{1}{|l}{\mbox{Dado}}\\
+#2
+\end{tabular}
+\ \ \ $ 
+\vskip 5pt}{\hfill  \raggedright{ \rule{0.5em}{0.5em} }\vskip 5pt }
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Solucion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{sol}[2]{\renewcommand{\arraystretch}{2.06}
+\newcommand{\tn}{\tabularnewline}
+\newcommand{\rr}{\raggedright}
+\fontsize{7}{6}\selectfont
+\vskip 5pt  {
+ \colorbox{teal!30}{\color{white}{Soluci\'on:}}
+ }\vskip 5pt
+ %
+\begin{center}
+ \begin{tabular}
+[t]{ll||l}\hline
+\multicolumn{2}{c||}{Afirmaciones} & Razones\\\hline\hline
+1. & #1 & \multicolumn{1}{|l}{Dado}\\
+#2
+\end{tabular}\end{center}
+\ \ \  \vskip 5pt}{\hfill  \raggedright{ \rule{0.5em}{0.5em} }\vskip 5pt }
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5Probar %%%%%%%%%%%%%%%%%%%%%
+ \newenvironment{probar}[1]
+  {\vskip 5pt
+   
+  \colorbox{teal!30}{\color{white}{Prueba}}\vskip 5pt
+ 
+ #1 
+  }
+ {\hfill  \raggedright{ \rule{0.5em}{0.5em} }\vskip 5pt }
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%$$$$$$$$$$$$$$$$$$$$$$$ Comandos $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% solucion %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\solucion}
+ {\vskip 5pt
+  {
+ \colorbox{teal!30}{\color{white}{Soluci\'on: \,}}
+ }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% problemas %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\problema}[1]
+{
+%\noindent
+\section{Problemas}
+\begin{multicols}{2}
+ #1
+\end{multicols}
+{\setlength{\parindent}{0mm}\color{black}\rule{\linewidth}{1mm}}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Arco %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\arco}[2][30pt]{\overset{\tikz \draw[rotate=60,line width=1pt]
+ (#1,0pt) arc (0:60:#1);}{#2}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Nota y solución%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newcommand{\solucion}{\colorbox{black}{\color{white}{Soluciön:}}}
+\newcommand{\nota}{\colorbox{teal!20!white}{\color{black}{Nota:}}}
+\newcommand{\degre}{\ensuremath{^\circ}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Cierra Introducción de tipos  @ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%Regla y transportador %%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\regla}[1]{
+\begin{center}
+\begin{tikzpicture}[scale=#1,font=\fontsize{7}{7}\selectfont]
+% La regla de plastico
+\draw[thick,red] (-0.25,0.0) rectangle (25.25,2.5);
+% Marcas de milímetros
+\foreach \x in{0.0, 0.1,...,25.0}
+	\draw[blue,shift={(\x,0)}] (0,0.5pt) -- (0,5pt);
+% Marcas de centímetros	
+\foreach \x in{0, 1, ..., 25}
+	\draw[thick,shift={(\x,0)}] (0,-0.5pt) -- (0,7.5pt) node[above]{$\x$};
+% Para que escriban su nombre los niños:
+%\node[blue,right]	at (0,1.75) {\textbf{Nombre:} \rule{7.5cm}{0.5pt}};
+\end{tikzpicture}
+\end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\transportador}[1]{
+\begin{center}
+\begin{tikzpicture}[scale=#1,font=\fontsize{7}{7}\selectfont]
+\draw[thick] (5,0) arc (0:180:5);
+\draw[thick] (5,0) -- (5,-5pt) -- (-5,-5pt) -- (-5,0);
+%
+\draw[red,fill=red] (0,0) circle (3.5pt);
+% Grados
+\foreach \ang in {0,1,...,180}
+	\draw[rotate=\ang] (4.9,0) -- (5.0,0);
+% Multiplos de 5
+\foreach \mult in {0, 5,..., 180}
+	\draw[thick,rotate=\mult] (4.8,0) -- (5.0,0);
+% Multiplos de 10 (Solamente nodos)
+\foreach \nodo in {0, 10, ...,180}
+	\node[red] at (\nodo:4.5) {\nodo};
+% Multiplos de 10 [los últimos]
+\foreach \ult in {0, 10, ...,180}
+	\draw[very thick,rotate=\ult,red]	(4.8,0) -- (5.0,0);
+\end{tikzpicture}
+\end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\instruccion}[1]{
+	\vspace{\fill}
+	\begin{center}
+	\cooltooltip
+	[1 1 0]
+	{Instrucciones:}
+	{Imprima en hojas tamaño carta sin lineas. \\
+	Utilice sólo regla sin graduar y compás.	
+	}
+	{http://www.uninorte.edu.co}{Catálogo Web}
+	{#1\strut}
+	\end{center}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%triangulo    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\triangulo}{\tikz \filldraw[scale=0.5,fill=teal!20] (0,0) -- ++(60:1) -- ++(-60:1) -- cycle ;
+                 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,54 @@
+\documentclass[10pt, a4paper]{report}
+
+\usepackage[titletoc]{appendix}
+\usepackage{titlesec}
+\usepackage{titletoc}
+\usepackage{shorttoc}
+\usepackage{hyperref}
+
+%\newcommand{\nocontentsline}[3]{}
+%\newcommand{\tocless}[2]{\bgroup\let\addcontentsline=\nocontentsline#1{#2}\egroup}
+
+\begin{document}
+
+\setcounter{secnumdepth}{3}
+
+\renewcommand*\contentsname{Contents (detailed)}
+
+\pdfbookmark[1]{Contents}{toc}
+\shorttoc{Contents}{1}
+
+\cleardoublepage
+
+\setcounter{tocdepth}{4}
+\renewcommand*\contentsname{Contents (detailed)}
+\pdfbookmark[1]{Contents (detailed)}{toc (detailed)}
+\tableofcontents
+
+\chapter{Test Chapter}
+\section{Test Section}
+\subsection{Test Subsection}
+\subsubsection{Test Subsubsection}
+\paragraph{Test Paragraph}
+
+\begin{appendices}
+
+\renewcommand\thechapter{}
+
+\chapter{Test Appendix}
+
+\titleformat{\section}[runin]
+  {\normalfont\normalsize\bfseries}{}{1em}{}
+\titlespacing*{\section}
+  {0pt}{3.25ex plus 1ex minus .2ex}{1em}
+\titlecontents{section}[1.5em]
+  {}{}{}{\titlerule*[7.5pt]{.}\contentspage}
+
+%\tocless\section{Test Section One}
+\section{First section looking like a paragraph}
+%\tocless\section{Test Section Two}
+\section{Second section looking like a paragraph}
+
+\end{appendices}
+
+\end{document}

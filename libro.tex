@@ -1,0 +1,424 @@
+\documentclass{book}
+\usepackage[top=20mm,bottom=20mm,left=20mm,right=20mm,a4paper]{geometry}
+\usepackage{microtype,soul,filecontents}
+\usepackage{pgf}
+\usepackage{lettrine,caption,multicol}
+\usepackage{xcolor}
+\usepackage{lipsum,soul}
+\usepackage{palatino}
+\usepackage{calligra}
+\usepackage[T1]{fontenc}
+\usepackage{minitoc}
+\setcounter{minitocdepth}{2}
+\setlength{\mtcindent}{24pt}
+\renewcommand{\mtcfont}{\small\rm}
+\renewcommand{\mtcSfont}{\small\bf}
+\usepackage{chngcntr}%para referenciar cualquier entorno
+\usepackage[notref,color]{showkeys} %para mostrar etiquetas de las referencias
+\usepackage{pifont}
+\usepackage{tikz}
+%\usetikzlibrary{shapes}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\usepackage{epstopdf}
+\usepackage{floatflt}
+\usepackage{multirow}
+\usepackage{bigstrut}
+\usepackage{type1ec}       % Tildes en el pdf
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{courier}
+\usepackage{units}
+\usepackage{url}
+\usepackage{float}
+\usepackage{mathpazo}
+\usepackage{amsfonts}
+\usepackage{fancyvrb}
+\usepackage[utf8x]{inputenc}
+%\usepackage[latin1]{inputenc}
+%\usepackage[calcwidth]{titlesec}
+\usepackage{graphicx}
+%\usepackage[oneline,flushleft,footnotesize]{caption2}
+\usepackage{enumerate}
+\usepackage{comment}
+\usepackage{ifthen}
+\usepackage{cancel}
+\usepackage{layout}
+\usepackage{footnote}
+\usepackage{hyperref}
+\usepackage{verbatim}
+\usepackage{listings}
+\usepackage{hhline}
+\usepackage{colortbl}
+\usepackage{blindtext}
+\usepackage{fix-cm}
+\usepackage[newparttoc]{titlesec}
+\usepackage[rightlabels]{titletoc}
+\usepackage{kpfonts}
+\usepackage{fancyhdr}
+\makeatletter
+%\usepackage[listings,theorems]{tcolorbox}
+%\usepackage[charter]{mathdesign}
+% \def\rmdefault{bch} % not scaled
+% \def\ttdefault{blg}
+\usepackage{xcolor,filecontents,ragged2e}
+\definecolor{theblue} {rgb}{0.02,0.04,0.48}
+\definecolor{thered}  {rgb}{0.65,0.04,0.07}
+\definecolor{thegreen}{rgb}{0.06,0.44,0.08}
+\definecolor{thegrey} {gray}{0.5}
+\definecolor{theshade}{gray}{0.94}
+\definecolor{theframe}{gray}{0.75}
+
+\begin{filecontents*}{chapterx.sty}
+\ProvidesPackage{chapters}[2012/04/07 v0.1 Typesetting chapters]
+\newcommand\HUGE{\@setfontsize\Huge{38}{47}}
+\newcommand\HHUGE{\@setfontsize\HHUGE{58}{67}}
+
+
+\newenvironment{summary}
+               {\list{}{\listparindent0pt %
+                        \itemindent\listparindent
+                        \leftmargin0pt
+                        \rightmargin\leftmargin
+                        \parsep\z@ \@plus\p@}%
+                \item\relax\itshape}
+               {\endlist}
+
+% helper macros
+\gdef\thinrule{\rule{\textwidth}{0.4pt}}
+\gdef\mediumrule{\rule{\textwidth}{0.8pt}}
+%% broad positions
+\newif\if@left
+\newif\if@right
+\newif\if@center
+\@leftfalse
+\@rightfalse
+\@centerfalse
+% newifs for number position
+\newif\if@lefttitle
+\newif\if@righttitle
+\newif\if@leftname
+\newif\if@rightname
+\newif\if@chapterspaceout\@chapterspaceoutfalse
+\newif\if@titlespaceout\@chapterspaceoutfalse
+
+%\section{Libraries}
+
+\def\cx@optionlist{}
+
+
+\def\cx@optionlist{}
+
+\def\cxuselibrary#1{\cxset{library/.cd,#1}}
+%
+% The library is added by inputting the file and setting the path accordingly.
+\def\cx@add@library#1#2{%
+  \cxset{library/#1/.code={\@ifundefined{cxlibrary@#1@loaded}{\input #2}{}}}%
+  \DeclareOption{#1}{\edef\cx@optionlist{\cx@optionlist,#1}}%
+}
+
+\def\thickrule{\leavevmode \leaders \hrule height 3pt \hfill \kern \z@}
+
+
+% Define a family for chapter styling keys
+\pgfkeys{/chapter/.is family}
+\def\cxset{\pgfqkeys{/chapter}} %Notice this is pgf q keys
+\cxset{%
+  name/.code={\gdef\chaptername{#1}},
+  color/.store in=\color@cx,
+  color/.default=black,
+  chapter font-family/.store in=\chapterfontfamily@cx,
+  chapter font-weight/.store in=\chapterfontweight@cx,
+  chapter font-size/.store in=\chapterfontsize@cx,
+  chapter color/.store in=\chaptercolor@cx,
+  chapter before/.store in=\chapterbefore@cx,
+  chapter after/.store in=\chapterafter@cx,
+  chapter spaceout/.is choice,
+  %chapter spaceout/soul/.code={\@chapterspaceouttrue},
+  chapter spaceout/none/.code={\@chapterspaceoutfalse},
+  % title keys
+  title font-family/.store in=\titlefontfamily@cx,
+  title font-family/.default=\rmfamily,
+  title font-weight/.store in=\titlefontweight@cx,
+  title font-size/.store in=\titlefontsize@cx,
+  title font-color/.store in=\titlefontcolor@cx,
+  title spaceout/.is choice,
+  title spaceout/soul/.code={\@titlespaceouttrue},
+  title spaceout/none/.code={\@titlespaceoutfalse},
+  title font/.style={title font-family=#1},
+  title before/.store in=\titlebefore@cx,
+  title after/.store in=\titleafter@cx,
+  title beforeskip/.store in=\titlebeforeskip@cx,
+  title afterskip/.store in=\titleafterskip@cx,
+  position/.is choice,
+  position/left/.code={\@lefttrue},
+  position/right/.code={\@righttrue},
+  position/center/.code={\@centertrue},
+% numbering options that are required
+  numbering/.is choice,
+% better to rename thechapter?
+  numbering/roman/.code={\gdef\thechapter{\@roman\c@chapter}},
+  numbering/Roman/.code={\gdef\thechapter{\@Roman\c@chapter}},
+  numbering/arabic/.code={\gdef\thechapter{\@arabic\c@chapter}},
+  numbering/none/.code={\gdef\thechapter{}},
+  number dot/.store in=\numberpunctuation@cx,
+  number position/.is choice,
+  number position/leftname/.code={\@leftnametrue\@rightnamefalse},
+  number position/rightname/.code={\@rightnametrue\@leftnamefalse},
+  number position/absolute/.code={},
+  number position/righttitle/.code={\@righttitletrue},
+  number position/lefttitle/.code={\@lefttitletrue},
+  number after/.store in=\numberafter@cx,
+  number before/.store in=\numberbefore@cx,
+  number color/.store in=\numbercolor@cx,
+  number font-size/.store in=\numberfontsize@cx,
+  number font-family/.store in=\numberfontfamily@cx,
+  number font-weight/.store in=\numberfontweight@cx,
+% headers and footers
+  header style/.store in=\headerstyle@cx,
+% general draft rules
+  rule /.is choice,
+  rule on/.code={\gdef\rulewidth@cx{0.4pt}},
+  rule off/.code={\gdef\rulewidth@cx{0pt}},
+image/.store in=\image@cx,
+       image caption/.store in=\caption@cx,
+       }
+       \cxset{%
+         color=blue,
+         position=center,
+         name=chapteris,
+         title font-family=\rmfamily,
+         title font-weight=\bfseries,
+         title font-size=\Huge,
+         title font-color=\color{olive},
+         numbering=arabic,
+         number dot=,
+         chapter font-family=\sffamily,
+         chapter font-weight=\bfseries,
+         chapter font-size=\Large,
+         chapter color=gray,
+         chapter before={\leavevmode\par\hfill},%need to correct for 0pt
+         chapter after=\hfill\hfill,
+         number position=rightname,
+         number color=\color{gray},
+         number after=\hspace{20pt},
+         number before=\hspace*{20pt},
+         number font-size=\huge,
+         number font-family=\sffamily,
+         number font-weight=\bfseries,
+         number before=,
+         number after=,
+         title before=,
+         title after=,
+         title afterskip={\vskip50pt},
+         title beforeskip={\vskip10pt},
+         header style=plain,
+       }
+
+       \gdef\setdefaults{%
+       \cxset{%
+       name=CAP\'ITULO,
+       title font-family=\rmfamily,
+       title font-weight=\bfseries,
+       title font-size=\Huge,
+       title font-color=\color{purple},
+       numbering=arabic,
+       number dot=,
+       number before=,
+       number after=,
+       chapter font-family=\sffamily,
+       chapter font-weight=\bfseries,
+       chapter font-size=\large,
+       chapter spaceout=soul,
+       chapter color=gray,
+       chapter before={},%need to correct for 0pt
+       chapter after=,
+       number position=rightname,
+       number color=\color{gray},
+       number after=\hspace{20pt},
+       number before=\space,
+       number font-size=\large,
+       number font-family=\sffamily,
+       number font-weight=\bfseries,
+       title before=,
+       title after=,
+       title afterskip={\vskip24pt},
+       title beforeskip={\vskip10pt},
+       title font=\rmfamily,
+       header style=plain,
+       }
+       }
+       \cxset{libro/.style={
+
+              name={CAP\'ITULO \ \thechapter},
+              numbering=none,
+              number font-size=,
+              number font-family=,
+              number font-weight=,
+              number color=white,
+              chapter color={black},
+              chapter font-family=\sffamily,
+              chapter font-size=\large,
+              chapter font-weight=\bfseries,
+              title font-family=\sffamily,
+              title font-color=teal,
+              rule off,
+              image=piramide,%genetics-dogs,
+                   image caption={\minitoc}
+         }
+         \def\imagecap#1{\cxset{image={\hskip-2.3cm\includegraphics[width=1.25\textwidth]{./chapters/#1}\par
+                \vspace*{\baselineskip}\par}}}
+       \newcommand\specialchapter@cx[1][]{%
+              \cxset{libro}
+       \vbox to 0pt{\color{blue}\rule{\paperwidth}{0.4pt}\par\vskip-1.4pt
+       \rule{0.4pt}{\textheight}\rule{4cm}{0.4pt}}
+
+       \vbox to 0pt{\parbox[b]{4.7cm}{%
+       \raggedright
+
+       \leftskip1.5cm
+       \caption@cx\par
+        \expandafter\rule{\rulewidth@cx}{5.8cm}
+       }\parbox[b]{0.5cm}{\includegraphics[width=0.5cm,height=9.15cm]{./chapters/shadow}}\includegraphics{./chapters/\image@cx}\par}
+
+       \vspace{8.2cm}
+       \hspace*{-3.51cm}\hbox to 0pt{\hspace*{1.01cm}\includegraphics[width=7.7cm,height=3.8cm]{./chapters/genetics-band}
+       \hspace*{-2.7cm}\sffamily\color{\numbercolor@cx}\HHUGE \raise30pt\hbox{4}%
+       \hspace{1.5cm}\raise0.5pt\hbox{\includegraphics{./chapters/chapterconcept}\includegraphics{./chapters/shadow2}}
+       }
+
+       %% Title name
+       \parbox[b]{0.45\textwidth}{%
+         \titlefontsize@cx
+         \titlefontweight@cx
+         \titlefontfamily@cx
+         \leftskip0.5em \color{\titlefontcolor@cx}
+         #1
+       }
+       %% Concepts
+       }
+       % % % % % % % % % % % % % % % % % % % % % % %
+       \newcommand\specialchap[1][]{%
+         \if@openright\cleardoublepage\else\clearpage\fi
+           \thispagestyle{plain}%
+           \global\@topnum\z@
+           \@afterindentfalse
+           \specialchapter@cx{#1}
+           \begin{minipage}{0.5\textwidth}%
+           \vspace{0.5\baselineskip}
+           \raggedright
+         \end{minipage}}
+       \end{filecontents*}
+
+       \usepackage{chapterx}
+       \usepackage{makeidx}
+       \makeindex
+       \author{A. J. OLIVO}
+       \title{\parindent0pt Un nuevo estilo para mis libros.}
+       % % % % % % % % % % % % % % % % % % % % % % % % % % %
+       \begin{document}
+       \maketitle
+       \dominitoc
+       \tableofcontents
+       \mainmatter
+       %\setdefaults
+       % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+              \chapter{EDOUARD MANET}
+       \begin{multicols}{3}
+             \leftskip0pt
+             \lettrine{I}{psum dolor} sit amet latixeus. \lipsum*[1-2]
+             Latinicus porcupinus to fill the line.
+       \end{multicols}
+
+       %% CARDINAL
+
+       
+       \chapter{ALAN MacDONALD}
+       \begin{multicols}{3}
+             \leftskip0pt
+             \lettrine{I}{psum dolor} sit amet latixeus. \lipsum*[1-2]
+             Latinicus porcupinus to fill the line.
+       \end{multicols}
+       \clearpage
+
+       This particular code, uses the predefined style \textit{manet}. The only difference we have now defined a helper macro to make it easier for such images to be inserted for similar style chapter openings.
+
+       \medskip
+
+       \begin{lstlisting}
+       \def\topimage#1{\cxset{title before={\hskip-2.3cm\includegraphics[width=1.25\textwidth]{./chapters/#1}\par
+       \vspace*{\baselineskip}\par}}}
+       \end{lstlisting}
+
+       If a full book is to be designed using chapter openings in this fashion more keys and styles could be defined to make it even more easy to enter.
+
+       The full code to have the chapter typeset is shown below:
+       \medskip
+
+       \begin{lstlisting}
+       \cxset{manet}
+       \topimage{Alan-MacDonald-Cardinal-Spin-01}
+
+       \chapter{ALAN MacDONALD}
+       \begin{multicols}{3}
+             \leftskip0pt
+             \lettrine{I}{psum dolor} sit amet latixeus. \lipsum*[1-2]
+             Latinicus porcupinus to fill the line.
+       \end{multicols}
+       \end{lstlisting}
+       All major components are saved in boxes. then based on booleans or templets are inserted in right location. Similar to objects.
+
+       \clearpage
+       % % % % % % % % % % % % % % % % % % % % % % %
+       \section{Definiendo un estilo libro}
+       \begin{lstlisting}
+       \cxset{manet/.style={
+               name={},
+               numbering=none,
+               number font-size=,
+               number font-family=,
+               number font-weight=,
+               number before={\vspace*{-2.5cm}},
+               number dot={},
+               number after={},
+               number position=leftname,
+               chapter font-family=,
+               chapter font-weight=,
+               chapter font-size=,
+               chapter before={},
+               chapter after={},
+               chapter color={black!90},
+               number color=\color{purple},
+               title beforeskip={},
+               title afterskip={},
+               title before={\hskip-2.3cm\includegraphics[width=1.25\textwidth]{./chapters/manet}\par
+                  \par\hfill\hfill{\tiny\bfseries Manet's  \textit{The Barmaid.}}\\
+                  \par
+                  \vspace*{\baselineskip}
+                  \par\hfill},
+               title after={\hfill\hfill},
+               title font-family=\sffamily,
+               title font-color=\color{black!80},
+               title font-weight=\bfseries,
+               title font-size=\LARGE}}
+       \end{lstlisting}
+       \section{Modificando un estilo}
+       \begin{lstlisting}
+       \cxset{
+        name={CHAPTER CONCEPT},
+        numbering=none,
+        number font-size=,
+        number font-family=,
+        number font-weight=,
+        number color=white,
+        chapter color={black},
+        chapter font-family=\sffamily,
+        chapter font-size=\large,
+        chapter font-weight=\bfseries,
+        title font-family=\sffamily,
+        title font-color=teal,
+        rule off,
+       }
+       \end{lstlisting}
+
+       \end{document}

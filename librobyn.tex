@@ -1,0 +1,393 @@
+ \makeatletter
+ %%%%%%%%%%%%%%%%%%%definición de capítulos%%%%%%%%%%%%%%
+ \renewcommand\chapter{\if@openright\cleardoublepage\else\clearpage\fi
+                    \thispagestyle{empty}%
+                    \global\@topnum\z@
+                    \@afterindentfalse
+                    \secdef\@chapter\@schapter}
+\def\@chapter[#1]#2{\ifnum \c@secnumdepth >\m@ne
+                       \if@mainmatter
+                         \refstepcounter{chapter}%
+                         \typeout{\@chapapp\space\thechapter.}%
+                         \addcontentsline{toc}{chapter}%
+                                   {\protect\numberline{\thechapter}#1}%
+                       \else
+                         \addcontentsline{toc}{chapter}{#1}%
+                       \fi
+                    \else
+                      \addcontentsline{toc}{chapter}{#1}%
+                    \fi
+                    \chaptermark{#1}%
+                    \addtocontents{lof}{\protect\addvspace{10\p@}}%
+                    \addtocontents{lot}{\protect\addvspace{10\p@}}%
+                    \if@twocolumn
+                      \@topnewpage[\@makechapterhead{#2}]%
+                    \else
+                      \@makechapterhead{#2}%
+                      \@afterheading
+                    \fi}
+%%%%%%%%%%%%%%%%%%%%%Página par en blanco al final del capítulo%%%%%%%%%%%%%%%%%%%
+\def\clearpage{\ifvmode
+\ifnum \@dbltopnum =\m@ne \ifdim \pagetotal <\topskip \hbox{} \fi
+\fi \fi
+\newpage
+\thispagestyle{empty} \write\m@ne{} \vbox{} \penalty -\@Mi }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\@endchapter{\vfil\newpage
+              \if@twoside
+               \if@openright
+                \null
+                \thispagestyle{empty}%
+                \newpage
+               \fi
+              \fi
+              \if@tempswa
+                \twocolumn
+              \fi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%headings estilo%% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \pagestyle{headings}
+    \newcounter{msection}\renewcommand\themsection{\thechapter.\@arabic\c@msection}
+  \newcommand\msectionmark[1]{}
+   \newcommand\l@msection[2]{}
+%%%%%%%%%%%%%caption de figuras%%%%%%%%%%%%%%%%%
+\newcommand{\grafcaption}[1]{\def\@captype{figure}\caption{#1}}
+ %\newcommand\grafcaption{\def\@captype{figure}\caption}
+\newcommand{\figcaption}{%
+                          \renewcommand*\captionlabeldelim{\hspace{-2pt}}
+                          \setlength{\abovecaptionskip}{0pt}
+                          \setlength{\belowcaptionskip}{0pt}
+                          \grafcaption}
+\renewcommand\@seccntformat[1]%
+{\color{black}\csname the#1\endcsname.\quad}% %numero a color verde
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% definición para la sección y los capitulos %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\@makechapterhead#1{%
+\vspace*{50\p@}%
+{\parindent \z@ \raggedright \scshape \normalfont\color{black}%   <--%color del capitulo
+\ifnum \c@secnumdepth >\m@ne \scshape \huge\bfseries \@chapapp\space
+\thechapter \par\nobreak \vskip 20\p@ \fi \interlinepenalty\@M
+\Huge \scshape \bfseries\color{black} #1\par\nobreak% <--%color titulo
+\vskip 40\p@ }}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\@makeschapterhead#1{%
+\vspace*{50\p@}%
+{\parindent \z@ \raggedright \scshape \normalfont \interlinepenalty\@M
+\color{black}%   <--color del nombre del capitulo
+\Huge \scshape \bfseries #1\par\nobreak %
+\vskip 40\p@ }}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\blackline}{{\setlength{\parindent}{0mm}\color{black}\rule{\linewidth}{0.3mm}}}
+\newcommand{\blueline}{{\setlength{\parindent}{0mm}\color{blue}\rule{\linewidth}{1mm}}}
+\newcommand{\greenline}{{\setlength{\parindent}{0mm}\color{green}\rule{\linewidth}{1mm}}}
+\renewcommand\section{\@startsection {section}{1}{-5pt}%
+                                   {3.5ex \@plus 1ex \@minus .2ex
+                                   }%
+                                   {2.3ex\@plus .2ex
+                                   \vskip 0.2\p@ \blackline \vskip 1pt}%
+                                   {\centering\sc\normalsize\color{black}}}
+
+\renewcommand\subsection{\@startsection {subsection}{1}{-5pt}%
+                                   {3.5ex \@plus 1ex \@minus .2ex
+                                   }%
+                                   {2.3ex\@plus .2ex
+                                   \vskip 0.2\p@ \vskip 1pt}%
+                                   {\centering\sc\normalsize\color{black}}}
+
+\renewcommand\subsubsection{\@startsection {subsubsection}{1}{-5pt}%
+                                   {3.5ex \@plus 1ex \@minus .2ex
+                                   }%
+                                   {2.3ex\@plus .2ex
+                                   \vskip 0.2\p@ \vskip 1pt}%
+                                   {\centering\sc\normalsize\color{black}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Ecuaciones enmarcadas %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definecolor{gris-oscuro}{rgb}{0.89,0.89,0.89}
+\definecolor{gris-claro}{rgb}{0.91,0.91,0.91}
+\makeatother
+\newbox\eqbox \newdimen\myboxlen
+\newenvironment{myeq} {%
+\everymath{\color{black}} \everydisplay{\color{black}}
+\myboxlen=\columnwidth \fboxrule=0.5mm \advance\myboxlen -2\fboxsep
+\advance\myboxlen -2\fboxrule
+\setbox\eqbox=\vbox\bgroup\hsize\myboxlen
+%
+\abovedisplayskip=0pt%
+\abovedisplayshortskip=0pt%
+\belowdisplayskip=0pt%
+\belowdisplayshortskip=0pt%
+%\begin{equation}%
+ }%
+{%
+%\end{equation}
+\egroup%
+%$$\fcolorbox{black}{gris-claro}{\copy\eqbox}$$%
+$$\fcolorbox{black}{white}{\copy\eqbox}$$
+ }
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Etiquetas ejercicos y ejemplos%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{ejercicio}
+\newcommand{\ejercicio}
+{
+\stepcounter{ejercicio}
+{
+\blackline
+\vskip 5pt
+\colorbox{black}{\color{white}{Ejemplo \thechapter.\theejercicio.}}
+}
+}
+
+\newenvironment{ejemplo}[1][
+ \ejercicio]{
+                                    %\begin{minipage}[r]{0.7\columnwidth} \hspace{10pt}
+                                     #1
+                                     %\end{minipage}
+                                     }{\vskip 5pt }%\greenline \vskip 0.1pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ECUACION A COLOR%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newbox\notabox \newdimen\myboxnot
+\newenvironment{nota}{%
+\myboxnot=\columnwidth \fboxrule=1mm \advance\myboxnot -2\fboxsep
+\advance\myboxnot -2\fboxrule
+\setbox\notabox=\vbox\bgroup\hsize\myboxnot
+%
+\abovedisplayskip=0.2pt%
+\abovedisplayshortskip=0.5pt%
+\belowdisplayskip=0pt%
+\belowdisplayshortskip=0pt%
+\begin{flushleft}
+ \textcolor[rgb]{0.50,0.00,0.25}{NOTA.}}%
+ {%
+\end{flushleft}\egroup
+\vskip 5pt \fcolorbox{black}{white}{\copy\notabox}\vskip 5pt%
+ }%
+\newenvironment{sol}[1][ \colorbox{black}{\color{white}{Soluci\'{o}n:}}]{
+                                     #1
+                                     }{ \vskip -5pt
+                                        %\blackline
+                                        \vskip 0.2pt}
+\newcommand{\ecuacion}[1]{\begin{myeq} #1 {} \end{myeq}}
+%%%%encajonado %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\marginparwidth}{5cm} \setlength{\marginparsep}{0.5cm}
+\setlength{\textheight}{22 cm} \setlength{\textwidth}{12cm}
+\oddsidemargin 0cm
+\evensidemargin 5cm
+\topmargin-1.0 cm
+\headsep+22pt
+\headheight9pt
+\topmargin-1.0 cm
+%\hoffset -0.8cm
+%\voffset -1.8cm
+%\footskip 1cm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ENCABEZADO Y PIE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\chaptermark}[1]{\markboth{\chaptername \ \thechapter.\ #1}{}}
+%\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+\renewcommand{\headrule}{\vbox to 0pt{\hbox to\headwidth{\hrulefill}\vss}}
+\renewcommand{\footrule}{\vbox to 0pt{\hbox to\headwidth{\hrulefill}\vss}}
+\newcommand{\helv}{\fontfamily{phv}\fontsize{8}{11}\selectfont}
+\newcommand{\helvi}{\fontfamily{phv}\fontseries{b}\fontsize{9}{11}\selectfont}
+%\renewcommand{\chaptermark}[1]{\markboth{{\chaptername \ \thechapter.\ #1}}{}}
+%\renewcommand{\sectionmark}[1]{\markright{{\thesection.\ #1}}}
+\fancyhf{}
+\fancyhead[LE,RO]{{\textcolor[rgb]{0.00,0.00,0.00}{\helv \thepage}}}
+\fancyhead[LO]{\textcolor[rgb]{0.00,0.00,0.00}{\helv Física Electricidad para estudiantes de Ingeniería}}
+\fancyhead[RE]{\textcolor[rgb]{0.00,0.00,0.00}{\helv D. Castro - A. Olivo}}
+\fancyfoot[LE,RO]{}
+\fancyfoot[RO,LE]{}
+\fancyfoot[CO]{\textcolor[rgb]{0.00,0.00,0.00}{\helv \nouppercase{\rightmark}}}
+\fancyfoot[CE]{\textcolor[rgb]{0.00,0.00,0.00}{\helv \nouppercase{\leftmark}}}
+%\pagestyle{fancy}
+\fancyhfoffset[LE,RO]{\marginparwidth-2.5\marginparsep}
+\fancypagestyle{headings}
+{
+\fancyhf{}
+\fancyhead{}
+\fancyfoot{}
+\fancyheadoffset[RO,LE]{-2.5\marginparwidth}
+\fancyfootoffset[RO,LE]{\marginparwidth-2.5\marginparsep}
+ \fancyfoot[C]{{\textcolor[rgb]{0.00,0.25,0.50}{\helv \thepage}}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIN DE ENCABEZADO Y PIE %%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Español%%%%%%%%%%%%%%%%%%%%%%%
+\def\indexname{Índice}
+\def\contentsname{\Large Contenido}
+\def\listfigurename{Tabla de figuras}
+\def\bibname{\Large Bibliograf\'{\i}a}
+\def\tablename{Tabla}
+\def\proofname{Demostraci\'on}
+\def\appendixname{Ap\'endice}
+\def\chaptername{ Cap\'{\i}tulo}
+\def\figurename{Figura}
+\renewcommand{\tablename}{Tabla}
+\renewcommand{\listtablename}{\'{\I}ndice de Tablas}
+\makeindex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Estilo de capítulos%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\bigrule}{\titlerule[0.0mm]}
+\titleformat{\chapter}[display]
+{\scshape \bfseries\Huge}
+{\color{black}\sc\Large\chaptertitlename\ \thechapter}{1ex}
+{\sc\color{black}\titlerule \vspace{4mm} \filleft {\filcenter}}
+[\vspace{0.5mm} {\color{black}\bigrule}]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Estilo de las partes%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titleformat{\part}[display]
+{\sl\bfseries\Huge} {\color{black}\sc\Large\parttitlename\ \thepart}{1ex}
+{\color{black}\titlerule \vspace{4mm} \filleft {\filcenter}}
+[\vspace{0.5mm} {\color{black}\bigrule}]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%Fancy estilo y figcaption%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\figurename}{Figura}
+%\def\labelenumii{\alph{enumii})}
+\pagestyle{fancy}
+%\newfixedcaption{\figcaption}{figure}
+%\newfixedcaption{\tabcaption}{table}
+%\newfixedcaption{\marcaption}{figure}
+ \makeatletter
+  \newcommand\margcaption{\def\@captype{figure}\caption}
+  \newcommand{\marcaption}{%
+                          \renewcommand*\captionlabeldelim{\hspace{-2pt}}
+                          \setlength{\abovecaptionskip}{0pt}
+                          \setlength{\belowcaptionskip}{0pt}
+                          \margcaption}
+
+\newcommand{\margencaption}{%
+                          \renewcommand*\captionlabeldelim{\hspace{-2pt}}
+                          \setlength{\abovecaptionskip}{0pt}
+                          \setlength{\belowcaptionskip}{0pt}
+                          \margcaption}
+\makeatother
+\newcommand{\marfigura}[3]{\marginpar{\centering \setcaptionwidth{2in}\vspace{10pt}\includegraphics
+                          [width=0.8\marginparwidth]{#1}{\marcaption{\small{#2}}\label{#3}} }}
+\newcommand{\marfig}[3]{\marginpar{\centering \setcaptionwidth{5cm}\vspace{10pt}\includegraphics
+                          [width=0.8\marginparwidth]{#1}{\margencaption{\small{#2}}\label{#3}}
+                                                                             }}
+%\newsavebox{\tmpbox}
+%\newcommand{\marfig}[3]{
+%\sbox{\tmpbox}{\includegraphics[width=0.5\marginparwidth]{#1}}
+%\marginpar{\raisebox{-1.1\ht\tmpbox}{\centering\includegraphics[width=0.5\marginparwidth]{#1}}\\
+%{\marcaption{#2}\label{#3}} }}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{changemargin}[2]
+{
+\begin{list}{}
+{
+\setlength{\topsep}{0pt}
+\setlength{\evensidemargin}{0pt}%
+\setlength{\oddsidemargin}{0pt}
+\setlength{\leftmargin}{#1}%
+\setlength{\rightmargin}{#2}%
+\setlength{\listparindent}{\parindent}%
+\setlength{\itemindent}{\parindent}%
+\setlength{\parsep}{\parskip}%
+}
+\item[]
+}
+{\end{list}}
+%%%% fin macro %%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%cambiando margen%%%%%%%%%%%%%%%%
+  \makeatletter
+  \def\ifta{0}\def\iftb{0}%
+\def\txa#1{\ifthenelse{\equal{\ifta}{1}}{\typeout{#1}}{}}%%
+\def\settext#1#2#3#4#5{%
+  \txa{\string\textheight: #1}\txa{\string\textwidth: #2}%
+  \global\setlength{\textheight}{#1}%
+  \global\setlength{\textwidth}{#2}%
+  \global\setlength{\evensidemargin}{#3}%
+  \global\setlength{\oddsidemargin}{#4}%
+  \global\setlength{\marginparwidth}{#5}%
+  \@change@text%
+                       }
+  \def\@change@text{%
+  \global\setlength{\@colht}{\textheight}%
+  \txa{\string\@colht:\the\@colht}%
+  \global\setlength{\@colroom}{\textheight}%
+  \global\setlength{\vsize}{\textheight}%
+  \global\setlength{\columnwidth}{\textwidth}%
+  \if@twocolumn%
+    \advance\columnwidth-\columnsep \divide\columnwidth\tw@%
+    \@firstcolumntrue%
+  \fi%
+  \global\setlength{\hsize}{\columnwidth}%
+  \global\setlength{\linewidth}{\hsize}%
+}%
+
+                       \makeatother
+  %%%%%%%%%%%%%%%%%%%%%%% fin de cambiando margen%%%%%%%%%%%%%%%%%%%%%
+\newcounter{ej}
+
+\newcommand{\ej}
+ {
+ \stepcounter{ej}
+ {
+ \colorbox{black}{\color{white}{\thechapter.\theej.}}
+ }
+ }
+\newcommand{\problema}[1]
+{
+\begin{changemargin}{-0.1cm}{-5cm}
+\noindent
+\section{Problemas}
+\begin{multicols}{2}
+ #1
+\end{multicols}
+{\setlength{\parindent}{0mm}\color{black}\rule{\linewidth}{1mm}}
+\end{changemargin}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{notas}
+\newcommand{\notas}
+{
+\stepcounter{notas}
+{
+\vskip 6pt \colorbox{black}{\color{white}{Nota \thechapter.\thenotas.}}
+}
+}
+%\newcounter{ejercicio}
+%\newcommand{\ejercicio}
+%{
+%\stepcounter{ejercicio}
+%{
+%\blackline \vskip 3pt \colorbox{black}{\color{white}{Ejemplo \thechapter.\theejercicio.}}
+%}
+%}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{pregunta}
+\newcommand{\pregunta}
+{
+\stepcounter{pregunta}
+{
+\vskip 7pt \colorbox{black}{\color{white}{Pregunta \thechapter.\thepregunta.}}
+}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\margen }[1]{\marginpar{\parbox{4cm}{\small\emph{#1}}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{marnota}[1]{\begin{minipage}{4cm}\small\emph{#1} }{\end{minipage}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\pie}[1]
+{
+\begin{changemargin}{-0.1cm}{-5cm}
+#1
+\end{changemargin}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\parindent}{0pt}
+%%%%%%%%%%%%%tabla de contenido%%%%%%%%%%%%
+ \makeatletter
+ \newif\if@toc \@tocfalse
+\renewcommand\tableofcontents{ \if@twocolumn
+\@restonecoltrue\onecolumn \else \@restonecolfalse \fi
+\begingroup                     \@toctrue
+\chapter*{\Large \contentsname}
+\endgroup
+\pagestyle{empty} \baselineskip=18pt plus .5pt minus .5pt
+{\raggedleft P\'{a}gina \par\vskip-\parskip} \@starttoc{toc}
+\newpage
+\if@restonecol\twocolumn\fi \baselineskip=\normalbaselineskip
+}\let\par \par
+\makeatother
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\captionfont}{\rmfamily}
+\renewcommand{\captionlabelfont}{\footnotesize\bfseries \sffamily}
+\makeatletter
+\renewcommand\footnoterule{  \kern-3\p@
+\hrule\@width.2\columnwidth \kern2.6\p@}
+ \makeatother
+
+
+\endinput
